@@ -15,6 +15,12 @@
         <p class="projectItem_description">{{ proj.description }}</p>
         <span class="projectItem_by">Created by: {{ proj.creator | name }}</span>
         <span class="projectItem_date">Created on: {{ proj.startDate | date }}</span>
+        <div class="projectItem_latest">
+          <h3>Latest Updates</h3>
+          {{ proj.features[0].title }}
+          Status: {{ proj.features[0].status }}
+          <span class="projectItem_latestDate">Last Updated: {{ proj.features[0].updatedDate | date }}</span>
+        </div>
       </li>
     </ul>
   </div>

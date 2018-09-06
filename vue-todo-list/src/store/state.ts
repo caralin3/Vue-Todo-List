@@ -62,7 +62,7 @@ export const Feature1: Feature = {
   startDate: new Date(),
   status: 'todo',
   title: 'Feature1',
-  // updatedDate: new Date(),
+  updatedDate: new Date(),
   version: Version1,
 };
 
