@@ -1,0 +1,6 @@
+export enum MutationType {
+  ADD_TODO = 'ADD_TODO',
+  EDIT_TODO = 'EDIT_TODO',
+  REMOVE_TODO = 'REMOVE_TODO',
+  REMOVE_ALL_TODOS = 'REMOVE_ALL_TODOS',
+}
