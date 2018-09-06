@@ -3,9 +3,8 @@
     <h1 class="header_title">Todo</h1>
     <div class="header_nav">
       <router-link to="/">Home</router-link>
-      <router-link to="/about">About</router-link>
-      <router-link to="/board">Board</router-link>
-      <router-link to="/list">List</router-link>
+      <router-link to="/projects">Projects</router-link>
+      <router-link to="/board">Boards</router-link>
     </div>
   </div>
 </template>

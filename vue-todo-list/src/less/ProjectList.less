@@ -1,0 +1,30 @@
+@import (reference) 'variables';
+@import (reference) 'button';
+
+.projectList {
+  padding: 1rem 2rem;
+
+  &_header {
+    align-items: center;
+    color: @madison;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &_text {
+    align-items: center;
+    display: flex;
+    justify-content: flex-start;
+  }
+
+  &_count {
+    padding: 0 1rem;
+  }
+
+  &_button {
+    .button;
+    max-height: 3rem;
+    max-width: 8rem;
+    padding: 1rem;
+  }
+}

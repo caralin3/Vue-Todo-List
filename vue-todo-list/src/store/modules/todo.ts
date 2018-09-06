@@ -1,13 +1,14 @@
 import { GetterTree, MutationTree, ActionTree } from 'vuex';
 import { Item } from '@/types';
 import { MutationType } from '@/store/mutation-types';
+import { Item1 } from '@/store/state';
 
 export interface TodoState {
   todos: Item[];
 }
 
 const initialState: TodoState = {
-  todos: [{id: '0', title: 'Item', status: 'todo', type: 'bug'}],
+  todos: [Item1],
 };
 
 const actions: ActionTree<TodoState, any> = {

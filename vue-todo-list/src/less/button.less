@@ -1,0 +1,12 @@
+@import (reference) 'variables';
+
+.button {
+  background-color: @medium-sea-green;
+  color: @white;
+  font-weight: bold;
+
+  &:focus,
+  &:hover {
+    background-color: darken(@medium-sea-green, 10%);
+  }
+}
