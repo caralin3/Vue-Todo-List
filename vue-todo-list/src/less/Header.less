@@ -1,0 +1,24 @@
+@import (reference) 'variables';
+
+.header {
+  background-color: @medium-sea-green;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 2rem;
+
+  &_title {
+    color: @madison;
+  }
+
+  &_nav {
+    padding: 30px;
+    a {
+      color: @madison;
+      font-weight: bold;
+      padding: 0 5px;
+      &.router-link-exact-active {
+        color: @white;
+      }
+    }
+  }
+}

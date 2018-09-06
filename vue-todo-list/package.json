@@ -3,10 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "start": "vue-cli-service serve",
+    "build": "vue-cli-service build && yarn run build:css",
+    "build:css": "lessc src/less/index.less",
     "lint": "vue-cli-service lint",
-    "test:unit": "vue-cli-service test:unit"
+    "test:unit": "vue-cli-service test:unit",
+    "test": "jest",
+    "watch:css": "chokidar \"**/*.less\" -c \"yarn run build:css\""
   },
   "dependencies": {
     "vue": "^2.5.17",
@@ -24,6 +27,7 @@
     "@vue/cli-service": "^3.0.0",
     "@vue/test-utils": "^1.0.0-beta.20",
     "babel-core": "7.0.0-bridge.0",
+    "chokidar-cli": "^1.2.1",
     "less": "^3.0.4",
     "less-loader": "^4.1.0",
     "ts-jest": "^23.0.0",
