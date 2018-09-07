@@ -41,11 +41,5 @@ export default {
       'projectCount',
     ]),
   },
-  methods: {
-    ...mapActions('projects', [
-      'addProject',
-      'removeProject',
-    ]),
-  },
 };
 </script>

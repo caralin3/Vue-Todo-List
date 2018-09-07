@@ -6,7 +6,7 @@
         <i class="dialog_x fas fa-times" @click="dismissDialog" />
       </div>
       <slot></slot>
-      <button class="dialog_button" type="button" v-on:click="add()">Add Project</button>
+      <!-- <button class="dialog_button" type="button" v-on:click="add()">Add Project</button> -->
     </div>
   </div>
 </template>
