@@ -5,7 +5,7 @@
       <h2 class="projectsHeader_count">({{ projectCount }})</h2>
     </div>
     <!-- <button type="button" v-on:click="removeProject()">+</button> -->
-    <button class="projectsHeader_button" type="button" v-on:click="addProject()">New Project</button>
+    <button class="projectsHeader_button" type="button" v-on:click="showDialog">New Project</button>
   </div>
 </template>
 
@@ -14,6 +14,9 @@ import Vue from 'vue';
 import {mapActions, mapGetters, mapState, mapMutations} from 'vuex';
 
 export default {
+  props: {
+    toggleDialog: Function,
+  },
   computed: {
     ...mapGetters('projects', [
       'projectCount',
@@ -24,6 +27,9 @@ export default {
       'addProject',
       'removeProject',
     ]),
+    showDialog(this: any) {
+      this.toggleDialog();
+    },
   },
 };
 </script>
