@@ -2,29 +2,10 @@
 @import (reference) 'button';
 
 .projectList {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(auto-fill, 1fr);
+  justify-items: center;
   padding: 1rem 2rem;
-
-  &_header {
-    align-items: center;
-    color: @madison;
-    display: flex;
-    justify-content: space-between;
-  }
-
-  &_text {
-    align-items: center;
-    display: flex;
-    justify-content: flex-start;
-  }
-
-  &_count {
-    padding: 0 1rem;
-  }
-
-  &_button {
-    .button;
-    max-height: 3rem;
-    max-width: 8rem;
-    padding: 1rem;
-  }
 }
