@@ -4,16 +4,16 @@
     <input
       class="TextInput_input"
       id="textInput"
-      v-model="text"
+      :value="text"
       :placeholder="placeholder"
-      @change="onChange"
+      @input="onChange($event.target.value)"
+      type="text"
     />
   </p>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-import {mapActions, mapGetters, mapState, mapMutations} from 'vuex';
 
 export default {
   props: {
@@ -21,15 +21,9 @@ export default {
     placeholder: String,
     text: String,
   },
-  // data: () => ({
-  //   text: '',
-  // }),
   methods: {
-    ...mapActions('projects', [
-      'addProject',
-    ]),
-    onChange(this: any) {
-      this.onChange();
+    onChange(this: any, value: string) {
+      this.$emit('input', value);
     },
   },
 };
