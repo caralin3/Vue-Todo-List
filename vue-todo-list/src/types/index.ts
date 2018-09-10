@@ -1,5 +1,5 @@
 export type itemType = 'bug' | 'task' | 'component';
-export type statusType = 'todo' | 'open' | 'inProgress' | 'completed' | 'closed';
+export type statusType = 'todo' | 'in Progress' | 'completed' | 'closed';
 export type priorityType = 'minor' | 'major' | 'critical' | 'blocker';
 
 export interface User {
@@ -27,7 +27,6 @@ export interface Version {
   startDate: Date;
   title: string;
 }
-
 
 export interface Item {
   assignee?: User;
@@ -65,6 +64,7 @@ export interface Feature {
   title: string;
   updatedDate?: Date;
   version: Version;
+  workFlow: WorkHistory[];
 }
 
 export interface Project {

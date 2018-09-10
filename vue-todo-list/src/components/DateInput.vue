@@ -5,9 +5,8 @@
       class="DateInput_input"
       id="dateInput"
       :value="date"
-      :placeholder="placeholder"
       @input="onChange($event.target.value)"
-      type="date"
+      type="datetime-local"
     />
   </p>
 </template>
@@ -18,12 +17,11 @@ import Vue from 'vue';
 export default {
   props: {
     label: String,
-    placeholder: String,
     date: String,
   },
   methods: {
     onChange(this: any, value: string) {
-      this.$emit('input', value);
+      this.$emit('input', new Date(value));
     },
   },
 };

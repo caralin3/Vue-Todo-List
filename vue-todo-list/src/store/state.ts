@@ -23,7 +23,7 @@ export const Version1: Version = {
   endDate: new Date(),
   id: '0',
   startDate: new Date(),
-  title: '1.0.0',
+  title: '1.0.0-dev',
 };
 
 export const Item1: Item = {
@@ -64,6 +64,7 @@ export const Feature1: Feature = {
   title: 'Feature1',
   updatedDate: new Date(),
   version: Version1,
+  workFlow: [WorkHistory1],
 };
 
 export const Project1: Project = {
@@ -74,7 +75,7 @@ export const Project1: Project = {
   features: [Feature1],
   id: '0',
   startDate: new Date(),
-  status: 'open',
+  status: 'todo',
   title: 'Project1',
   // updatedDate: new Date(),
   versions: [Version1],
