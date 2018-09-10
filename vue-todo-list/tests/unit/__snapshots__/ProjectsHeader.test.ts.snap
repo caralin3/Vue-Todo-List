@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ProjectsHeader receives the correct props: Text Input Test 1`] = `"Text Input Test"`;
+
+exports[`ProjectsHeader renders the correct markup 1`] = `
+<p
+  class="TextInput"
+>
+  <label
+    class="TextInput_label"
+    for="textInput"
+  >
+    Label
+  </label>
+   
+  <input
+    class="TextInput_input"
+    id="textInput"
+    placeholder=""
+    type="text"
+  />
+</p>
+`;

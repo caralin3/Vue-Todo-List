@@ -1,0 +1,52 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SelectInput receives the correct props 1`] = `
+Object {
+  "0": "todo",
+  "1": "in Progress",
+  "2": "completed",
+  "3": "closed",
+}
+`;
+
+exports[`SelectInput receives the correct props: Selected Value 1`] = `"Selected Value"`;
+
+exports[`SelectInput renders the correct markup 1`] = `
+<p
+  class="SelectInput"
+>
+  <label
+    class="SelectInput_label"
+    for="selectInput"
+  >
+    Label
+  </label>
+   
+  <select
+    class="SelectInput_input"
+    defaultvalue="Selected Value"
+    id="selectInput"
+  >
+    <option
+      value="todo"
+    >
+      Todo
+    </option>
+    <option
+      value="in Progress"
+    >
+      In Progress
+    </option>
+    <option
+      value="completed"
+    >
+      Completed
+    </option>
+    <option
+      value="closed"
+    >
+      Closed
+    </option>
+  </select>
+</p>
+`;

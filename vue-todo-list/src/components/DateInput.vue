@@ -17,7 +17,7 @@ import Vue from 'vue';
 export default {
   props: {
     label: String,
-    date: String,
+    date: Date,
   },
   methods: {
     onChange(this: any, value: string) {

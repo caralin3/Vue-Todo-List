@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DateInput receives the correct props: Mon Sep 10 2018 1`] = `2018-09-10T06:02:20.000Z`;
+
+exports[`DateInput renders the correct markup 1`] = `
+<p
+  class="DateInput"
+  placeholder=""
+>
+  <label
+    class="DateInput_label"
+    for="dateInput"
+  >
+    Label
+  </label>
+   
+  <input
+    class="DateInput_input"
+    id="dateInput"
+    type="datetime-local"
+  />
+</p>
+`;

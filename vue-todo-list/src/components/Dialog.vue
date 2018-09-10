@@ -6,14 +6,12 @@
         <i class="dialog_x fas fa-times" @click="dismissDialog" />
       </div>
       <slot></slot>
-      <!-- <button class="dialog_button" type="button" v-on:click="add()">Add Project</button> -->
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-import {mapActions, mapGetters, mapState, mapMutations} from 'vuex';
 import { Project } from '@/types';
 
 export default {
@@ -22,15 +20,8 @@ export default {
     toggleDialog: Function,
   },
   methods: {
-    ...mapActions('projects', [
-      'addProject',
-    ]),
     dismissDialog(this: any) {
       this.toggleDialog();
-    },
-    add(this: any, proj: Project) {
-      // this.addProject(proj);
-      this.dismissDialog();
     },
   },
 };

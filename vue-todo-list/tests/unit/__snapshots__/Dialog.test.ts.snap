@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Dialog receives the correct props: Test Title 1`] = `"Test Title"`;
+
+exports[`Dialog renders the correct markup 1`] = `
+<div
+  class="dialog"
+>
+  <div
+    class="dialog_content"
+  >
+    <div
+      class="dialog_header"
+    >
+      <h2
+        class="dialog_title"
+      >
+        Test Title
+      </h2>
+       
+      <i
+        class="dialog_x fas fa-times"
+      />
+    </div>
+     
+  </div>
+</div>
+`;

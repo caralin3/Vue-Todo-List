@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TextAreaInput receives the correct props: TextArea Test 1`] = `"TextArea Test"`;
+
+exports[`TextAreaInput renders the correct markup 1`] = `
+<p
+  class="TextAreaInput"
+>
+  <label
+    class="TextAreaInput_label"
+    for="textAreaInput"
+  >
+    Label
+  </label>
+   
+  <textarea
+    class="TextAreaInput_input"
+    id="textAreaInput"
+    placeholder=""
+  />
+</p>
+`;
