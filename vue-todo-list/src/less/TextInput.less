@@ -1,15 +1,17 @@
 .TextInput {
-  // display: grid;
-  // // gap: 2.5rem;
-  // grid-template: "label input";
-  // width: 20rem;
+  display: grid;
+  gap: 2.5rem;
+  grid-area: textInput;
+  grid-template: "label input";
+  width: 20rem;
 
   &_label {
     font-weight: bold;
-    grid-area: textLabel;
+    grid-area: label;
+    width: 10rem;
   }
 
   &_input {
-    grid-area: textInput;
+    grid-area: input;
   }
 }

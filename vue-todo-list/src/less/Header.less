@@ -5,6 +5,7 @@
   display: flex;
   justify-content: space-between;
   padding: 0 2rem;
+  // width: 100%;
 
   &_title {
     color: @madison;
@@ -12,6 +13,7 @@
 
   &_nav {
     padding: 30px;
+
     a {
       color: @madison;
       font-weight: bold;
@@ -27,3 +29,24 @@
     }
   }
 }
+
+@media only screen and (max-width: 640px) {
+  .header {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    // padding: 0 2rem;
+
+    &_nav {
+      align-items: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      width: 100%;
+    }
+  }
+
+
+}
+

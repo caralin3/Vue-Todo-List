@@ -3,7 +3,7 @@ import Header from '@/components/Header.vue';
 
 describe('Header', () => {
   const wrapper: any = mount(Header, {
-    stubs: ['router-link']
+    stubs: ['router-link'],
   });
 
   it('renders the correct markup', () => {

@@ -5,7 +5,10 @@
     <Dialog title="Create Project" :toggleDialog="toggleDialog" v-if="show">
       <Form buttonText="Add Project" :toggleDialog="toggleDialog" :submit="onSubmitForm">
         <div class="projects_dialog">
-        <span class="projects_creatorLabel" :creator="creator">Creator: <span class="projects_username">{{ creator | name }}</span></span>
+        <span class="projects_creatorLabel" :creator="creator">
+          Creator
+        </span>
+        <span class="projects_username">{{ creator | name }}</span>
         <TextInput label="Project Name" placeholder="" v-model="title" />
         <TextAreaInput label="Project Description" placeholder="" v-model="description" />
         <DateInput label="Start Date" v-model="startDate" />

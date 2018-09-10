@@ -37,7 +37,6 @@
 //       toggleDialog,
 //     },
 //   });
-  
 //   it('renders the correct markup', () => {
 //     expect(wrapper.element).toMatchSnapshot();
 //   });
