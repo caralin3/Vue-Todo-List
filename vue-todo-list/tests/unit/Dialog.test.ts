@@ -3,7 +3,7 @@ import Dialog from '@/components/Dialog.vue';
 
 describe('Dialog', () => {
   const title = 'Test Title';
-  const toggleDialog = () => null;
+  const toggleDialog = jest.fn();
   const wrapper: any = mount(Dialog, {
     propsData: {
       title,

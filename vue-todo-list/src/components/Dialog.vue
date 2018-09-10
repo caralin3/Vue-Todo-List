@@ -5,7 +5,7 @@
         <h2 class="dialog_title">{{ title }}</h2>
         <i class="dialog_x fas fa-times" @click="dismissDialog" />
       </div>
-      <slot></slot>
+      <slot class='dialog_body'></slot>
     </div>
   </div>
 </template>

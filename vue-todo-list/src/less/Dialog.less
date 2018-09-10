@@ -3,14 +3,14 @@
 
 .dialog {
   // display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  height: 100%; /* Full height */
   left: 0;
+  overflow: auto; /* Enable scroll if needed */
+  position: fixed; /* Stay in place */
   top: 0;
   width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  z-index: 1; /* Sit on top */
   
   &_content {
     display: flex;
@@ -24,6 +24,7 @@
 
   &_header {
     align-items: center;
+    border-bottom: 1px solid @very-light-gray;
     display: flex;
     justify-content: space-between;
   }
@@ -41,7 +42,8 @@
   &_title {
     // background-color: @madison;
     color: @medium-sea-green;
-    margin-top: 0;
+    margin: 0;
+    padding: 0 0 1rem;
   }
 
   &_button {

@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <ProjectList />
+    <!-- <ProjectList /> -->
     <!-- <TodoList /> -->
   </div>
 </template>

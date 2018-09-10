@@ -4,13 +4,15 @@
     <ProjectList />
     <Dialog title="Create Project" :toggleDialog="toggleDialog" v-if="show">
       <Form buttonText="Add Project" :toggleDialog="toggleDialog" :submit="onSubmitForm">
-        <span :creator="creator">Creator: <span>{{ creator | name }}</span></span>
+        <div class="projects_dialog">
+        <span class="projects_creatorLabel" :creator="creator">Creator: <span class="projects_username">{{ creator | name }}</span></span>
         <TextInput label="Project Name" placeholder="" v-model="title" />
         <TextAreaInput label="Project Description" placeholder="" v-model="description" />
         <DateInput label="Start Date" v-model="startDate" />
         <DateInput label="End Date" v-model="endDate" />
         <SelectInput label="Status" v-model="status" :options="statusOptions" />
         <TextInput label="Version" placeholder="" v-model="version" />
+        </div>
       </Form>
     </Dialog>
   </div>
@@ -27,8 +29,10 @@ import ProjectList from '@/components/ProjectList.vue';
 import ProjectsHeader from '@/components/ProjectsHeader.vue';
 import TextAreaInput from '@/components/TextAreaInput.vue';
 import TextInput from '@/components/TextInput.vue';
-import { User, statusType } from '@/types';
+import { User1 } from '@/store/state';
+import { Project, User, statusType } from '@/types';
 import { statusOptions } from '@/utils/constants';
+import { uid } from '@/utils/guid';
 
 @Component({
   components: {
@@ -42,9 +46,9 @@ import { statusOptions } from '@/utils/constants';
     TextInput,
   },
   data: () => ({
-    creator: {} as User,
+    creator: User1 as User,
     description: '',
-    endDate: new Date(),
+    endDate: '',
     title: '',
     startDate: new Date(),
     status: 'todo' as statusType,
@@ -65,8 +69,24 @@ import { statusOptions } from '@/utils/constants';
       console.log('Project Description: ', this.description);
       console.log('Start Date: ', this.startDate);
       console.log('End Date: ', this.endDate);
-      console.log('Version: ', this.version);
       console.log('Status: ', this.status);
+      console.log('Version: ', this.version);
+
+      const newProj: Project = {
+        creator: this.creator,
+        description: this.description,
+        endDate: this.endDate,
+        features: [],
+        id: uid(8),
+        startDate: this.startDate,
+        status: this.status,
+        title: this.title,
+        updatedDate: this.startDate,
+        versions: [this.version],
+      };
+
+      this.addProject(newProj);
+
     },
   },
 })

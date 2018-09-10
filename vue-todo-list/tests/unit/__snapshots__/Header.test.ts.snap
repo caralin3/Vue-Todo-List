@@ -13,23 +13,23 @@ exports[`Header renders the correct markup 1`] = `
   <div
     class="header_nav"
   >
-    <router-link
+    <router-link-stub
       to="/"
     >
       Home
-    </router-link>
+    </router-link-stub>
      
-    <router-link
+    <router-link-stub
       to="/projects"
     >
       Projects
-    </router-link>
+    </router-link-stub>
      
-    <router-link
+    <router-link-stub
       to="/board"
     >
       Boards
-    </router-link>
+    </router-link-stub>
   </div>
 </div>
 `;

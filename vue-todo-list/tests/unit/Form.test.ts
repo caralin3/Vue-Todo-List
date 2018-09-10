@@ -2,18 +2,20 @@ import { mount } from '@vue/test-utils';
 import TextInput from '@/components/TextInput.vue';
 
 describe('Form', () => {
-  const text = 'Text Input Test';
+  const buttonText = 'Test Button';
+  const submit = jest.fn();
+  const toggleDialog = jest.fn();
   const wrapper: any = mount(TextInput, {
     propsData: {
-      label: 'Label',
-      placeholder: '',
-      text,
+      buttonText,
+      submit,
+      toggleDialog,
     },
   });
   const vm: any = wrapper.vm;
 
   it('receives the correct props', () => {
-    expect(vm.text).toMatchSnapshot(text);
+    expect(vm.buttonText).toMatchSnapshot(buttonText);
   });
 
   it('renders the correct markup', () => {

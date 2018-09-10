@@ -16,14 +16,10 @@ export default {
     toggleDialog: Function,
   },
   methods: {
-    ...mapActions('projects', [
-      'addProject',
-    ]),
     dismissDialog(this: any) {
       this.toggleDialog();
     },
     onSubmit(this: any) {
-      // this.addProject(proj);
       this.submit();
       this.dismissDialog();
     },

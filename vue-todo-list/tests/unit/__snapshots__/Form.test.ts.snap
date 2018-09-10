@@ -1,22 +1,28 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Form receives the correct props: Text Input Test 1`] = `"Text Input Test"`;
+exports[`Form receives the correct props: Test Button 1`] = `undefined`;
 
 exports[`Form renders the correct markup 1`] = `
 <p
+  buttontext="Test Button"
   class="TextInput"
+  submit="function () {
+        return fn.apply(this, arguments);
+      }"
+  toggledialog="function () {
+        return fn.apply(this, arguments);
+      }"
 >
   <label
     class="TextInput_label"
     for="textInput"
   >
-    Label
+    
   </label>
    
   <input
     class="TextInput_input"
     id="textInput"
-    placeholder=""
     type="text"
   />
 </p>
