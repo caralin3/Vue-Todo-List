@@ -2,7 +2,8 @@
   <div class="sidebar">
     <h1 class="sidebar_title">{{ getTitle() }}</h1>
     <div class="sidebar_nav">
-      <router-link :to="'/boards/' + this.id">Board</router-link>
+      <router-link :to="{ path: '/projects/' + this.id, query: { filter: 'board'}}">Board</router-link>
+      <router-link :to="{ path: '/projects/' + this.id, query: { filter: 'features'}}">Features</router-link>
       <router-link :to="{ path: '/projects/' + this.id, query: { filter: 'tasks'}}">Tasks</router-link>
       <router-link :to="{ path: '/projects/' + this.id, query: { filter: 'components'}}">Components</router-link>
       <router-link :to="{ path: '/projects/' + this.id, query: { filter: 'bugs'}}">Bugs</router-link>
