@@ -67,14 +67,6 @@ import { uid } from '@/utils/guid';
       this.show = !this.show;
     },
     onSubmitForm(this: any) {
-      console.log('Creator: ', this.creator);
-      console.log('Projec Title: ', this.title);
-      console.log('Project Description: ', this.description);
-      console.log('Start Date: ', this.startDate);
-      console.log('End Date: ', this.endDate);
-      console.log('Status: ', this.status);
-      console.log('Version: ', this.version);
-
       const newProj: Project = {
         creator: this.creator,
         description: this.description,
@@ -89,7 +81,6 @@ import { uid } from '@/utils/guid';
       };
 
       this.addProject(newProj);
-
     },
   },
 })

@@ -2,6 +2,7 @@ import { GetterTree, MutationTree, ActionTree } from 'vuex';
 import { Item, Project } from '@/types';
 import { MutationType } from '@/store/mutation-types';
 import { Project1 } from '@/store/state';
+import { stat } from 'fs';
 
 export interface ProjectState {
   projects: Project[];
@@ -44,6 +45,14 @@ const mutations: MutationTree<ProjectState> = {
 const getters: GetterTree<ProjectState, any> = {
   // getProjects(state: ProjectState): Project[] {
   //   return state.projects;
+  // },
+  // projectName(state: ProjectState, id: string): string {
+  //   const index = state.projects.findIndex((p: Project) => p.id === id);
+  //   console.log(id, index, state.projects[index]);
+  //   if (index !== -1) {
+  //     return state.projects[index].title;
+  //   }
+  //   return '';
   // },
   projectCount(state: ProjectState): number {
     return state.projects.length;
