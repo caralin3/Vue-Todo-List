@@ -3,7 +3,7 @@ import { User } from '@/types';
 
 Vue.filter('date', (value: Date) => {
     if (value) {
-      return value.getMonth() + '/' +  value.getDate() + '/' + value.getFullYear();
+      return (value.getMonth() + 1) + '/' +  value.getDate() + '/' + value.getFullYear();
     }
   },
 );
@@ -11,7 +11,11 @@ Vue.filter('date', (value: Date) => {
 Vue.filter('time', (value: Date) => {
     if (value) {
       const hours = (value.getHours() + 11) % 12 + 1;
-      return hours + ':' +  value.getMinutes();
+      let label = 'AM';
+      if (value.getHours() > 11) {
+        label = 'PM';
+      }
+      return hours + ':' +  value.getMinutes() + ' ' + label;
     }
   },
 );

@@ -1,0 +1,64 @@
+@import (reference) 'variables';
+
+.projectTask {
+  background-color: @medium-sea-green;
+  height: 8rem;
+  color: @madison;
+  padding: 1rem 2rem;
+  width: 18rem;
+
+  &_overlay {
+    left: 70%;
+    opacity: 0;
+    position: relative;
+    top: 4rem;
+    transition: .5s ease;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    z-index: 1;
+  }
+
+  &_link {
+    background-color: @white;
+    color: @medium-sea-green;
+    padding: 1rem 2rem;
+  }
+
+  &:hover {
+    .projectTask_details {
+      opacity: 0.3;
+    }
+  
+    .projectTask_overlay {
+      opacity: 1;
+    }
+  }
+
+  &_details {
+    align-items: center;
+    display: grid;
+    grid-template:
+      "taskTitle taskDate"
+      "taskPriority taskStatus"
+      ~'/' 2fr 1fr;
+  }
+
+  &title {
+    grid-area: taskTitle;
+    margin: 0;
+  }
+
+  &date {
+    grid-area: taskDate;
+  }
+
+  &priority {
+    grid-area: taskPriority;
+    line-height: 2;
+  }
+
+  &status {
+    grid-area: taskStatus;
+    line-height: 2;
+  }
+}

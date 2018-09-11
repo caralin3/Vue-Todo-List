@@ -31,7 +31,7 @@
         </div>
         <div class="projectFeature_details">
           <h3 class="projectFeature_title">{{ feature.title }}</h3>
-          <span class="projectFeature_date">{{ feature.updatedDate | date }}</span>
+          <span class="projectFeature_date">{{ feature.updatedDate | date }} {{ feature.updatedDate | time }}</span>
           <span class="projectFeature_priority">Priority: {{ feature.priority | capitalize }}</span>
           <span class="projectFeatures_status">Status: {{ feature.status | capitalize }}</span>
         </div>
