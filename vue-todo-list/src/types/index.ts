@@ -29,7 +29,7 @@ export interface Version {
 }
 
 export interface Item {
-  assignee?: User;
+  assignee: User;
   comments?: Comment[];
   description: string;
   endDate?: Date;
@@ -39,17 +39,17 @@ export interface Item {
   priority: priorityType;
   projectName: string;
   reporter?: User;
-  startDate?: Date;
+  startDate: Date;
   status: statusType;
   title: string;
   type: itemType;
-  updatedDate?: Date;
+  updatedDate: Date;
   version: Version;
   workFlow: WorkHistory[];
 }
 
 export interface Feature {
-  assignee?: User;
+  assignee: User;
   comments?: Comment[];
   description: string;
   endDate?: Date;
@@ -59,21 +59,21 @@ export interface Feature {
   priority: priorityType;
   projectName: string;
   reporter?: User;
-  startDate?: Date;
+  startDate: Date;
   status: statusType;
   title: string;
-  updatedDate?: Date;
+  updatedDate: Date;
   version: Version;
   workFlow: WorkHistory[];
 }
 
 export interface Project {
-  creator?: User;
+  creator: User;
   description: string;
   endDate?: Date;
   features: Feature[];
   id: string;
-  startDate?: Date;
+  startDate: Date;
   status: statusType;
   title: string;
   updatedDate?: Date;

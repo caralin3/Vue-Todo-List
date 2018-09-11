@@ -42,20 +42,20 @@ export const Item1: Item = {
   status: 'todo',
   title: 'Item1',
   type: 'task',
-  // updatedDate: new Date(),
+  updatedDate: new Date(),
   version: Version1,
   workFlow: [WorkHistory1],
 };
 
 export const Feature1: Feature = {
   assignee: User1,
-  // comments: [Comment1],
+  comments: [Comment1],
   description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, \
     sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
   // endDate: new Date(),
   id: '0',
-  items: [Item1],
-  // links: [],
+  items: [Item1, Item1],
+  // links: ['https://www.google.com'],
   priority: 'minor',
   projectName: 'Project1',
   // reporter: User1,
@@ -72,7 +72,7 @@ export const Project1: Project = {
   description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, \
     sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
   // endDate: new Date(),
-  features: [Feature1],
+  features: [Feature1, Feature1, Feature1, Feature1, Feature1],
   id: '0',
   startDate: new Date(),
   status: 'todo',

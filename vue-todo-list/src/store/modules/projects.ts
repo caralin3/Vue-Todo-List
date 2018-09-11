@@ -9,7 +9,7 @@ export interface ProjectState {
 }
 
 const initialState: ProjectState = {
-  projects: [Project1, Project1],
+  projects: [Project1, Project1, Project1],
 };
 
 const actions: ActionTree<ProjectState, any> = {

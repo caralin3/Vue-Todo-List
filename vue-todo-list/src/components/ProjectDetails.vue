@@ -1,17 +1,19 @@
 <template>
   <div class="projectDetails">
-    <h2 class="projectDetails_detailsLabel">{{ proj.title }}</h2>
+    <h2 class="projectDetails_title">{{ proj.title }}</h2>
     <div class="projectDetails_details">
       <h3 class="projectDetails_detailsLabel">Details</h3>
       <div class="projectDetails_detailsBy">Created by: {{ proj.creator | name }}</div>
       <div class="projectDetails_detailsDate">Created on: {{ proj.startDate | date }}</div>
+      <div class="projectDetails_detailsDate" v-if="proj.endDate">Completed on: {{ proj.endDate | date }}</div>
+      <div class="projectDetails_detailsDate" v-if="proj.updatedDate">Last Updated on: {{ proj.updatedDate | date }}</div>
       <div class="projectDetails_detailsStatus">Status: {{ proj.status | capitalize }}</div>
       <div class="projectDetails_description">
         <h3 class="projectDetails_descriptionLabel">Description</h3>
         <p class="projectDetails_descriptionText">{{ proj.description }}</p>
       </div>
       <div class="projectDetails_latest" v-if="proj.features.length > 0">
-        <h5 class="projectDetails_latestTitle">Latest Updates</h5>
+        <h3 class="projectDetails_latestTitle">Latest Updates</h3>
         <div class="projectDetails_featureDetails">
           <div class="projectDetails_featureTitle">{{ proj.features[0].title }}</div>
           <div class="projectDetails_featureDate">Last Updated: {{ proj.features[0].updatedDate | date }}</div>

@@ -1,6 +1,6 @@
 <template>
-  <div class="projectTasks">
-    <ProjectHeader title="Tasks" buttonText="Add Task" :toggleDialog="toggleDialog" />
+  <div class="projectComponents">
+    <ProjectHeader title="Components" buttonText="Add Component" :toggleDialog="toggleDialog" />
   </div>
 </template>
 
