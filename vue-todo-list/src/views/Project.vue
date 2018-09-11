@@ -16,6 +16,9 @@
     <div class="project_container" v-if="filter === 'bugs'">
       <h1>Bugs</h1>
     </div>
+    <div class="project_container" v-if="!filter">
+      <ProjectDetails />
+    </div>
   </div>
 </template>
 
@@ -23,11 +26,13 @@
 import { Component, Vue } from 'vue-property-decorator';
 import {mapActions, mapGetters, mapState, mapMutations} from 'vuex';
 import Sidebar from '@/components/Sidebar.vue';
+import ProjectDetails from '@/components/ProjectDetails.vue';
 import ProjectFeatures from '@/components/ProjectFeatures.vue';
 
 @Component({
   components: {
     Sidebar,
+    ProjectDetails,
     ProjectFeatures,
   },
   created(this: any) {
