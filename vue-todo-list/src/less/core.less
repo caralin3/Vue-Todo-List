@@ -30,8 +30,113 @@ button {
   border: none;
 }
 
-table, th, tr, td {
-  border: 1px dotted @madison;
+table {
+  border-left: 1px solid @very-light-gray;
+  border-right: 1px solid @very-light-gray;
   border-collapse: collapse;
-  text-align: center;
+  // box-shadow: 2px 2px 2px rgba(114, 113, 113, 0.3);
+}
+
+td, th {
+  padding: 1rem;
+  text-align: left;
+}
+
+td {
+  color: @madison;
+  border-bottom: 1px solid @very-light-gray;
+}
+
+tr:hover {
+  // background-color: darken(@white, 5%);
+  background-color: fade(@medium-sea-green, 20%);
+  box-shadow: 2px 2px 2px rgba(114, 113, 113, 0.3);
+  cursor: pointer;
+}
+
+th {
+  background-color: @medium-sea-green;
+  box-shadow: 2px 2px 2px rgba(114, 113, 113, 0.3);
+  color: @white;
+  cursor: default;
+}
+
+.todo {
+  color: @deep-cerise;
+  font-size: 0.7rem;
+  padding-right: 0.3rem;
+}
+
+.inProgress {
+  color: @golden-yellow;
+  font-size: 0.7rem;
+  padding-right: 0.3rem;
+}
+
+.completed {
+  color: @medium-sea-green;
+  font-size: 0.7rem;
+  padding-right: 0.3rem;
+}
+
+.closed {
+  color: @purple;
+  font-size: 0.7rem;
+  padding-right: 0.3rem;
+}
+
+.blocker {
+  color: @red;
+  padding-right: 0.3rem;
+}
+
+.critical {
+  color: @safety-orange;
+  padding-right: 0.3rem;
+}
+
+.major {
+  color: @yellow-orange;
+  padding-right: 0.3rem;
+}
+
+.minor {
+  color: @medium-sea-green;
+  padding-right: 0.3rem;
+}
+
+.board {
+  color: @pink;
+  font-size: 1.5rem;
+  padding-left: 1rem;
+}
+
+.bug {
+  font-size: 0.8rem;
+  padding-left: 1rem;
+  
+  &-square {
+    color: @red;
+  }
+}
+
+.comp {
+  font-size: 0.8rem;
+  padding-left: 1rem;
+
+  &-square {
+    color: @safety-orange;
+  }
+}
+
+.feature {
+  font-size: 1.5rem;
+  padding-left: 1rem;
+  color: @purple;
+}
+
+.task {
+  font-size: 1.5rem;
+  padding-left: 1rem;
+  color: @deep-cerise;
 }

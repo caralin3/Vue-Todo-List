@@ -1,5 +1,5 @@
 export type itemType = 'bug' | 'task' | 'component';
-export type statusType = 'todo' | 'in Progress' | 'completed' | 'closed';
+export type statusType = 'todo' | 'inProgress' | 'completed' | 'closed';
 export type priorityType = 'minor' | 'major' | 'critical' | 'blocker';
 
 export interface User {

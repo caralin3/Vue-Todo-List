@@ -1,42 +1,72 @@
 <template>
-  <div class="projectFeatures">
+  <div class="projectFeatures"  :class="{'projectFeatures_open': openDetails}">
     <div class="projectFeatures_header">
       <ProjectHeader title="Features" buttonText="Add Feature" :toggleDialog="toggleDialog" />
     </div>
-    <!-- <table class="projectFeatures_table" v-if="proj.features.length > 0">
+    <table class="projectFeatures_table" v-if="proj.features.length > 0">
       <thead>
         <tr>
-          <th>Feature</th>
-          <th>Priority</th>
-          <th>Status</th>
-          <th>Updated</th>
+          <th>
+            Feature
+            <span class="projectFeatures_filter">
+              <i class="fas fa-long-arrow-alt-up projectFeatures_filter-icon" @click="setFilter('feature', 'asc')" />
+              <i class="fas fa-long-arrow-alt-down projectFeatures_filter-icon" @click="setFilter('feature', 'dec')" />
+            </span>
+          </th>
+          <th v-if="!openDetails">
+            Created
+            <span class="projectFeatures_filter">
+              <i class="fas fa-long-arrow-alt-up projectFeatures_filter-icon" @click="setFilter('created', 'asc')" />
+              <i class="fas fa-long-arrow-alt-down projectFeatures_filter-icon" @click="setFilter('created', 'dec')" />
+            </span>
+          </th>
+          <th v-if="!openDetails">
+            Last Updated
+            <span class="projectFeatures_filter">
+              <i class="fas fa-long-arrow-alt-up projectFeatures_filter-icon" @click="setFilter('updated', 'asc')" />
+              <i class="fas fa-long-arrow-alt-down projectFeatures_filter-icon" @click="setFilter('updated', 'dec')" />
+            </span>
+          </th>
+          <th>
+            Priority
+            <span class="projectFeatures_filter">
+              <i class="fas fa-long-arrow-alt-up projectFeatures_filter-icon" @click="setFilter('priority', 'asc')" />
+              <i class="fas fa-long-arrow-alt-down projectFeatures_filter-icon" @click="setFilter('priority', 'dec')" />
+            </span>
+          </th>
+          <th>
+            Status
+            <span class="projectFeatures_filter">
+              <i class="fas fa-long-arrow-alt-up projectFeatures_filter-icon" @click="setFilter('status', 'asc')" />
+              <i class="fas fa-long-arrow-alt-down projectFeatures_filter-icon" @click="setFilter('status', 'dec')" />
+            </span>
+          </th>
+          <th v-if="!openDetails">
+            Assignee
+            <span class="projectFeatures_filter">
+              <i class="fas fa-long-arrow-alt-up projectFeatures_filter-icon" @click="setFilter('user', 'asc')" />
+              <i class="fas fa-long-arrow-alt-down projectFeatures_filter-icon" @click="setFilter('user', 'dec')" />
+            </span>
+          </th>
         </tr>
       </thead>
       <tbody v-for="feature in proj.features" v-bind:key="feature.id" @click="clickFeature(feature)">
-        <tr class="projectFeatures_feature">
+        <tr class="projectFeatures_feature" :class="{'projectFeatures_selected': selected && feature.id === selected.id}">
           <td>{{ feature.title }}</td>
-          <td>{{ feature.priority | capitalize }}</td>
-          <td>{{ feature.status | capitalize }}</td>
-          <td>{{ feature.updatedDate | date }}</td>
+          <td v-if="!openDetails">{{ feature.startDate | date }} {{ feature.startDate | time }}</td>
+          <td v-if="!openDetails">{{ feature.updatedDate | date }} {{ feature.updatedDate | time }}</td>
+          <td>
+            <i class="fas fa-ban" :class="feature.priority" v-if="feature.priority === 'blocker'" />
+            <i class="fas fa-exclamation-triangle" :class="feature.priority" v-if="feature.priority === 'critical'" />
+            <i class="fas fa-arrow-up" :class="feature.priority" v-if="feature.priority === 'major'" />
+            <i class="fas fa-arrow-down" :class="feature.priority" v-if="feature.priority === 'minor'" />
+            {{ feature.priority | capitalize }}
+          </td>
+          <td><i class="fas fa-circle" :class="feature.status" />{{ feature.status | capitalize }}</td>
+          <td v-if="!openDetails">{{ feature.assignee | name }}</td>
         </tr>
       </tbody>
-    </table> -->
-    <ul class="projectFeatures_list" v-if="proj.features.length > 0 && !openDetails">
-      <li class="projectFeature" v-for="feature in proj.features" v-bind:key="feature.id">
-        <div class="projectFeature_overlay" @click="clickFeature(feature)">
-          <!-- <router-link class="projectFeature_link" :id="id" :to="{ path: '/projects/' + id, query: { filter: 'features', id: feature.id}}"> -->
-          <router-link class="projectFeature_link" :id="id" :to="{ path: '/projects/' + id, query: { filter: 'features'}}">
-            View Feature
-          </router-link>
-        </div>
-        <div class="projectFeature_details">
-          <h3 class="projectFeature_title">{{ feature.title }}</h3>
-          <span class="projectFeature_date">{{ feature.updatedDate | date }} {{ feature.updatedDate | time }}</span>
-          <span class="projectFeature_priority">Priority: {{ feature.priority | capitalize }}</span>
-          <span class="projectFeatures_status">Status: {{ feature.status | capitalize }}</span>
-        </div>
-      </li>
-    </ul>
+    </table>
     <div class="projectFeatures_empty" v-if="proj.features.length === 0 && !openDetails">
       <h4>No features to display</h4>
     </div>
@@ -66,8 +96,13 @@ export default {
   data: () => ({
     id: String,
     feature: {} as Feature,
+    filter: {
+      data: 'Feature',
+      sortDir: 'desc',
+    },
     openDetails: false,
     proj: {} as Project,
+    selected: {} as Feature,
     show: false,
   }),
   computed: {
@@ -83,12 +118,19 @@ export default {
       this.openDetails = !this.openDetails;
     },
     clickFeature(this: any, feature: Feature) {
-      console.log(feature);
-      this.toggleDetails();
-      // if (!this.openDetails) {
-      //   this.$router.go(-1);
-      // }
+      console.log(this.selected);
+
+      if (feature.id === this.selected.id) {
+        this.toggleDetails();
+      } else {
+        this.openDetails = true;
+      }
+      this.selected = feature;
       this.feature = feature;
+    },
+    setFilter(this: any, data: string, sortDir: string) {
+      this.filter = {data, sortDir};
+      console.log(this.filter);
     },
   },
 };

@@ -1,10 +1,12 @@
 <template>
-  <p class="SelectInput">
-    <label class="SelectInput_label" for="selectInput">{{ label }}</label>
+  <p class="selectInput">
+    <label class="selectInput_label" for="selectInput">{{ label }}</label>
     <select
-      class="SelectInput_input"
+      class="selectInput_input"
       id="selectInput"
       :defaultValue="value"
+      @blur="onBlur"
+      @focus="onFocus"
       @change="onChange($event.target.value)"
     >
       <option v-for="(option, index) in options" :value="option" :key="index">{{ option | capitalize }}</option>
@@ -18,6 +20,8 @@ import Vue from 'vue';
 export default {
   props: {
     label: String,
+    onBlur: Function,
+    onFocus: Function,
     options: Array,
     value: String,
   },

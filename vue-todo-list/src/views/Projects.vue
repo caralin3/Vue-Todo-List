@@ -9,12 +9,12 @@
           Creator
         </span>
         <span class="projects_username">{{ creator | name }}</span>
-        <TextInput label="Project Name" placeholder="" v-model="title" />
-        <TextAreaInput label="Project Description" placeholder="" v-model="description" />
-        <DateInput label="Start Date" v-model="startDate" />
-        <DateInput label="End Date" v-model="endDate" />
-        <SelectInput label="Status" v-model="status" :options="statusOptions" />
-        <TextInput label="Version" placeholder="" v-model="version" />
+        <TextInput :class="'projects_textInput'" label="Project Name" placeholder="" v-model="title" />
+        <TextAreaInput :class="'projects_textAreaInput'" label="Project Description" placeholder="" v-model="description" />
+        <DateInput :class="'projects_dateInput'" label="Start Date" v-model="startDate" />
+        <DateInput :class="'projects_dateInput'" label="End Date" v-model="endDate" />
+        <SelectInput :class="'projects_selectStatus'" label="Status" v-model="status" :options="statusOptions" />
+        <TextInput :class="'projects_textInput'" label="Version" placeholder="" v-model="version" />
         </div>
       </Form>
     </Dialog>

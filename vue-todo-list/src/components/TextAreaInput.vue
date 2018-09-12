@@ -1,12 +1,14 @@
 <template>
-  <p class="TextAreaInput">
-    <label class="TextAreaInput_label" for="textAreaInput">{{ label }}</label>
+  <p class="textAreaInput">
+    <label class="textAreaInput_label" for="textAreaInput">{{ label }}</label>
     <textarea
-      class="TextAreaInput_input"
+      class="textAreaInput_input"
       id="textAreaInput"
       :value="text"
       :placeholder="placeholder"
       @input="onChange($event.target.value)"
+      @blur="onBlur"
+      @focus="onFocus"
     />
   </p>
 </template>
@@ -18,6 +20,8 @@ export default {
   props: {
     label: String,
     placeholder: String,
+    onBlur: Function,
+    onFocus: Function,
     text: String,
   },
   methods: {

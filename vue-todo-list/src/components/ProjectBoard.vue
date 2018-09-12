@@ -1,22 +1,27 @@
 <template>
-  <div class="projectBoard">
-    <h2 class="projectBoard_title">Board</h2>
+  <div class="projectComponents">
+    <div class="projectComponents_header">
+      <ProjectHeader title="Board" buttonText="Add Board" :toggleDialog="toggleDialog" />
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
 import {mapActions, mapGetters, mapState, mapMutations} from 'vuex';
+import ProjectHeader from '@/components/ProjectHeader.vue';
+import { Item, Feature, Project } from '@/types';
 
 export default {
+  components: {
+    ProjectHeader,
+  },
   created(this: any) {
     this.id = this.$route.params.id;
-    const index: number = this.projects.findIndex((p: any) => p.id === this.id);
-    this.proj = this.projects[index];
   },
   data: () => ({
     id: String,
-    proj: String,
+    openDetails: false,
   }),
   computed: {
     ...mapState({
@@ -24,6 +29,9 @@ export default {
     }),
   },
   methods: {
+    toggleDialog(this: any) {
+      this.show = !this.show;
+    },
   },
 };
 </script>

@@ -1,11 +1,13 @@
 <template>
-  <p class="DateInput">
-    <label class="DateInput_label" for="dateInput">{{ label }}</label>
+  <p class="dateInput">
+    <label class="dateInput_label" for="dateInput">{{ label }}</label>
     <input
-      class="DateInput_input"
+      class="dateInput_input"
       id="dateInput"
       :value="date"
       @input="onChange($event.target.value)"
+      @blur="onBlur"
+      @focus="onFocus"
       type="datetime-local"
     />
   </p>
@@ -18,6 +20,8 @@ export default {
   props: {
     label: String,
     date: Date,
+    onBlur: Function,
+    onFocus: Function,
   },
   methods: {
     onChange(this: any, value: string) {

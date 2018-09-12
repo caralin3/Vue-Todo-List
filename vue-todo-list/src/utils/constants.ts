@@ -1,6 +1,6 @@
 import { statusType, itemType, priorityType } from '@/types';
 
-export const statusOptions: statusType[] = ['todo', 'in Progress', 'completed', 'closed'];
+export const statusOptions: statusType[] = ['todo', 'inProgress', 'completed', 'closed'];
 
 export const itemTypeOptions: itemType[] = ['task', 'component', 'bug'];
 
