@@ -5,7 +5,7 @@
         <span
           class="featureDetails_detailsText-edit"
           contenteditable="true"
-          @input="handleTextChange('title', $event.target.innerText)"
+          @blur="handleTextChange('title', $event.target.innerText)"
         >
           {{ feature.title }}
         </span>
@@ -147,9 +147,16 @@
       </div>
     </div>
     <h3 class="featureDetails_subTitle">Links</h3>
-    <div class="featureDetails_links" v-if="feature.links && feature.links.length > 0">
-      <div class="featureDetails_linkList" v-for="(link, index) in feature.links" :key="index">
-        <a class="featureDetails_link" :href="link" target="_blank">{{ link }}</a>
+    <div class="featureDetails_links" v-if="featureLinks && featureLinks.length > 0">
+      <div class="featureDetails_linkList" v-for="(link, index) in featureLinks" :key="index">
+          <div class="featureDetails_linkRow"
+            :class="{'featureDetails_linkRow-border': edit.link.editing && edit.link.id === link.id}"
+            :contenteditable="edit.link.editing && edit.link.id === link.id"
+            @blur="handleLinkChange($event.target.innerText, link)"
+          >
+            <a class="featureDetails_link" :href="link.to" target="_blank">{{ link.to }}</a>
+            <i class="fas fa-edit featureDetails_linkEdit" v-if="!edit.link.editing" @click="toggleEditLink(link.id)" />
+          </div>
       </div>
     </div>
     <div class="featureDetails_linkList" v-else>
@@ -218,7 +225,7 @@
         <p
           class="featureDetails_commentText"
           contenteditable="true"
-          @input="handleCommentChange($event.target.innerText, comment)"
+          @blur="handleCommentChange($event.target.innerText, comment)"
         >
           {{ comment.text }}
         </p>
@@ -258,9 +265,12 @@ export default {
       email: '',
       last: '',
     } as User,
-    comment: String,
     edit: {
       assignee: false,
+      link: {
+        editing: false,
+        id: '',
+      },
       priority: false,
       reporter: false,
       status: false,
@@ -269,7 +279,6 @@ export default {
     featureItems: [] as Item[],
     featureLinks: [] as Link[],
     projId: String,
-    link: String,
     reporter: {
       first: 'Select User',
       id: '0',
@@ -298,7 +307,7 @@ export default {
     ...mapActions({
       editComment: 'comments/editComment',
       editFeature: 'features/editFeature',
-      editLink: 'features/editLink',
+      editLink: 'links/editLink',
     }),
     initalizeFeatureArrays(ids: string[], stateArray: any[], featureArray: any[]) {
       for (const id of ids) {
@@ -338,14 +347,15 @@ export default {
       this.editComment(this.updatedComment);
     },
     handleLinkChange(this: any, value: string, link: Link) {
-      this.updatedComment = {
+      this.updatedLink = {
         id: link.id,
         startDate: link.startDate,
         to: value,
         updatedDate: new Date(),
         user: link.user,
       };
-      this.editComment(this.updatedComment);
+      this.edit.link = false;
+      this.editLink(this.updatedLink);
     },
     handleTextChange(this: any, type: string, value: string) {
       if (type === 'description') {
@@ -366,44 +376,27 @@ export default {
       }
       this.editFeature(this.updatedFeature);
     },
+    toggleEditLink(this: any, id: string) {
+      this.edit.link = {
+        id,
+        editing: true,
+      };
+    },
     toggleEdit(this: any, type: string) {
       if (type === 'assignee') {
-        this.edit = {
-          assignee: !this.edit.assignee,
-          priority: false,
-          reporter: false,
-          status: false,
-        };
+        this.edit.assignee = !this.edit.assignee;
       } else if (type === 'priority') {
-        this.edit = {
-          assignee: false,
-          priority: !this.edit.priority,
-          reporter: false,
-          status: false,
-        };
+        this.edit.priority = !this.edit.priority;
       } else if (type === 'reporter') {
-        this.edit = {
-          assignee: false,
-          priority: false,
-          reporter: !this.edit.reporter,
-          status: false,
-        };
+        this.edit.reporter = !this.edit.reporter;
       } else if (type === 'status') {
-        this.edit = {
-          assignee: false,
-          priority: false,
-          reporter: false,
-          status: !this.edit.status,
-        };
+        this.edit.status = !this.edit.status;
       }
     },
   },
   watch: {
     assignee(this: any) {
-      this.edit = {
-        ...this.edit,
-        assignee: !this.edit.assignee,
-      };
+      this.edit.assignee = !this.edit.assignee;
       // TODO edit assignee
       // this.updatedFeature = {
       //   ...this.updatedFeature,
@@ -416,10 +409,7 @@ export default {
       this.loadFeatureState();
     },
     priority(this: any) {
-      this.edit = {
-        ...this.edit,
-        priority: !this.edit.priority,
-      };
+      this.edit.priority = !this.edit.priority;
       this.updatedFeature = {
         ...this.updatedFeature,
         priority: this.priority,
@@ -428,17 +418,11 @@ export default {
       this.editFeature(this.updatedFeature);
     },
     reporter(this: any) {
-      this.edit = {
-        ...this.edit,
-        reporter: !this.edit.reporter,
-      };
+      this.edit.reporter = !this.edit.reporter;
       // TODO edit reporter
     },
     status(this: any) {
-      this.edit = {
-        ...this.edit,
-        status: !this.edit.status,
-      };
+      this.edit.status = !this.edit.status;
       this.updatedFeature = {
         ...this.updatedFeature,
         status: this.status,

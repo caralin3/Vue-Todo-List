@@ -106,6 +106,29 @@
     }
   }
 
+  &_linkRow {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+
+    &:hover {
+      .featureDetails_linkEdit {
+        cursor: pointer;
+        opacity: 1;
+      }
+    }
+
+    &-border {
+      padding: 0.3rem 0.5rem;
+      border: 1px solid @madison;
+    }
+  }
+
+  &_linkEdit {
+    opacity: 0;
+    padding: 0.5rem 1rem;
+  }
+
   &_workflowButton {
     .button;
   }
