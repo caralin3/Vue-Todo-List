@@ -42,16 +42,16 @@ export default {
   },
   created(this: any) {
     this.id = this.$route.params.id;
-    const index: number = this.projects.findIndex((p: any) => p.id === this.id);
-    const features: Feature[] = this.projects[index].features;
-    for (let feature of features) {
-      const items: Item[] = feature.items;
-      for (let item of items) {
-        if (item.type === 'task') {
-          this.tasks.push(item);
-        }
-      }
-    }
+    // const index: number = this.projects.findIndex((p: any) => p.id === this.id);
+    // const features: Feature[] = this.projects[index].features;
+    // for (let feature of features) {
+    //   const items: Item[] = feature.items;
+    //   for (let item of items) {
+    //     if (item.type === 'task') {
+    //       this.tasks.push(item);
+    //     }
+    //   }
+    // }
   },
   data: () => ({
     tasks: [],

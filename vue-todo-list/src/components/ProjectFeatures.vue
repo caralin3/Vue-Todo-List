@@ -3,7 +3,7 @@
     <div class="projectFeatures_header">
       <ProjectHeader title="Features" buttonText="Add Feature" :toggleDialog="toggleDialog" />
     </div>
-    <table class="projectFeatures_table" v-if="proj.features.length > 0">
+    <table class="projectFeatures_table" v-if="feats.length > 0">
       <thead>
         <tr>
           <th>
@@ -50,8 +50,8 @@
           </th>
         </tr>
       </thead>
-      <tbody v-for="feature in proj.features" v-bind:key="feature.id" @click="clickFeature(feature)">
-        <tr class="projectFeatures_feature" :class="{'projectFeatures_selected': selected && feature.id === selected.id}">
+      <tbody v-for="feature in feats" v-bind:key="feature.id">
+        <tr class="projectFeatures_feature" :class="{'projectFeatures_selected': selected && feature.id === selected.id}" @click="clickFeature(feature)">
           <td>{{ feature.title }}</td>
           <td v-if="!openDetails">{{ feature.startDate | date }} {{ feature.startDate | time }}</td>
           <td v-if="!openDetails">{{ feature.updatedDate | date }} {{ feature.updatedDate | time }}</td>
@@ -67,11 +67,11 @@
         </tr>
       </tbody>
     </table>
-    <div class="projectFeatures_empty" v-if="proj.features.length === 0 && !openDetails">
+    <div class="projectFeatures_empty" v-if="feats.length === 0 && !openDetails">
       <h4>No features to display</h4>
     </div>
     <div class="projectFeatures_details" v-if="openDetails">
-      <FeatureDetails :feature="feature" :closeDetails="toggleDetails" />
+      <FeatureDetails :feature="selected" :closeDetails="toggleDetails" />
     </div>
   </div>
 </template>
@@ -90,27 +90,40 @@ export default {
   },
   created(this: any) {
     this.id = this.$route.params.id;
-    const index: number = this.projects.findIndex((p: any) => p.id === this.id);
-    this.proj = this.projects[index];
+    this.loadState();
   },
   data: () => ({
     id: String,
-    feature: {} as Feature,
+    // feature: {} as Feature,
+    feats: [] as Feature[],
     filter: {
       data: 'Feature',
       sortDir: 'desc',
     },
-    openDetails: false,
+    openDetails: false as boolean,
     proj: {} as Project,
     selected: {} as Feature,
-    show: false,
+    show: false  as boolean,
   }),
   computed: {
     ...mapState({
       projects: (state: any) => state.projects.projects,
+      features: (state: any) => state.features.features,
     }),
   },
   methods: {
+    loadState(this: any) {
+      const index: number = this.projects.findIndex((p: any) => p.id === this.id);
+      const featIds = this.projects[index].features;
+      this.feats = [];
+      for (const id of featIds) {
+        for (const f of this.features) {
+          if (f.id === id) {
+            this.feats.push(f);
+          }
+        }
+      }
+    },
     toggleDialog(this: any) {
       this.show = !this.show;
     },
@@ -118,19 +131,25 @@ export default {
       this.openDetails = !this.openDetails;
     },
     clickFeature(this: any, feature: Feature) {
-      console.log(this.selected);
-
       if (feature.id === this.selected.id) {
         this.toggleDetails();
       } else {
         this.openDetails = true;
       }
-      this.selected = feature;
-      this.feature = feature;
+
+      if (this.openDetails === true) {
+        this.selected = feature;
+        this.feature = feature;
+      }
     },
     setFilter(this: any, data: string, sortDir: string) {
       this.filter = {data, sortDir};
-      console.log(this.filter);
+      // console.log(this.filter);
+    },
+  },
+  watch: {
+    features(this: any) {
+      this.loadState();
     },
   },
 };

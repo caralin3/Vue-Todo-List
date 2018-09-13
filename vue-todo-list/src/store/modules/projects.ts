@@ -1,8 +1,7 @@
 import { GetterTree, MutationTree, ActionTree } from 'vuex';
-import { Item, Project } from '@/types';
+import { Project } from '@/types';
 import { MutationType } from '@/store/mutation-types';
 import { Project1 } from '@/store/state';
-import { stat } from 'fs';
 
 export interface ProjectState {
   projects: Project[];
@@ -15,6 +14,9 @@ const initialState: ProjectState = {
 const actions: ActionTree<ProjectState, any> = {
   addProject: ({commit}, proj: Project): any => {
     commit(MutationType.ADD_PROJECT, proj);
+  },
+  editProject: ({commit}, proj: Project): any => {
+    commit(MutationType.EDIT_PROJECT, proj);
   },
   removeProject: ({commit}, proj: Project): any => {
     commit(MutationType.REMOVE_PROJECT, proj);
@@ -29,10 +31,10 @@ const mutations: MutationTree<ProjectState> = {
     state.projects.push(proj);
   },
   [MutationType.EDIT_PROJECT]: (state: ProjectState, proj: Project) => {
-    const index = state.projects.findIndex((p: Project) => p.id === proj.id);
-    if (index !== -1) {
-      state.projects.splice(index, 1, proj);
-    }
+    state.projects = [
+      ...state.projects.filter((p: Project) => p.id !== proj.id),
+      proj,
+    ];
   },
   [MutationType.REMOVE_PROJECT]: (state: ProjectState, proj: Project) => {
     state.projects.splice(state.projects.indexOf(proj), 1);
@@ -43,17 +45,6 @@ const mutations: MutationTree<ProjectState> = {
 };
 
 const getters: GetterTree<ProjectState, any> = {
-  // getProjects(state: ProjectState): Project[] {
-  //   return state.projects;
-  // },
-  // projectName(state: ProjectState, id: string): string {
-  //   const index = state.projects.findIndex((p: Project) => p.id === id);
-  //   console.log(id, index, state.projects[index]);
-  //   if (index !== -1) {
-  //     return state.projects[index].title;
-  //   }
-  //   return '';
-  // },
   projectCount(state: ProjectState): number {
     return state.projects.length;
   },

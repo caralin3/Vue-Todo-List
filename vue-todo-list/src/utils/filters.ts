@@ -15,6 +15,9 @@ Vue.filter('time', (value: Date) => {
       if (value.getHours() > 11) {
         label = 'PM';
       }
+      if (value.getMinutes().toString().length === 1) {
+        return hours + ':0' +  value.getMinutes() + ' ' + label;
+      }
       return hours + ':' +  value.getMinutes() + ' ' + label;
     }
   },

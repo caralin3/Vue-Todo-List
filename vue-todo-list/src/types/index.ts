@@ -10,13 +10,23 @@ export interface User {
 }
 
 export interface Comment {
+  id: string;
   startDate: Date;
   text: string;
   updatedDate?: Date;
   user: User;
 }
 
+export interface Link {
+  id: string;
+  startDate: Date;
+  to: string;
+  updatedDate?: Date;
+  user: User;
+}
+
 export interface WorkHistory {
+  id: string;
   startDate: Date;
   status: statusType;
 }
@@ -30,14 +40,13 @@ export interface Version {
 
 export interface Item {
   assignee: User;
-  comments?: Comment[];
+  comments?: string[];
   description: string;
   endDate?: Date;
   featureName: string;
   id: string;
   links?: string[];
   priority: priorityType;
-  projectName: string;
   reporter?: User;
   startDate: Date;
   status: statusType;
@@ -45,37 +54,38 @@ export interface Item {
   type: itemType;
   updatedDate: Date;
   version: Version;
-  workFlow: WorkHistory[];
+  workFlow: string[];
 }
 
 export interface Feature {
   assignee: User;
-  comments?: Comment[];
+  comments?: string[];
   description: string;
   endDate?: Date;
   id: string;
-  items: Item[];
+  items: string[];
   links?: string[];
   priority: priorityType;
-  projectName: string;
   reporter?: User;
   startDate: Date;
   status: statusType;
   title: string;
   updatedDate: Date;
   version: Version;
-  workFlow: WorkHistory[];
+  workFlow: string[];
 }
 
 export interface Project {
+  comments?: string[];
   creator: User;
   description: string;
   endDate?: Date;
-  features: Feature[];
+  features: string[];
   id: string;
+  links?: string[];
   startDate: Date;
   status: statusType;
   title: string;
-  updatedDate?: Date;
-  versions: Version[];
+  updatedDate: Date;
+  versions: string[];
 }

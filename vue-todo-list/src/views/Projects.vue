@@ -23,7 +23,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import {mapActions, mapGetters, mapState, mapMutations} from 'vuex';
+import { mapActions } from 'vuex';
 import DateInput from '@/components/DateInput.vue';
 import Dialog from '@/components/Dialog.vue';
 import SelectInput from '@/components/SelectInput.vue';
@@ -79,7 +79,6 @@ import { uid } from '@/utils/guid';
         updatedDate: this.startDate,
         versions: [this.version],
       };
-
       this.addProject(newProj);
     },
   },
