@@ -6,8 +6,6 @@
       id="textInput"
       :value="text"
       :placeholder="placeholder"
-      @blur="onBlur"
-      @focus="onFocus"
       @input="onChange($event.target.value)"
       type="text"
     />
@@ -21,8 +19,6 @@ export default {
   props: {
     label: String,
     placeholder: String,
-    onBlur: Function,
-    onFocus: Function,
     text: String,
   },
   methods: {

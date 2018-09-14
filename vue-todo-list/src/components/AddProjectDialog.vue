@@ -7,12 +7,12 @@
             Creator
           </span>
           <span class="addProject_username">{{ creator | name }}</span>
-          <TextInput :class="'addProject_textInput'" label="Project Name" placeholder="" v-model="title" :onBlur="() => null" :onFocus="() => null" />
-          <TextAreaInput :class="'addProject_textAreaInput'" label="Project Description" placeholder="" v-model="description" :onBlur="() => null" :onFocus="() => null" />
-          <DateInput :class="'addProject_dateInput'" label="Start Date" v-model="startDate" :onBlur="() => null" :onFocus="() => null" />
-          <DateInput :class="'addProject_dateInput'" label="End Date" v-model="endDate" :onBlur="() => null" :onFocus="() => null" />
+          <TextInput :class="'addProject_textInput'" label="Project Name" placeholder="" v-model="title" />
+          <TextAreaInput :class="'addProject_textAreaInput'" label="Project Description" placeholder="" v-model="description" />
+          <DateInput :class="'addProject_dateInput'" label="Start Date" v-model="startDate" />
+          <DateInput :class="'addProject_dateInput'" label="End Date" v-model="endDate" />
           <SelectInput :class="'addProject_selectStatus'" label="Status" v-model="status" :options="statusOptions" :onBlur="() => null" :onFocus="() => null" />
-          <TextInput :class="'addProject_textInput'" label="Version" placeholder="" v-model="version" :onBlur="() => null" :onFocus="() => null" />
+          <TextInput :class="'addProject_textInput'" label="Version" placeholder="" v-model="version" />
         </div>
       </Form>
     </Dialog>
@@ -56,6 +56,7 @@ import { uid } from '@/utils/guid';
     title: '',
     startDate: new Date(),
     status: 'todo' as statusType,
+    show: true,
     version: String,
     statusOptions,
   }),

@@ -6,8 +6,6 @@
       id="dateInput"
       :value="date"
       @input="onChange($event.target.value)"
-      @blur="onBlur"
-      @focus="onFocus"
       type="datetime-local"
     />
   </p>
@@ -20,8 +18,6 @@ export default {
   props: {
     label: String,
     date: Date,
-    onBlur: Function,
-    onFocus: Function,
   },
   methods: {
     onChange(this: any, value: string) {
