@@ -4,18 +4,18 @@ exports[`DateInput receives the correct props: Mon Sep 10 2018 1`] = `2018-09-10
 
 exports[`DateInput renders the correct markup 1`] = `
 <p
-  class="DateInput"
+  class="dateInput"
   placeholder=""
 >
   <label
-    class="DateInput_label"
+    class="dateInput_label"
     for="dateInput"
   >
     Label
   </label>
    
   <input
-    class="DateInput_input"
+    class="dateInput_input"
     id="dateInput"
     type="datetime-local"
   />

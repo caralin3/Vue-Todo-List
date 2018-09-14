@@ -4,17 +4,17 @@ exports[`ProjectsHeader receives the correct props: Text Input Test 1`] = `"Text
 
 exports[`ProjectsHeader renders the correct markup 1`] = `
 <p
-  class="TextInput"
+  class="textInput"
 >
   <label
-    class="TextInput_label"
+    class="textInput_label"
     for="textInput"
   >
     Label
   </label>
    
   <input
-    class="TextInput_input"
+    class="textInput_input"
     id="textInput"
     placeholder=""
     type="text"

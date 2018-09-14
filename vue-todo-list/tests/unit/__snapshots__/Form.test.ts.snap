@@ -5,7 +5,7 @@ exports[`Form receives the correct props: Test Button 1`] = `undefined`;
 exports[`Form renders the correct markup 1`] = `
 <p
   buttontext="Test Button"
-  class="TextInput"
+  class="textInput"
   submit="function () {
         return fn.apply(this, arguments);
       }"
@@ -14,14 +14,14 @@ exports[`Form renders the correct markup 1`] = `
       }"
 >
   <label
-    class="TextInput_label"
+    class="textInput_label"
     for="textInput"
   >
     
   </label>
    
   <input
-    class="TextInput_input"
+    class="textInput_input"
     id="textInput"
     type="text"
   />

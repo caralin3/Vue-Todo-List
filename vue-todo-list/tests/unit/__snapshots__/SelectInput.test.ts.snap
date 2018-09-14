@@ -2,10 +2,11 @@
 
 exports[`SelectInput receives the correct props 1`] = `
 Object {
-  "0": "todo",
-  "1": "in Progress",
-  "2": "completed",
-  "3": "closed",
+  "0": "Select Status",
+  "1": "todo",
+  "2": "inProgress",
+  "3": "completed",
+  "4": "closed",
 }
 `;
 
@@ -13,29 +14,34 @@ exports[`SelectInput receives the correct props: Selected Value 1`] = `"Selected
 
 exports[`SelectInput renders the correct markup 1`] = `
 <p
-  class="SelectInput"
+  class="selectInput"
 >
   <label
-    class="SelectInput_label"
+    class="selectInput_label"
     for="selectInput"
   >
     Label
   </label>
    
   <select
-    class="SelectInput_input"
+    class="selectInput_input"
     defaultvalue="Selected Value"
     id="selectInput"
   >
+    <option
+      value="Select Status"
+    >
+      Select Status
+    </option>
     <option
       value="todo"
     >
       Todo
     </option>
     <option
-      value="in Progress"
+      value="inProgress"
     >
-      In Progress
+      InProgress
     </option>
     <option
       value="completed"

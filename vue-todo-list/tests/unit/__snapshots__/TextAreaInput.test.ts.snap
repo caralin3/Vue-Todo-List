@@ -4,17 +4,17 @@ exports[`TextAreaInput receives the correct props: TextArea Test 1`] = `"TextAre
 
 exports[`TextAreaInput renders the correct markup 1`] = `
 <p
-  class="TextAreaInput"
+  class="textAreaInput"
 >
   <label
-    class="TextAreaInput_label"
+    class="textAreaInput_label"
     for="textAreaInput"
   >
     Label
   </label>
    
   <textarea
-    class="TextAreaInput_input"
+    class="textAreaInput_input"
     id="textAreaInput"
     placeholder=""
   />

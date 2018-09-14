@@ -141,7 +141,7 @@
         />
       </div>
       <div class="featureDetails_detailsData">
-        <span class="featureDetails_detailsLabel">Version:</span>
+        <span class="featureDetails_detailsLabel">Version:
           {{ feature.version.title }}
         </span>
       </div>
@@ -154,7 +154,7 @@
             :contenteditable="edit.link.editing && edit.link.id === link.id"
             @blur="handleLinkChange($event.target.innerText, link)"
           >
-            <a class="featureDetails_link" :href="link.to" target="_blank">{{ link.to }}</a>
+            <a class="featureDetails_link" :href="updatedLink.to ? updatedLink.to : link.to" target="_blank">{{ link.to }}</a>
             <i class="fas fa-edit featureDetails_linkEdit" v-if="!edit.link.editing" @click="toggleEditLink(link.id)" />
           </div>
       </div>
@@ -293,6 +293,7 @@ export default {
     title: String,
     updatedItem: {} as Item,
     updatedFeature: {} as Feature,
+    updatedLink: {} as Link,
     users: [] as User[],
   }),
   computed: {
@@ -354,7 +355,7 @@ export default {
         updatedDate: new Date(),
         user: link.user,
       };
-      this.edit.link = false;
+      this.edit.link.editing = false;
       this.editLink(this.updatedLink);
     },
     handleTextChange(this: any, type: string, value: string) {
@@ -364,9 +365,6 @@ export default {
           description: value,
           updatedDate: new Date(),
         };
-      } else if (type === 'link') {
-        this.link = value;
-        // TODO edit links
       } else if (type === 'title') {
         this.updatedFeature = {
           ...this.updatedFeature,
