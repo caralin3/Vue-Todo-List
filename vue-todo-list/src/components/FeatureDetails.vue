@@ -147,9 +147,22 @@
         </span>
       </div>
     </div>
-    <h3 class="featureDetails_subTitle">Links</h3>
+    <div class="featureDetails_description">
+      <h3 class="featureDetails_subTitle">Description</h3>
+      <p 
+        class="featureDetails_descriptionText featureDetails_detailsText-edit"
+        contenteditable="true"
+        @blur="handleTextChange('description', $event.target.innerText)"
+      >
+        {{ feature.description }}
+      </p>
+    </div>
+    <span class="featureDetails_subtitle">
+      <h3 class="featureDetails_subtitle-title">Links</h3>
+      <i class="fas fa-plus featureDetails_subtitle-add" />
+    </span>
     <div class="featureDetails_links" v-if="featureLinks && featureLinks.length > 0">
-      <div class="featureDetails_linkList" v-for="(link, index) in featureLinks" :key="index">
+      <div class="featureDetails_linkList" v-for="link in featureLinks" :key="link.id">
           <div class="featureDetails_linkRow"
             :class="{'featureDetails_linkRow-border': edit.link.editing && edit.link.id === link.id}"
             :contenteditable="edit.link.editing && edit.link.id === link.id"
@@ -163,17 +176,10 @@
     <div class="featureDetails_linkList" v-else>
       <p class="featureDetails_noLinks">No links</p>
     </div>
-    <div class="featureDetails_description">
-      <h3 class="featureDetails_subTitle">Description</h3>
-      <p 
-        class="featureDetails_descriptionText featureDetails_detailsText-edit"
-        contenteditable="true"
-        @blur="handleTextChange('description', $event.target.innerText)"
-      >
-        {{ feature.description }}
-      </p>
-    </div>
-    <h3 class="featureDetails_subTitle">Items</h3>
+    <span class="featureDetails_subtitle">
+      <h3 class="featureDetails_subtitle-title">Items</h3>
+      <i class="fas fa-plus featureDetails_subtitle-add" />
+    </span>
     <div class="featureDetails_items" v-if="featureItems.length > 0">
       <router-link
         class="featureDetails_itemDetails"
@@ -202,7 +208,10 @@
     <div class="featureDetails_items" v-else>
       <p>No items</p>
     </div>
-    <h3 class="featureDetails_subTitle">Comments</h3>
+    <span class="featureDetails_subtitle">
+      <h3 class="featureDetails_subtitle-title">Comments</h3>
+      <i class="fas fa-plus featureDetails_subtitle-add" />
+    </span>
     <div class="featureDetails_comments" v-if="featureComments && featureComments.length > 0">
       <div class="featureDetails_commentDetails" v-for="comment in featureComments" :key="comment.id">
         <span class="featureDetails_commentUser">
@@ -216,10 +225,14 @@
           {{ comment.startDate | date }}
           {{ comment.startDate | time }}
         </span>
-        <span v-if="comment.updatedDate">
-          updated on
+        <span v-if="updatedComment.updatedDate || comment.updatedDate">
+            updated on
         </span>
-        <span class="featureDetails_commentDate" v-if="comment.updatedDate">
+        <span class="featureDetails_commentDate" v-if="updatedComment.updatedDate && !comment.updatedDate">
+          {{ updatedComment.updatedDate | date }}
+          {{ updatedComment.updatedDate | time }}
+        </span>
+        <span class="featureDetails_commentDate" v-if="updatedComment.updatedDate || comment.updatedDate">
           {{ comment.updatedDate | date }}
           {{ comment.updatedDate | time }}
         </span>
@@ -292,6 +305,7 @@ export default {
     status: 'Select Status' as statusType,
     statusOptions,
     title: String,
+    updatedComment: {} as Comment,
     updatedItem: {} as Item,
     updatedFeature: {} as Feature,
     updatedLink: {} as Link,
@@ -321,19 +335,23 @@ export default {
       }
     },
     loadFeatureState(this: any) {
-      const index: number = this.features.findIndex((f: any) => f.id === this.feature.id);
-      const itemIds = this.features[index].items;
-      const commentIds = this.features[index].comments;
-      const linkIds = this.features[index].links;
-
+      const index: number = this.features.findIndex((f: Feature) => f.id === this.feature.id);
       this.updatedFeature = this.features[index];
       this.featureComments = [];
       this.featureItems = [];
       this.featureLinks = [];
-
-      this.initalizeFeatureArrays(commentIds, this.comments, this.featureComments);
-      this.initalizeFeatureArrays(itemIds, this.items, this.featureItems);
-      this.initalizeFeatureArrays(linkIds, this.links, this.featureLinks);
+      if (this.features[index].comments) {
+        const commentIds = this.features[index].comments;
+        this.initalizeFeatureArrays(commentIds, this.comments, this.featureComments);
+      }
+      if (this.features[index].items.length > 0) {
+        const itemIds = this.features[index].items;
+        this.initalizeFeatureArrays(itemIds, this.items, this.featureItems);
+      }
+      if (this.features[index].links) {
+        const linkIds = this.features[index].links;
+        this.initalizeFeatureArrays(linkIds, this.links, this.featureLinks);
+      }
     },
     toggleDialog(this: any) {
       this.show = !this.show;

@@ -58,11 +58,11 @@ export const Version1: Version = {
 
 export const Item1: Item = {
   assignee: User1,
-  // comments?: [Comment1]
+  comments: ['0'],
   description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, \
     sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
   // endDate: new Date(),
-  featureName: 'Feature1',
+  featureId: '0',
   id: '0',
   links: ['0', '1'],
   priority: 'minor',
@@ -70,7 +70,7 @@ export const Item1: Item = {
   startDate: new Date(),
   status: 'todo',
   title: 'Item1',
-  type: 'task',
+  type: 'bug',
   updatedDate: new Date(),
   version: Version1,
   workFlow: ['0', '1'],
@@ -82,15 +82,15 @@ export const Item2: Item = {
   description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, \
     sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
   // endDate: new Date(),
-  featureName: 'Feature1',
+  featureId: '1',
   id: '1',
-  // links: [],
+  links: ['0'],
   priority: 'major',
   // reporter: User,
   startDate: new Date(),
   status: 'todo',
   title: 'Item2',
-  type: 'bug',
+  type: 'component',
   updatedDate: new Date(),
   version: Version1,
   workFlow: ['0'],
@@ -98,19 +98,18 @@ export const Item2: Item = {
 
 export const Item3: Item = {
   assignee: User1,
-  // comments?: ['0', '1']
+  comments: ['0', '1'],
   description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, \
     sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
   // endDate: new Date(),
-  featureName: 'Feature1',
+  featureId: '1',
   id: '2',
-  links: [],
   priority: 'critical',
   // reporter: User,
   startDate: new Date(),
   status: 'todo',
   title: 'Item3',
-  type: 'component',
+  type: 'bug',
   updatedDate: new Date(),
   version: Version1,
   workFlow: ['0'],
@@ -196,7 +195,7 @@ export const Project1: Project = {
   description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, \
     sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
   // endDate: new Date(),
-  features: ['0', '1', '2', '3'],
+  features: ['0', '1', '3'],
   id: '0',
   links: ['0', '1'],
   startDate: new Date(),

@@ -43,7 +43,7 @@ export interface Item {
   comments?: string[];
   description: string;
   endDate?: Date;
-  featureName: string;
+  featureId: string;
   id: string;
   links?: string[];
   priority: priorityType;

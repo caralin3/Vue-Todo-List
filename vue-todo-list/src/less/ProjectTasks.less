@@ -3,18 +3,57 @@
 @import (reference) 'listItem';
 
 .projectTasks {
+  display: grid;
+  grid-column-gap: 2rem;
+  grid-template:
+    "header header"
+    "table details"
+    ~'/' 1fr;
+  
+    &_open {
+      display: grid;
+      grid-column-gap: 2rem;
+      grid-template:
+        "header header"
+        "table details"
+        ~'/' 1fr 2fr;
+    }
 
-  &_list {
-    display: grid;
-    gap: 3.5rem;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(auto-fill, 1fr);
-    justify-items: center;
-    padding: 1rem 2rem 3rem;
+  &_header {
+    grid-area: header;
+  }
+
+  &_table {
+    grid-area: table;
   }
 
   &_details {
     margin-right: 3rem;
     padding-bottom: 3rem;
+    grid-area: details;
+    // animation: fadein 1s ease;
+  }
+
+  // @keyframes fadein {
+  //   from { opacity: 0; }
+  //   to   { opacity: 1; }
+  // }
+
+  &_selected {
+    background-color: fade(@medium-sea-green, 20%);
+    box-shadow: 2px 2px 2px rgba(114, 113, 113, 0.3);
+  }
+
+  &_filter {
+    // color: @madison;
+    // padding-left: minmax(0, 0.5rem);
+
+    &-icon {
+      padding-left: 0.2rem;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
   }
 }

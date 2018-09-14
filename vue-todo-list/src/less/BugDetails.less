@@ -4,32 +4,111 @@
 .bugDetails {
   background-color: fade(@medium-sea-green, 20%);
   color: @madison;
-  padding: 2rem 3rem;
+  padding: 2rem;
 
   &_header {
+    align-items: center;
     display: flex;
     justify-content: space-between;
   }
 
+  &_title {
+    margin: 0;
+  }
+
+  &_subTitle {
+    padding: 0 1rem;
+  }
+
+  &_subtitle {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    padding-right: 2rem;
+
+    &-title {
+      padding: 1rem 0;
+    }
+
+    &-add {
+      border-radius: 50%;
+      padding: 0.5rem 0.65rem;
+      transition: 0.3s ease;
+
+      &:hover {
+        background-color: @medium-sea-green;
+        cursor: pointer;
+      }
+    }
+  }
+
+  &_details,
+  &_linkList,
+  &_items {
+    padding: 0 2rem;
+  }
+
   &_details {
     display: grid;
+    grid-column-gap: 1rem;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(auto-fill, 1fr);
+
+    &-userIcon {
+      padding-right: 0.3rem;
+    }
   }
 
   &_detailsData {
+    align-items: center;
     display: grid;
-    grid-column-gap: 1rem;
-    // grid-template-columns: repeat(2, 1fr);
-    grid-template-columns: 8rem 1fr;
+    grid-template-columns: 6rem 1fr;
   }
 
   &_detailsLabel {
     font-weight: bold;
   }
 
-  &_title {
-    margin:  0;
+  &_detailsText,
+  &_detailsText-edit {
+    padding: 0.3rem 0.5rem;
+
+    &-edit:hover {
+      border: 1px solid @madison;
+      cursor: pointer;
+    }
+  }
+
+  &_comments {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
+  &_commentDetails {
+    background-color: @white;
+    color: @madison;
+    margin: 0 0 1rem 0;
+    padding: 1rem 1rem 0;
+    width: 40rem;
+  }
+
+  &_commentUsername {
+    font-weight: bold;
+  }
+
+  &_commentText {
+    padding: 0.5rem;
+    
+    &:hover {
+      border: 1px solid @madison;
+      cursor: pointer;
+    }
+  }
+
+  &_descriptionText {
+    margin: 0 2rem;
   }
 
   &_buttons {
@@ -46,10 +125,78 @@
 
     &:hover {
       background-color: @medium-sea-green;
+      cursor: pointer;
     }
+  }
+
+  &_linkRow {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+
+    &:hover {
+      .bugDetails_linkEdit {
+        cursor: pointer;
+        opacity: 1;
+      }
+    }
+
+    &-border {
+      padding: 0.3rem 0.5rem;
+      border: 1px solid @madison;
+    }
+  }
+
+  &_linkEdit {
+    opacity: 0;
+    padding: 0.5rem 1rem;
   }
 
   &_workflowButton {
     .button;
+  }
+
+  &_select {
+    select {
+      border: none;
+      // box-shadow: 3px 3px 5px rgba(114, 113, 113, 0.4);
+      height: 1.8rem;
+      width: 100%;
+    }
+
+    option {
+      border: none;
+    }
+  }
+
+  &_link,
+  &_featureDetails {
+    color: @madison;
+
+    &:hover {
+      color: darken(@medium-sea-green, 10%);
+      text-decoration: underline;
+    }
+  }
+
+  &_feature {
+    display: flex;
+    flex-direction: column;
+    padding: 0 0 0 1rem;
+  }
+
+  &_featureDetails {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &_featureTitle {
+    padding: 0 1rem;
+  }
+
+  &_featureText {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
   }
 }

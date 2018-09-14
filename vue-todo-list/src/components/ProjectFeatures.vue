@@ -107,8 +107,8 @@ export default {
   }),
   computed: {
     ...mapState({
-      projects: (state: any) => state.projects.projects,
       features: (state: any) => state.features.features,
+      projects: (state: any) => state.projects.projects,
     }),
   },
   methods: {

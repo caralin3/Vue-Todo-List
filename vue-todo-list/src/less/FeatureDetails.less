@@ -20,6 +20,29 @@
     padding: 0 1rem;
   }
 
+  &_subtitle {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    padding-left: 1rem;
+    padding-right: 2rem;
+
+    &-title {
+      padding: 1rem 0;
+    }
+
+    &-add {
+      border-radius: 50%;
+      padding: 0.5rem 0.65rem;
+      transition: 0.3s ease;
+
+      &:hover {
+        background-color: @medium-sea-green;
+        cursor: pointer;
+      }
+    }
+  }
+
   &_details,
   &_linkList,
   &_items {
@@ -103,6 +126,7 @@
 
     &:hover {
       background-color: @medium-sea-green;
+      cursor: pointer;
     }
   }
 
