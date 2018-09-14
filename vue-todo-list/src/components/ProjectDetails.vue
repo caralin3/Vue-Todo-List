@@ -80,7 +80,8 @@
           contenteditable="true"
           @blur="handleTextChange('description', $event.target.innerText)"
         >
-          {{ proj.description }}
+          <span v-if="proj.description !== ''">{{ proj.description }}</span>
+          <span v-else>No description</span>
         </p>
       </div>
       <span class="projectDetails_subtitle">

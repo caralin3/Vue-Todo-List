@@ -14,7 +14,8 @@
             <span class="projectItem_by">Created by: {{ proj.creator | name }}</span>
             <span class="projectItem_date">Created on: {{ proj.startDate | date }}</span>
           </div>
-          <p class="projectItem_description">{{ proj.description }}</p>
+          <p class="projectItem_description" v-if="proj.description !== ''">{{ proj.description }}</p>
+          <p class="projectItem_description" v-else>No description</p>
           <div class="projectItem_latest" v-if="proj.features.length > 0">
             <h5 class="projectItem_latestTitle">Latest Update</h5>
             <div class="projectItem_featureDetails">

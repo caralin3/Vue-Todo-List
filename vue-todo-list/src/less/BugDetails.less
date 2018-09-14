@@ -91,7 +91,7 @@
     color: @madison;
     margin: 0 0 1rem 0;
     padding: 1rem 1rem 0;
-    width: 40rem;
+    width: 90%;
   }
 
   &_commentUsername {
@@ -198,5 +198,19 @@
     align-items: center;
     display: flex;
     justify-content: space-between;
+  }
+}
+
+@media only screen and (max-width: 640px) {
+  .bugDetails {
+    margin: 0 auto;
+    width: 100%;
+
+    &_details {
+      align-items: flex-start;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
   }
 }

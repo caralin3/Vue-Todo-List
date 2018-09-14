@@ -178,7 +178,8 @@
     </div>
     <span class="featureDetails_subtitle">
       <h3 class="featureDetails_subtitle-title">Items</h3>
-      <i class="fas fa-plus featureDetails_subtitle-add" />
+      <i class="fas fa-plus featureDetails_subtitle-add" @click="toggleItemDialog" />
+      <AddItemDialog v-if="showItemDialog" :toggleDialog="toggleItemDialog" />
     </span>
     <div class="featureDetails_items" v-if="featureItems.length > 0">
       <router-link
@@ -254,7 +255,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import { mapActions, mapState } from 'vuex';
-import Dialog from '@/components/Dialog.vue';
+import AddItemDialog from '@/components/AddItemDialog.vue';
 import SelectInput from '@/components/SelectInput.vue';
 import { Comment, Feature, Item, Link, priorityType, statusType, User } from '@/types';
 import { priorityOptions, statusOptions } from '@/utils/constants';
@@ -265,7 +266,7 @@ export default {
     this.loadFeatureState();
   },
   components: {
-    Dialog,
+    AddItemDialog,
     SelectInput,
   },
   props: {
@@ -302,6 +303,7 @@ export default {
     priority: 'Select Priority' as priorityType,
     priorityOptions,
     show: false,
+    showItemDialog: false,
     status: 'Select Status' as statusType,
     statusOptions,
     title: String,
@@ -355,6 +357,9 @@ export default {
     },
     toggleDialog(this: any) {
       this.show = !this.show;
+    },
+    toggleItemDialog(this: any) {
+      this.showItemDialog = !this.showItemDialog;
     },
     handleCommentChange(this: any, value: string, comm: Comment) {
       this.updatedComment = {

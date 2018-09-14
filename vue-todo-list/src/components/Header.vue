@@ -2,7 +2,7 @@
   <div class="header">
     <h1 class="header_title">Todo</h1>
     <div class="header_nav">
-      <router-link to="/">Home</router-link>
+      <router-link to="/" :exact="true">Home</router-link>
       <router-link to="/projects">Projects</router-link>
       <router-link to="/board">Boards</router-link>
     </div>

@@ -25,6 +25,7 @@
 
   &_table {
     grid-area: table;
+    overflow-x: auto;
   }
 
   &_details {
@@ -54,6 +55,39 @@
       &:hover {
         cursor: pointer;
       }
+    }
+  }
+}
+
+@media only screen and (max-width: 640px) {
+  .projectBugs {
+    align-items: space-between;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 2rem;
+
+    &_open {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 0;
+
+      &-header {
+        padding-left: 2rem;
+      }
+
+      &-table {
+        align-self: center;
+      }
+    }
+    
+    &_table {
+      margin-bottom: 2rem;
+    }
+
+    &_details {
+      padding: 0 2rem 3rem 1rem;
     }
   }
 }

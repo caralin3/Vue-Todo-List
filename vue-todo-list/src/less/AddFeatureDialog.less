@@ -1,0 +1,86 @@
+.addFeature {
+  &_dialog {
+    align-self: center;
+  }
+
+  &_creatorLabel {
+    font-weight: bold;
+    padding-right: 8.7rem;
+  }
+
+  &_textInput {
+    display: grid;
+    gap: 2.5rem;
+    grid-area: textInput;
+    grid-template: "label input";
+    width: 20rem;
+  
+    label {
+      font-weight: bold;
+      grid-area: label;
+      width: 10rem;
+    }
+  
+    input {
+      grid-area: input;
+    }
+  }
+  
+
+  &_textAreaInput {
+    display: grid;
+    gap: 2.5rem;
+    grid-area: textArea;
+    grid-template: "label input";
+    width: 20rem;
+  
+    label {
+      font-weight: bold;
+      grid-area: label;
+      width: 10rem;
+    }
+  
+    input {
+      grid-area: input;
+      height: 5rem;
+      width: 15rem;
+    }
+  }  
+
+  &_dateInput {
+    display: grid;
+    gap: 1rem;
+    grid-area: dateInput;
+    grid-template: "label input";
+  
+    label {
+      font-weight: bold;
+      grid-area: label;
+      width: 10rem;
+    }
+  
+    input {
+      grid-area: input;
+    }
+  }  
+
+  &_select {
+    display: grid;
+    gap: 2.5rem;
+    grid-template: "label input";
+    grid-area: selectInput;
+  
+    label {
+      font-weight: bold;
+      grid-area: label;
+      width: 10rem;
+    }
+  
+    select {
+      grid-area: input;
+      height: 2rem;
+      width: 15rem;
+    }
+  }
+  
+}

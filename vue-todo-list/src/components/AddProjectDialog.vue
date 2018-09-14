@@ -12,7 +12,7 @@
           <DateInput :class="'addProject_dateInput'" label="Start Date" v-model="startDate" />
           <DateInput :class="'addProject_dateInput'" label="End Date" v-model="endDate" />
           <SelectInput :class="'addProject_selectStatus'" label="Status" v-model="status" :options="statusOptions" :onBlur="() => null" :onFocus="() => null" />
-          <TextInput :class="'addProject_textInput'" label="Version" placeholder="" v-model="version" />
+          <TextInput :class="'addProject_textInput'" label="Version" placeholder="" v-model="versionName" />
         </div>
       </Form>
     </Dialog>
@@ -53,12 +53,11 @@ import { uid } from '@/utils/guid';
     creator: User1 as User,
     description: '',
     endDate: '',
-    title: '',
     startDate: new Date(),
     status: 'todo' as statusType,
-    show: true,
-    version: String,
     statusOptions,
+    title: '',
+    versionName: String,
   }),
   methods: {
     ...mapActions('projects', [
@@ -78,11 +77,12 @@ import { uid } from '@/utils/guid';
         status: this.status,
         title: this.title,
         updatedDate: this.startDate,
-        versions: [this.version],
+        // FIXME: Version adding
+        versions: [this.versionName],
       };
       this.addProject(newProj);
     },
   },
 })
-export default class Projects extends Vue {}
+export default class AddProjectDialog extends Vue {}
 </script>
