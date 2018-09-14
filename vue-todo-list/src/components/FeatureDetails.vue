@@ -141,7 +141,8 @@
         />
       </div>
       <div class="featureDetails_detailsData">
-        <span class="featureDetails_detailsLabel">Version:
+        <span class="featureDetails_detailsLabel">Version:</span>
+        <span>
           {{ feature.version.title }}
         </span>
       </div>
