@@ -1,9 +1,9 @@
 <template>
   <p class="textInput">
-    <label class="textInput_label" for="textInput">{{ label }}</label>
+    <label class="textInput_label" :for="label">{{ label }}</label>
     <input
       class="textInput_input"
-      id="textInput"
+      :id="label"
       :value="text"
       :placeholder="placeholder"
       @input="onChange($event.target.value)"

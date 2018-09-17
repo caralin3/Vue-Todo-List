@@ -2,6 +2,8 @@
   <div class="signup">
     <h2 class="signup_title">Sign Up</h2>
     <Form class="signup_form" buttonText="Sign Up" :toggleDialog="() => null" :submit="onSignUp">
+      <TextInput class="signup_input" label="First Name" v-model="first" />
+      <TextInput class="signup_input" label="Last Name" v-model="last" />
       <TextInput class="signup_input" label="Email" v-model="email" />
       <PasswordInput class="signup_input" label="Password" v-model="password" />
       <PasswordInput class="signup_input" label="Confirm Password" v-model="passwordConfirm" />
@@ -16,9 +18,13 @@
 <script lang="ts">
 import firebase from 'firebase';
 import Vue from 'vue';
+import { mapActions } from 'vuex';
+import * as fb from '@/firebaseConfig';
 import Form from '@/components/Form.vue';
 import PasswordInput from '@/components/PasswordInput.vue';
 import TextInput from '@/components/TextInput.vue';
+import { MutationType } from '@/store/mutation-types';
+import { User } from '@/types';
 
 export default {
   components: {
@@ -28,15 +34,37 @@ export default {
   },
   data: () => ({
     email: String,
+    first: String,
+    last: String,
     password: String,
     passwordConfirm: String,
   }),
   methods: {
+    ...mapActions([
+      'setCurrentUser',
+      'fetchUserProfile',
+    ]),
     onSignUp(this: any) {
-      firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then(
-        (user: any) => {
-          console.log(user, 'Account created');
-          this.$router.replace('/');
+      fb.auth.createUserWithEmailAndPassword(this.email, this.password)
+        .then((user: any) => {
+          const currentUser: User = {
+            email: this.email,
+            first: this.first,
+            id: user.user.uid,
+            last: this.last,
+          };
+          this.setCurrentUser(currentUser);
+          // create user object
+          fb.usersCollection.doc(user.user.uid).set({
+            firstName: this.first,
+            lastName: this.last,
+            email: this.email,
+          }).then(() => {
+            this.fetchUserProfile(user);
+            this.$router.replace('/');
+          }).catch((err: any) => {
+            console.log(err);
+          });
         },
         (err: any) => {
           console.log('Error', err.message);
