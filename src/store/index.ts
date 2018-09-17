@@ -54,7 +54,7 @@ const store = new Vuex.Store<RootState>({
         .then((user: any) => {
           commit(MutationType.SET_USER_PROFILE, user.data());
         }).catch((err: any) => {
-          console.log(err);
+          console.log(err.message);
         });
     },
   },

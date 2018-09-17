@@ -7,6 +7,7 @@
       :value="password"
       :placeholder="placeholder"
       @input="onChange($event.target.value)"
+      autocomplete="off"
       type="password"
     />
   </p>

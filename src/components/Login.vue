@@ -1,14 +1,25 @@
 <template>
   <div class="login">
+    <transition name="fade">
+      <div v-if="performingRequest" class="loading">
+          <p>Loading...</p>
+      </div>
+    </transition>
     <h2 class="login_title">Log In</h2>
     <Form class="login_form" buttonText="Log In" :toggleDialog="() => null" :submit="onLogin">
       <TextInput class="login_input" label="Email" v-model="email" />
       <PasswordInput class="login_input" label="Password" v-model="password" />
     </Form>
-    <p>
-      <span class="login_signup">Don't have an account?</span>
-      <router-link class="login_signup login_signup-link" to="/">Sign Up</router-link>
+    <router-link class="login_forgot" to="/forgotPassword">Forgot Password?</router-link>
+    <p class="login_signup">
+      <span class="login_signup-text">Don't have an account?</span>
+      <router-link class="login_signup-link" to="/">Sign Up</router-link>
     </p>
+    <transition name="fade">
+      <div v-if="errorMsg !== ''" class="error-msg">
+          <p>{{ errorMsg }}</p>
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -29,7 +40,9 @@ export default {
   },
   data: () => ({
     email: String,
+    errorMsg: '',
     password: String,
+    performingRequest: false,
   }),
   computed: {
     ...mapState({
@@ -43,12 +56,13 @@ export default {
       'fetchUserProfile',
     ]),
     onLogin(this: any) {
+      this.performingRequest = true;
       fb.auth.signInWithEmailAndPassword(this.email, this.password)
         .then((user: any) => {
           this.getUser(user);
-        },
-        (err: any) => {
-          console.log('Error', err.message);
+        }).catch((err: any) => {
+          console.log(err.message);
+          this.errorMsg = err.message;
         });
     },
     getUser(this: any, user: any) {
@@ -62,9 +76,12 @@ export default {
           };
           this.setCurrentUser(currentUser);
           this.fetchUserProfile(user);
+          this.performingRequest = false;
           this.$router.replace('/projects');
         }).catch((err: any) => {
-          console.log(err);
+          console.log(err.message);
+          this.performingRequest = false;
+          this.errorMsg = err.message;
         });
     },
   },

@@ -2,8 +2,8 @@ import firebase from 'firebase';
 import Vue from 'vue';
 import Router from 'vue-router';
 import Home from './views/Home.vue';
+import ForgotPassword from './components/ForgotPassword.vue';
 import Login from './components/Login.vue';
-import SignUp from './components/SignUp.vue';
 
 Vue.use(Router);
 
@@ -22,9 +22,9 @@ const router: any = new Router({
         path: '*',
         redirect: '/login',
     }, {
-        path: '/signup',
-        name: 'signup',
-        component: SignUp,
+        path: '/forgotPassword',
+        name: 'forgotPassword',
+        component: ForgotPassword,
     }, {
       path: '/projects',
       name: 'projects',

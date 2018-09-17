@@ -34,10 +34,12 @@ export default {
   },
   data: () => ({
     email: String,
+    errorMsg: String,
     first: String,
     last: String,
     password: String,
     passwordConfirm: String,
+    performingRequest: false,
   }),
   methods: {
     ...mapActions([
@@ -45,6 +47,7 @@ export default {
       'fetchUserProfile',
     ]),
     onSignUp(this: any) {
+      this.performingRequest = true;
       fb.auth.createUserWithEmailAndPassword(this.email, this.password)
         .then((user: any) => {
           const currentUser: User = {
@@ -61,13 +64,17 @@ export default {
             email: this.email,
           }).then(() => {
             this.fetchUserProfile(user);
+            this.performingRequest = false;
             this.$router.replace('/projects');
           }).catch((err: any) => {
             console.log(err);
+            this.errorMsg = err.message;
           });
         },
         (err: any) => {
           console.log('Error', err.message);
+          this.performingRequest = false;
+          this.errorMsg = err.message;
         },
       );
     },
