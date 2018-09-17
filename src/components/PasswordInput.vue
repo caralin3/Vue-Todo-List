@@ -1,12 +1,13 @@
 <template>
   <p class="PasswordInput">
-    <label class="PasswordInput_label" for="passwordInput">{{ label }}</label>
+    <label class="PasswordInput_label" :for="label">{{ label }}</label>
     <input
       class="PasswordInput_input"
       :id="label"
       :value="password"
       :placeholder="placeholder"
       @input="onChange($event.target.value)"
+      autocomplete="off"
       type="password"
     />
   </p>

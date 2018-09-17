@@ -1,4 +1,5 @@
 @import (reference) 'variables';
+@import (reference) 'button';
 
 .header {
   background-color: @medium-sea-green;
@@ -29,15 +30,32 @@
       }
     }
 
-    &-login {
-      background-color: @medium-sea-green;
-      color: @white;
-      padding: 1rem;
-      transition: 0.2s ease;
+    // &-login {
+    //   background-color: @medium-sea-green;
+    //   color: @madison;
+    //   padding: 1rem;
+    //   transition: 0.2s ease;
+
+    //   &:focus,
+    //   &:hover {
+    //     background-color: @madison;
+    //     color: @white;
+    //     cursor: pointer;
+    //   }
+    // }
+
+    &-logout {
+      // background-color: @medium-sea-green;
+      color: @madison;
+      font-size: 1rem;
+      font-weight: bold;
+      // padding: 0 0.5rem;
+      // transition: 0.2s ease;
 
       &:focus,
       &:hover {
-        background-color: @madison;
+        // background-color: @madison;
+        color: @white;
         cursor: pointer;
       }
     }

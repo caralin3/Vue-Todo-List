@@ -1,17 +1,14 @@
-import firebase from 'firebase';
 import Vue from 'vue';
 import App from './App.vue';
+import '@/less/index.less';
 import router from './router';
 import store from './store';
-import { firebaseConfig } from '@/firebase-config';
+import * as fb from '@/firebaseConfig';
 
 Vue.config.productionTip = false;
 let app: any;
 
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-
-firebase.auth().onAuthStateChanged((user: any) => {
+fb.auth.onAuthStateChanged((user: any) => {
   if (!app) {
     app = new Vue({
       el: '#app',
