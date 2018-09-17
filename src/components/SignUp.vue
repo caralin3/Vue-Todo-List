@@ -61,7 +61,7 @@ export default {
             email: this.email,
           }).then(() => {
             this.fetchUserProfile(user);
-            this.$router.replace('/');
+            this.$router.replace('/projects');
           }).catch((err: any) => {
             console.log(err);
           });
