@@ -4,10 +4,14 @@ exports[`Header renders the correct markup 1`] = `
 <div
   class="header"
 >
-  <h1
-    class="header_title"
-  >
-    Todo
+  <h1>
+    <router-link-stub
+      class="header_title"
+      exact="true"
+      to="/"
+    >
+      Todo
+    </router-link-stub>
   </h1>
    
   <div
@@ -30,6 +34,13 @@ exports[`Header renders the correct markup 1`] = `
       to="/board"
     >
       Boards
+    </router-link-stub>
+     
+    <router-link-stub
+      class="header_nav-login"
+      to="/login"
+    >
+      Log In
     </router-link-stub>
   </div>
 </div>

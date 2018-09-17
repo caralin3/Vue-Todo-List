@@ -1,10 +1,13 @@
 <template>
   <div class="header">
-    <h1 class="header_title">Todo</h1>
+    <h1>
+      <router-link class="header_title" to="/" :exact="true">Todo</router-link>
+    </h1>
     <div class="header_nav">
       <router-link to="/" :exact="true">Home</router-link>
       <router-link to="/projects">Projects</router-link>
       <router-link to="/board">Boards</router-link>
+      <router-link class="header_nav-login" to="/login">Log In</router-link>
     </div>
   </div>
 </template>
