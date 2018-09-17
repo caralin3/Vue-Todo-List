@@ -10,7 +10,7 @@
     </Form>
     <p>
       <span class="signup_login">Already have an account?</span>
-      <router-link class="signup_login" to="/login">Log In</router-link>
+      <router-link class="signup_login signup_login-link" to="/login">Log In</router-link>
     </p>
   </div>
 </template>

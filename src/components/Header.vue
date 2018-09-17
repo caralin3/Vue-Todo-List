@@ -4,11 +4,11 @@
       <router-link class="header_title" to="/" :exact="true">Todo</router-link>
     </h1>
     <div class="header_nav">
-      <router-link to="/" :exact="true">Home</router-link>
-      <router-link to="/projects">Projects</router-link>
-      <router-link to="/board">Boards</router-link>
+      <router-link v-if="currentUser === null" to="/" :exact="true">Home</router-link>
+      <router-link v-if="currentUser !== null" to="/projects">Projects</router-link>
+      <router-link v-if="currentUser !== null" to="/board">Boards</router-link>
       <router-link v-if="currentUser === null" class="header_nav-login" to="/login">Log In</router-link>
-      <button v-else class="header_nav-logout" @click="onLogOut">Log Out</button>
+      <button v-if="currentUser !== null" class="header_nav-logout" @click="onLogOut">Log Out</button>
     </div>
   </div>
 </template>
@@ -34,7 +34,7 @@ export default {
       fb.auth.signOut().then(
         () => {
           this.resetData();
-          this.$router.replace('/');
+          this.$router.replace('/login');
         },
         (err: any) => {
           console.log('Error', err.message);

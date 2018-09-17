@@ -7,7 +7,7 @@
     </Form>
     <p>
       <span class="login_signup">Don't have an account?</span>
-      <router-link class="login_signup" to="/signup">Sign Up</router-link>
+      <router-link class="login_signup login_signup-link" to="/">Sign Up</router-link>
     </p>
   </div>
 </template>
@@ -62,7 +62,7 @@ export default {
           };
           this.setCurrentUser(currentUser);
           this.fetchUserProfile(user);
-          this.$router.replace('/');
+          this.$router.replace('/projects');
         }).catch((err: any) => {
           console.log(err);
         });

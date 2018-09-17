@@ -13,7 +13,28 @@ const debug = process.env.NODE_ENV !== 'production';
 
 Vue.use(Vuex);
 
-const store: StoreOptions<RootState> = {
+// Handle page reload
+fb.auth.onAuthStateChanged((user: any) => {
+  if (user) {
+    fb.usersCollection.doc(user.uid).get()
+      .then((curr: any) => {
+        const currentUser = {
+          email: curr.data().email,
+          first: curr.data().firstName,
+          id: curr.id,
+          last: curr.data().lastName,
+        };
+        store.commit(MutationType.SET_CURRENT_USER, currentUser);
+        store.commit(MutationType.SET_USER_PROFILE, currentUser);
+      });
+
+    fb.usersCollection.doc(user.uid).onSnapshot((doc: any) => {
+      store.commit(MutationType.SET_USER_PROFILE, doc.data());
+    });
+  }
+});
+
+const store = new Vuex.Store<RootState>({
   state: {
     currentUser: null,
     userProfile: {},
@@ -57,6 +78,6 @@ const store: StoreOptions<RootState> = {
     projects,
   },
   strict: debug,
-};
+});
 
-export default new Vuex.Store<RootState>(store);
+export default store;
