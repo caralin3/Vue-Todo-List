@@ -11,7 +11,7 @@
         </span>
       </h2>
       <div class="projectDetails_header-buttons">
-        <button class="projectDetails_workflowButton" type="button" @click="toggleDialog">View Workflow</button>
+        <button class="projectDetails_workflowButton" type="button">View Workflow</button>
       </div>
     </div>
     <div class="projectDetails_body">
@@ -105,7 +105,7 @@
       </div>
       <span class="projectDetails_subtitle">
         <h3 class="projectDetails_subtitle-title">Features</h3>
-        <i class="fas fa-plus projectDetails_subtitle-add" />
+        <i class="fas fa-plus projectDetails_subtitle-add" @click="toggleAddDialog()" />
       </span>
       <div class="projectDetails_features" v-if="projFeatures && projFeatures.length > 0">
         <router-link
@@ -171,6 +171,7 @@
         <p class="projectDetails_noComments">No comments</p>
       </div>
     </div>
+    <AddFeatureDialog v-if="showAddDialog" :toggleDialog="toggleAddDialog" />
   </div>
 </template>
 
@@ -178,6 +179,7 @@
 import Vue from 'vue';
 import * as fb from '@/firebase';
 import { mapActions, mapState } from 'vuex';
+import AddFeatureDialog from '@/components/AddFeatureDialog.vue';
 import Dialog from '@/components/Dialog.vue';
 import SelectInput from '@/components/SelectInput.vue';
 import { Comment, Feature, FirebaseProject, Link, Project, statusType, Version } from '@/types';
@@ -185,6 +187,7 @@ import { statusOptions } from '@/utils/constants';
 
 export default {
   components: {
+    AddFeatureDialog,
     Dialog,
     SelectInput,
   },
@@ -210,7 +213,7 @@ export default {
     projFeatures: [] as Feature[],
     projLinks: [] as Link[],
     projVersions: [] as Version[],
-    show: false,
+    showAddDialog: false,
     status: 'Select Status' as statusType,
     statusOptions,
     title: String,
@@ -261,8 +264,9 @@ export default {
         this.initalizeProjectArrays(linkIds, this.links, this.projLinks);
       }
     },
-    toggleDialog(this: any) {
-      this.show = !this.show;
+    toggleAddDialog(this: any) {
+      this.showAddDialog = !this.showAddDialog,
+      console.log(this.showAddDialog);
     },
     handleCommentChange(this: any, value: string, comm: Comment) {
       this.updatedComment = {
