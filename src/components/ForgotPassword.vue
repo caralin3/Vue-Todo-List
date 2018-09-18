@@ -19,9 +19,8 @@
 </template>
 
 <script lang="ts">
-import firebase from 'firebase';
 import Vue from 'vue';
-import * as fb from '@/firebaseConfig';
+import * as fb from '@/firebase';
 import Form from '@/components/Form.vue';
 import PasswordInput from '@/components/PasswordInput.vue';
 import TextInput from '@/components/TextInput.vue';

@@ -16,7 +16,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import { mapActions, mapState } from 'vuex';
-import * as fb from '@/firebaseConfig';
+import * as fb from '@/firebase';
 import { RootState } from '@/store/types';
 
 export default {

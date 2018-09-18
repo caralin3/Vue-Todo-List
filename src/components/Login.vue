@@ -29,7 +29,7 @@ import { mapActions, mapState } from 'vuex';
 import Form from '@/components/Form.vue';
 import PasswordInput from '@/components/PasswordInput.vue';
 import TextInput from '@/components/TextInput.vue';
-import * as fb from '@/firebaseConfig';
+import * as fb from '@/firebase';
 import { RootState } from '@/store/types';
 
 export default {

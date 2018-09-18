@@ -1,6 +1,6 @@
 import Vue from 'vue';
-import Vuex, { StoreOptions } from 'vuex';
-import * as fb from '@/firebaseConfig';
+import Vuex from 'vuex';
+import * as fb from '@/firebase';
 import { comments } from './modules/comments';
 import { features } from './modules/features';
 import { items } from './modules/items';

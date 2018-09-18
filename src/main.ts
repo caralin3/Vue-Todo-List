@@ -3,7 +3,7 @@ import App from './App.vue';
 import '@/less/index.less';
 import router from './router';
 import store from './store';
-import * as fb from '@/firebaseConfig';
+import * as fb from '@/firebase';
 
 Vue.config.productionTip = false;
 let app: any;
