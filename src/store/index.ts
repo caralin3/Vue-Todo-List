@@ -8,7 +8,7 @@ import { links } from './modules/links';
 import { projects } from './modules/projects';
 import { MutationType } from './mutation-types';
 import { RootState } from './types';
-import { FirebaseProject } from '@/types';
+import { Feature, Project } from '@/types';
 
 const debug = process.env.NODE_ENV !== 'production';
 
@@ -37,7 +37,8 @@ fb.auth.onAuthStateChanged((user: any) => {
     // realtime updates for projects collection
     fb.projectsCollection.orderBy('startDate', 'asc').onSnapshot((querySnapshot: any) => {
       if (querySnapshot.docChanges().length === querySnapshot.docs.length) {
-        const projectList: FirebaseProject[] = [];
+        const projectList: Project[] = [];
+
         querySnapshot.forEach((doc: any) => {
           const project = doc.data();
           project.startDate = new Date(doc.data().startDate);
@@ -48,7 +49,28 @@ fb.auth.onAuthStateChanged((user: any) => {
           project.id = doc.id;
           projectList.push(project);
         });
+
         store.commit('projects/' + MutationType.SET_PROJECTS, projectList);
+      }
+    });
+
+    // realtime updates for features collection
+    fb.featuresCollection.orderBy('startDate', 'asc').onSnapshot((querySnapshot: any) => {
+      if (querySnapshot.docChanges().length === querySnapshot.docs.length) {
+        const featureList: Feature[] = [];
+
+        querySnapshot.forEach((doc: any) => {
+          const feature = doc.data();
+          feature.startDate = new Date(doc.data().startDate);
+          feature.updatedDate = new Date(doc.data().updatedDate);
+          if (feature.endDate) {
+            feature.endDate = new Date(doc.data().endDate.toString());
+          }
+          feature.id = doc.id;
+          featureList.push(feature);
+        });
+
+        store.commit('features/' + MutationType.SET_FEATURES, featureList);
       }
     });
   }

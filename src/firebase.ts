@@ -34,7 +34,10 @@ const commentsCollection = db.collection('comments');
 export {
   db,
   auth,
+  commentsCollection,
   currentUser,
+  featuresCollection,
+  itemsCollection,
   usersCollection,
   projectsCollection,
 };

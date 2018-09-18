@@ -1,28 +1,60 @@
 import { GetterTree, MutationTree, ActionTree } from 'vuex';
+import * as fb from '@/firebase';
 import { Feature } from '@/types';
 import { MutationType } from '@/store/mutation-types';
-import { Feature1, Feature2, Feature3, Feature4 } from '@/store/state';
 
 export interface FeatureState {
   features: Feature[];
 }
 
 const initialState: FeatureState = {
-  features: [Feature1, Feature2, Feature3, Feature4],
+  features: [],
 };
 
 const actions: ActionTree<FeatureState, any> = {
   addFeature: ({commit}, feature: Feature): any => {
-    commit(MutationType.ADD_FEATURE, feature);
+    fb.featuresCollection.add(feature).then(() => {
+      let newFeature: Feature;
+      fb.featuresCollection.orderBy('startDate', 'asc')
+        .onSnapshot((querySnapshot: any) => {
+          querySnapshot.forEach((doc: any) => {
+            newFeature = doc.data();
+            newFeature.startDate = new Date(doc.data().startDate);
+            newFeature.updatedDate = new Date(doc.data().updatedDate);
+            if (newFeature.endDate) {
+              newFeature.endDate = new Date(doc.data().endDate);
+            }
+            newFeature.id = doc.id;
+          });
+          commit(MutationType.ADD_FEATURE, newFeature);
+        });
+    }).catch((err: any) => {
+      console.log(err.message);
+    });
   },
   editFeature: ({commit}, feature: Feature): any => {
-    commit(MutationType.EDIT_FEATURE, feature);
+    fb.featuresCollection.doc(feature.id).update(feature).then(() => {
+      const newFeature = {
+        ...feature,
+        startDate: new Date(feature.startDate),
+        updatedDate: new Date(feature.updatedDate),
+      };
+      if (feature.endDate) {
+        newFeature.endDate = new Date(feature.endDate);
+      }
+      commit(MutationType.EDIT_FEATURE, newFeature);
+    }).catch((err: any) => {
+      console.log(err.message);
+    });
   },
   removeFeature: ({commit}, feature: Feature): any => {
     commit(MutationType.REMOVE_FEATURE, feature);
   },
   removeAllFeatures: ({commit}): any => {
     commit(MutationType.REMOVE_ALL_FEATURES);
+  },
+  setFeatures: ({commit}, feature: Feature): any => {
+    commit(MutationType.SET_FEATURES, feature);
   },
 };
 
@@ -42,16 +74,15 @@ const mutations: MutationTree<FeatureState> = {
   [MutationType.REMOVE_ALL_FEATURES]: (state: FeatureState) => {
     state.features = [];
   },
+  [MutationType.SET_FEATURES]: (state: FeatureState, featureList: Feature[]) => {
+    state.features = featureList;
+  },
 };
 
 const getters: GetterTree<FeatureState, any> = {
   featureCount(state: FeatureState): number {
     return state.features.length;
   },
-  // projectFeatures(state: FeatureState): number {
-  //   // return state.features.length;
-  //   return state.features.map((id: string) => state.features.filter());
-  // },
 };
 
 export const features = {

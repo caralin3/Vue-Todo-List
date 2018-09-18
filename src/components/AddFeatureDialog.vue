@@ -18,6 +18,7 @@
 </template>
 
 <script lang="ts">
+import * as admin from 'firebase-admin';
 import { Component, Vue } from 'vue-property-decorator';
 import { mapActions } from 'vuex';
 import * as fb from '@/firebase';
@@ -31,7 +32,7 @@ import SelectUserInput from '@/components/SelectUserInput.vue';
 import TextAreaInput from '@/components/TextAreaInput.vue';
 import TextInput from '@/components/TextInput.vue';
 import { User1 } from '@/store/state';
-import { Feature, User, statusType, priorityType, Version } from '@/types';
+import { FirebaseFeature, User, statusType, priorityType, Version, Feature } from '@/types';
 import { getUserOptions, priorityOptions, statusOptions } from '@/utils/constants';
 import { uid } from '@/utils/guid';
 
@@ -79,31 +80,57 @@ import { uid } from '@/utils/guid';
     userOptions: [] as string[],
   }),
   methods: {
-    ...mapActions('features', [
-      'addFeature',
-    ]),
+    ...mapActions({
+      addFeature: 'features/addFeature',
+      editProject: 'projects/editProject',
+    }),
     dismissDialog(this: any) {
       this.toggleDialog();
     },
+    updateProject(this: any, feature: Feature) {
+      const projId = this.$route.params.id;
+      // fb.projectsCollection.doc(projId).get().then((docs: any) => {
+      //   console.log(docs);
+      // })
+      fb.projectsCollection.doc(projId).update({
+        features: admin.firestore.FieldValue.arrayUnion(feature),
+      }).then((proj) => {
+        console.log(projId);
+        console.log(feature);
+        console.log(proj);
+        // const newProj = {
+        //   ...proj,
+        //   startDate: new Date(proj.startDate),
+        //   updatedDate: new Date(proj.updatedDate),
+        // };
+        // if (proj.endDate) {
+        //   newProj.endDate = new Date(proj.endDate);
+        // }
+        // commit(MutationType.EDIT_PROJECT, newProj);
+      }).catch((err: any) => {
+        console.log(err.message);
+      });
+    },
     onSubmitForm(this: any) {
-      const newFeature: Feature = {
+      const newFeature: FirebaseFeature = {
         assignee: this.assignee,
         description: this.description,
         endDate: this.endDate,
         items: [],
-        id: uid(8),
         priority: this.priority,
+        projectId: this.$route.params.id,
         reporter: this.reporter,
-        startDate: this.startDate,
+        startDate: this.startDate.toString(),
         status: this.status,
         title: this.title,
-        updatedDate: this.startDate,
+        updatedDate: this.startDate.toString(),
         // FIXME: Version adding
         version: {} as Version,
         // FIXME: Workflow adding
         workFlow: [],
       };
       this.addFeature(newFeature);
+      this.updateProject(newFeature);
     },
   },
   watch: {

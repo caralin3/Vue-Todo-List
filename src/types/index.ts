@@ -57,6 +57,24 @@ export interface Item {
   workFlow: string[];
 }
 
+export interface FirebaseFeature {
+  assignee: User;
+  comments?: string[];
+  description: string;
+  endDate?: Date;
+  items: string[];
+  links?: string[];
+  priority: priorityType;
+  projectId: string;
+  reporter?: User;
+  startDate: Date;
+  status: statusType;
+  title: string;
+  updatedDate: Date;
+  version: Version;
+  workFlow: string[];
+}
+
 export interface Feature {
   assignee: User;
   comments?: string[];
@@ -66,6 +84,7 @@ export interface Feature {
   items: string[];
   links?: string[];
   priority: priorityType;
+  projectId: string;
   reporter?: User;
   startDate: Date;
   status: statusType;
