@@ -32,7 +32,7 @@ import TextAreaInput from '@/components/TextAreaInput.vue';
 import TextInput from '@/components/TextInput.vue';
 import { User1 } from '@/store/state';
 import { Feature, User, statusType, priorityType, Version } from '@/types';
-import { priorityOptions, statusOptions, getUserOptions } from '@/utils/constants';
+import { getUserOptions, priorityOptions, statusOptions } from '@/utils/constants';
 import { uid } from '@/utils/guid';
 
 @Component({
@@ -76,7 +76,6 @@ import { uid } from '@/utils/guid';
     status: 'todo' as statusType,
     statusOptions,
     title: '',
-    users: [] as User[],
     userOptions: [] as string[],
   }),
   methods: {

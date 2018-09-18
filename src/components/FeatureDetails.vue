@@ -28,7 +28,7 @@
       <div class="featureDetails_detailsData">
         <span class="featureDetails_detailsLabel">Assignee:</span>
         <span class="featureDetails_detailsText-edit" v-if="!edit.assignee" @click="toggleEdit('assignee')">
-          <span v-if="assignee.firstName === 'Select User'">
+          <span v-if="assignee.firstName === 'Select'">
             <i class="fas fa-user-circle featureDetails_details-userIcon" />
             {{ feature.assignee | name }}
           </span>
@@ -37,10 +37,10 @@
             {{ assignee | name }}
           </span>
         </span>
-        <SelectInput
+        <SelectUserInput
           :class="'featureDetails_select'"
           v-if="edit.assignee"
-          v-model="assignee"
+          v-model="assigneeId"
           :onBlur="() => this.edit.assignee = false"
           :onFocus="() => this.edit.assignee = true"
           :options="userOptions"
@@ -56,7 +56,7 @@
       <div class="featureDetails_detailsData">
         <span class="featureDetails_detailsLabel">Reporter:</span>
         <span class="featureDetails_detailsText-edit" v-if="!edit.reporter" @click="toggleEdit('reporter')">
-          <span v-if="reporter === 'Select User'">
+          <span v-if="reporter === 'Select'">
             <span v-if="feature.reporter">
               <i class="fas fa-user-circle featureDetails_details-userIcon" />
               {{ feature.reporter | name }}
@@ -68,10 +68,10 @@
           </span>
           <span v-else> None</span>
         </span>
-        <SelectInput
+        <SelectUserInput
           :class="'featureDetails_select'"
           v-if="edit.reporter"
-          v-model="reporter"
+          v-model="reporterId"
           :onBlur="() => this.edit.reporter = false"
           :onFocus="() => this.edit.reporter = true"
           :options="userOptions"
@@ -257,17 +257,20 @@ import Vue from 'vue';
 import { mapActions, mapState } from 'vuex';
 import AddItemDialog from '@/components/AddItemDialog.vue';
 import SelectInput from '@/components/SelectInput.vue';
+import SelectUserInput from '@/components/SelectUserInput.vue';
 import { Comment, Feature, Item, Link, priorityType, statusType, User } from '@/types';
-import { priorityOptions, statusOptions } from '@/utils/constants';
+import { getUserOptions, priorityOptions, statusOptions } from '@/utils/constants';
 
 export default {
   created(this: any) {
     this.projId = this.$route.params.id;
     this.loadFeatureState();
+    this.userOptions = getUserOptions();
   },
   components: {
     AddItemDialog,
     SelectInput,
+    SelectUserInput,
   },
   props: {
     feature: {},
@@ -275,11 +278,12 @@ export default {
   },
   data: () => ({
     assignee: {
-      firstName: 'Select User',
-      id: '0',
       email: '',
-      lastName: '',
+      firstName: 'Select',
+      id: '',
+      lastName: 'User',
     } as User,
+    assigneeId: '',
     edit: {
       assignee: false,
       link: {
@@ -295,11 +299,12 @@ export default {
     featureLinks: [] as Link[],
     projId: String,
     reporter: {
-      firstName: 'Select User',
-      id: '0',
       email: '',
-      lastName: '',
+      firstName: 'Select',
+      id: '',
+      lastName: 'User',
     } as User,
+    reporterId: '',
     priority: 'Select Priority' as priorityType,
     priorityOptions,
     show: false,
@@ -311,7 +316,7 @@ export default {
     updatedItem: {} as Item,
     updatedFeature: {} as Feature,
     updatedLink: {} as Link,
-    users: [] as User[],
+    userOptions: [] as string[],
   }),
   computed: {
     ...mapState({
@@ -417,15 +422,19 @@ export default {
     },
   },
   watch: {
-    assignee(this: any) {
+    assigneeId(this: any) {
       this.edit.assignee = !this.edit.assignee;
-      // TODO edit assignee
-      // this.updatedFeature = {
-      //   ...this.updatedFeature,
-      //   assignee: this.assignee,
-      //   updatedDate: new Date(),
-      // };
-      // this.editFeature(this.updatedFeature);
+      for (const user of this.userOptions) {
+        if (user.id === this.assigneeId) {
+          this.assignee = user;
+        }
+      }
+      this.updatedFeature = {
+        ...this.updatedFeature,
+        assignee: this.assignee,
+        updatedDate: new Date(),
+      };
+      this.editFeature(this.updatedFeature);
     },
     feature(this: any) {
       this.loadFeatureState();
@@ -439,9 +448,19 @@ export default {
       };
       this.editFeature(this.updatedFeature);
     },
-    reporter(this: any) {
+    reporterId(this: any) {
       this.edit.reporter = !this.edit.reporter;
-      // TODO edit reporter
+      for (const user of this.userOptions) {
+        if (user.id === this.reporterId) {
+          this.reporter = user;
+        }
+      }
+      this.updatedFeature = {
+        ...this.updatedFeature,
+        reporter: this.reporter,
+        updatedDate: new Date(),
+      };
+      this.editFeature(this.updatedFeature);
     },
     status(this: any) {
       this.edit.status = !this.edit.status;

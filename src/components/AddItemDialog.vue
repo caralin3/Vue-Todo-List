@@ -3,8 +3,8 @@
     <Dialog title="Add Item" :toggleDialog="dismissDialog">
       <Form buttonText="Add Item" :toggleDialog="dismissDialog" :submit="onSubmitForm">
         <div class="addItem_dialog">
-          <SelectInput :class="'addItem_select'" label="Assignee" v-model="assignee" :options="statusOptions" :onBlur="() => null" :onFocus="() => null" />
-          <SelectInput :class="'addItem_select'" label="Reporter" v-model="reporter" :options="statusOptions" :onBlur="() => null" :onFocus="() => null" />
+          <SelectUserInput :class="'addFeature_select'" label="Assignee" v-model="assigneeId" :options="userOptions" :onBlur="() => null" :onFocus="() => null" />
+          <SelectUserInput :class="'addFeature_select'" label="Reporter" v-model="reporterId" :options="userOptions" :onBlur="() => null" :onFocus="() => null" />
           <TextInput :class="'addItem_textInput'" label="Item Name" placeholder="" v-model="title" />
           <TextAreaInput :class="'addItem_textAreaInput'" label="Item Description" placeholder="" v-model="description" />
           <DateInput :class="'addItem_dateInput'" label="Start Date" v-model="startDate" />
@@ -23,14 +23,15 @@ import { Component, Vue } from 'vue-property-decorator';
 import { mapActions } from 'vuex';
 import DateInput from '@/components/DateInput.vue';
 import Dialog from '@/components/Dialog.vue';
-import SelectInput from '@/components/SelectInput.vue';
 import Form from '@/components/Form.vue';
 import ProjectList from '@/components/ProjectList.vue';
 import ProjectsHeader from '@/components/ProjectsHeader.vue';
+import SelectInput from '@/components/SelectInput.vue';
+import SelectUserInput from '@/components/SelectUserInput.vue';
 import TextAreaInput from '@/components/TextAreaInput.vue';
 import TextInput from '@/components/TextInput.vue';
 import { Item, User, statusType, priorityType, Version, itemType } from '@/types';
-import { itemTypeOptions, priorityOptions, statusOptions } from '@/utils/constants';
+import { getUserOptions, itemTypeOptions, priorityOptions, statusOptions } from '@/utils/constants';
 import { uid } from '@/utils/guid';
 
 @Component({
@@ -38,6 +39,7 @@ import { uid } from '@/utils/guid';
     DateInput,
     Dialog,
     SelectInput,
+    SelectUserInput,
     Form,
     ProjectsHeader,
     ProjectList,
@@ -47,20 +49,35 @@ import { uid } from '@/utils/guid';
   props: {
     toggleDialog: Function,
   },
+  created(this: any) {
+    this.userOptions = getUserOptions();
+  },
   data: () => ({
-    assignee: {} as User,
+    assignee: {
+      email: '',
+      firstName: 'Select',
+      id: '',
+      lastName: 'User',
+    } as User,
+    assigneeId: '',
     description: '',
     endDate: '',
     itemTypeOptions,
     priority: 'Select Priority' as priorityType,
     priorityOptions,
-    reporter: {} as User,
+    reporter: {
+      email: '',
+      firstName: 'Select',
+      id: '',
+      lastName: 'User',
+    } as User,
+    reporterId: '',
     startDate: new Date(),
     status: 'todo' as statusType,
     statusOptions,
     title: '',
     type: 'Select Type' as itemType,
-    // FIXME: userOptions,
+    userOptions: [] as string[],
   }),
   methods: {
     ...mapActions('items', [
@@ -90,6 +107,22 @@ import { uid } from '@/utils/guid';
         workFlow: [],
       };
       this.addItem(newItem);
+    },
+  },
+  watch: {
+    assigneeId(this: any) {
+      for (const user of this.userOptions) {
+        if (user.id === this.assigneeId) {
+          this.assignee = user;
+        }
+      }
+    },
+    reporterId(this: any) {
+      for (const user of this.userOptions) {
+        if (user.id === this.reporterId) {
+          this.reporter = user;
+        }
+      }
     },
   },
 })

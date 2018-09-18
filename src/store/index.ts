@@ -20,9 +20,9 @@ fb.auth.onAuthStateChanged((user: any) => {
       .then((curr: any) => {
         const currentUser = {
           email: curr.data().email,
-          first: curr.data().firstName,
+          firstName: curr.data().firstName,
           id: curr.id,
-          last: curr.data().lastName,
+          lastName: curr.data().lastName,
         };
         store.commit(MutationType.SET_CURRENT_USER, currentUser);
         store.commit(MutationType.SET_USER_PROFILE, currentUser);

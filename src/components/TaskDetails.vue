@@ -28,7 +28,7 @@
       <div class="taskDetails_detailsData">
         <span class="taskDetails_detailsLabel">Assignee:</span>
         <span class="taskDetails_detailsText-edit" v-if="!edit.assignee" @click="toggleEdit('assignee')">
-          <span v-if="assignee.firstName === 'Select User'">
+          <span v-if="assignee.firstName === 'Select'">
             <i class="fas fa-user-circle taskDetails_details-userIcon" />
             {{ task.assignee | name }}
           </span>
@@ -37,10 +37,10 @@
             {{ assignee | name }}
           </span>
         </span>
-        <SelectInput
+        <SelectUserInput
           :class="'taskDetails_select'"
           v-if="edit.assignee"
-          v-model="assignee"
+          v-model="assigneeId"
           :onBlur="() => this.edit.assignee = false"
           :onFocus="() => this.edit.assignee = true"
           :options="userOptions"
@@ -56,7 +56,7 @@
       <div class="taskDetails_detailsData">
         <span class="taskDetails_detailsLabel">Reporter:</span>
         <span class="taskDetails_detailsText-edit" v-if="!edit.reporter" @click="toggleEdit('reporter')">
-          <span v-if="reporter === 'Select User'">
+          <span v-if="reporter === 'Select'">
             <span v-if="task.reporter">
               <i class="fas fa-user-circle taskDetails_details-userIcon" />
               {{ task.reporter | name }}
@@ -68,10 +68,10 @@
           </span>
           <span v-else> None</span>
         </span>
-        <SelectInput
+        <SelectUserInput
           :class="'taskDetails_select'"
           v-if="edit.reporter"
-          v-model="reporter"
+          v-model="reporterId"
           :onBlur="() => this.edit.reporter = false"
           :onFocus="() => this.edit.reporter = true"
           :options="userOptions"
@@ -241,17 +241,20 @@ import Vue from 'vue';
 import { mapActions, mapState } from 'vuex';
 import Dialog from '@/components/Dialog.vue';
 import SelectInput from '@/components/SelectInput.vue';
+import SelectUserInput from '@/components/SelectUserInput.vue';
 import { Comment, Feature, Item, Link, priorityType, statusType, User } from '@/types';
-import { priorityOptions, statusOptions } from '@/utils/constants';
+import { getUserOptions, priorityOptions, statusOptions } from '@/utils/constants';
 
 export default {
   created(this: any) {
     this.projId = this.$route.params.id;
     this.loadTaskState();
+    this.userOptions = getUserOptions();
   },
   components: {
     Dialog,
     SelectInput,
+    SelectUserInput,
   },
   props: {
     task: {},
@@ -259,11 +262,12 @@ export default {
   },
   data: () => ({
     assignee: {
-      firstName: 'Select User',
-      id: '0',
       email: '',
-      lastName: '',
+      firstName: 'Select',
+      id: '',
+      lastName: 'User',
     } as User,
+    assigneeId: '',
     edit: {
       assignee: false,
       link: {
@@ -279,11 +283,12 @@ export default {
     taskLinks: [] as Link[],
     projId: String,
     reporter: {
-      firstName: 'Select User',
-      id: '0',
       email: '',
-      lastName: '',
+      firstName: 'Select',
+      id: '',
+      lastName: 'User',
     } as User,
+    reporterId: '',
     priority: 'Select Priority' as priorityType,
     priorityOptions,
     show: false,
@@ -293,7 +298,7 @@ export default {
     updatedComment: {} as Comment,
     updatedItem: {} as Item,
     updatedLink: {} as Link,
-    users: [] as User[],
+    userOptions: [] as string[],
   }),
   computed: {
     ...mapState({
@@ -394,15 +399,19 @@ export default {
     },
   },
   watch: {
-    assignee(this: any) {
+    assigneeId(this: any) {
       this.edit.assignee = !this.edit.assignee;
-      // TODO edit assignee
-      // this.updatedItem = {
-      //   ...this.updatedItem,
-      //   assignee: this.assignee,
-      //   updatedDate: new Date(),
-      // };
-      // this.editItem(this.updatedItem);
+      for (const user of this.userOptions) {
+        if (user.id === this.assigneeId) {
+          this.assignee = user;
+        }
+      }
+      this.updatedItem = {
+        ...this.updatedItem,
+        assignee: this.assignee,
+        updatedDate: new Date(),
+      };
+      this.editItem(this.updatedItem);
     },
     task(this: any) {
       this.loadTaskState();
@@ -416,9 +425,19 @@ export default {
       };
       this.editItem(this.updatedItem);
     },
-    reporter(this: any) {
+    reporterId(this: any) {
       this.edit.reporter = !this.edit.reporter;
-      // TODO edit reporter
+      for (const user of this.userOptions) {
+        if (user.id === this.reporterId) {
+          this.reporter = user;
+        }
+      }
+      this.updatedItem = {
+        ...this.updatedItem,
+        reporter: this.reporter,
+        updatedDate: new Date(),
+      };
+      this.editItem(this.updatedItem);
     },
     status(this: any) {
       this.edit.status = !this.edit.status;

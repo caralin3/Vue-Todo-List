@@ -3,10 +3,10 @@
     <Dialog title="Create Project" :toggleDialog="dismissDialog">
       <Form buttonText="Add Project" :toggleDialog="dismissDialog" :submit="onSubmitForm">
         <div class="addProject_dialog">
-          <span class="addProject_creatorLabel" :creator="creator">
+          <span class="addProject_creatorLabel" :currentUser="currentUser">
             Creator
           </span>
-          <span class="addProject_username">{{ creator | name }}</span>
+          <span class="addProject_username">{{ currentUser | name }}</span>
           <TextInput :class="'addProject_textInput'" label="Project Name" placeholder="" v-model="title" />
           <TextAreaInput :class="'addProject_textAreaInput'" label="Project Description" placeholder="" v-model="description" />
           <DateInput :class="'addProject_dateInput'" label="Start Date" v-model="startDate" />
@@ -21,7 +21,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import { mapActions } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 import DateInput from '@/components/DateInput.vue';
 import Dialog from '@/components/Dialog.vue';
 import SelectInput from '@/components/SelectInput.vue';
@@ -30,10 +30,11 @@ import ProjectList from '@/components/ProjectList.vue';
 import ProjectsHeader from '@/components/ProjectsHeader.vue';
 import TextAreaInput from '@/components/TextAreaInput.vue';
 import TextInput from '@/components/TextInput.vue';
-import { User1 } from '@/store/state';
+import { RootState } from '@/store/types';
 import { Project, User, statusType } from '@/types';
 import { statusOptions } from '@/utils/constants';
 import { uid } from '@/utils/guid';
+
 
 @Component({
   components: {
@@ -50,7 +51,6 @@ import { uid } from '@/utils/guid';
     toggleDialog: Function,
   },
   data: () => ({
-    creator: User1 as User,
     description: '',
     endDate: '',
     startDate: new Date(),
@@ -59,6 +59,11 @@ import { uid } from '@/utils/guid';
     title: '',
     versionName: String,
   }),
+  computed: {
+    ...mapState({
+      currentUser: (state: RootState) => state.currentUser,
+    }),
+  },
   methods: {
     ...mapActions('projects', [
       'addProject',
@@ -68,7 +73,7 @@ import { uid } from '@/utils/guid';
     },
     onSubmitForm(this: any) {
       const newProj: Project = {
-        creator: this.creator,
+        creator: this.currentUser,
         description: this.description,
         endDate: this.endDate,
         features: [],
