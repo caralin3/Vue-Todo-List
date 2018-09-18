@@ -32,8 +32,10 @@ export default {
   },
   methods: {
     getTitle(this: any) {
-      const index: number = this.projects.findIndex((p: any) => p.id === this.id);
-      return this.projects[index].title;
+      if (this.projects.length > 0) {
+        const index: number = this.projects.findIndex((p: any) => p.id === this.id);
+        return this.projects[index].title;
+      }
     },
   },
 };

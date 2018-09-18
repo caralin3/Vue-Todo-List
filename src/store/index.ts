@@ -36,18 +36,20 @@ fb.auth.onAuthStateChanged((user: any) => {
 
     // realtime updates for projects collection
     fb.projectsCollection.orderBy('startDate', 'asc').onSnapshot((querySnapshot: any) => {
-      const projectList: FirebaseProject[] = [];
-      querySnapshot.forEach((doc: any) => {
-        const project = doc.data();
-        project.startDate = new Date(doc.data().startDate);
-        project.updatedDate = new Date(doc.data().updatedDate);
-        if (project.endDate) {
-          project.endDate = new Date(doc.data().endDate);
-        }
-        project.id = doc.id;
-        projectList.push(project);
-      });
-      store.commit('projects/' + MutationType.SET_PROJECTS, projectList);
+      if (querySnapshot.docChanges().length === querySnapshot.docs.length) {
+        const projectList: FirebaseProject[] = [];
+        querySnapshot.forEach((doc: any) => {
+          const project = doc.data();
+          project.startDate = new Date(doc.data().startDate);
+          project.updatedDate = new Date(doc.data().updatedDate);
+          if (project.endDate) {
+            project.endDate = new Date(doc.data().endDate.toString());
+          }
+          project.id = doc.id;
+          projectList.push(project);
+        });
+        store.commit('projects/' + MutationType.SET_PROJECTS, projectList);
+      }
     });
   }
 });

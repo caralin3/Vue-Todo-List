@@ -107,7 +107,7 @@
         <h3 class="projectDetails_subtitle-title">Features</h3>
         <i class="fas fa-plus projectDetails_subtitle-add" />
       </span>
-      <div class="projectDetails_features" v-if="projFeatures.length > 0">
+      <div class="projectDetails_features" v-if="projFeatures && projFeatures.length > 0">
         <router-link
           class="projectDetails_featureDetails"
           v-for="feature in projFeatures"
@@ -176,10 +176,11 @@
 
 <script lang="ts">
 import Vue from 'vue';
+import * as fb from '@/firebase';
 import { mapActions, mapState } from 'vuex';
 import Dialog from '@/components/Dialog.vue';
 import SelectInput from '@/components/SelectInput.vue';
-import { Comment, Feature, Link, Project, statusType, Version } from '@/types';
+import { Comment, Feature, FirebaseProject, Link, Project, statusType, Version } from '@/types';
 import { statusOptions } from '@/utils/constants';
 
 export default {
@@ -189,9 +190,11 @@ export default {
   },
   created(this: any) {
     this.id = this.$route.params.id;
-    const index: number = this.projects.findIndex((p: any) => p.id === this.id);
-    this.proj = this.projects[index];
-    this.loadProjectState();
+    if (this.projects.length > 0) {
+      const index: number = this.projects.findIndex((p: any) => p.id === this.id);
+      this.proj = this.projects[index];
+      this.loadProjectState();
+    }
   },
   data: () => ({
     id: String,
@@ -228,6 +231,7 @@ export default {
       editComment: 'comments/editComment',
       editProject: 'projects/editProject',
       editLink: 'links/editLink',
+      setProjects: 'projects/setProjects',
     }),
     initalizeProjectArrays(ids: string[], stateArray: any[], projArray: any[]) {
       for (const id of ids) {
@@ -263,9 +267,9 @@ export default {
     handleCommentChange(this: any, value: string, comm: Comment) {
       this.updatedComment = {
         id: comm.id,
-        startDate: comm.startDate,
+        startDate: new Date(comm.startDate).toString(),
         text: value,
-        updatedDate: new Date(),
+        updatedDate: new Date().toString(),
         user: comm.user,
       };
       this.editComment(this.updatedComment);
@@ -273,9 +277,9 @@ export default {
     handleLinkChange(this: any, value: string, link: Link) {
       this.updatedLink = {
         id: link.id,
-        startDate: link.startDate,
+        startDate: new Date(link.startDate).toString(),
         to: value,
-        updatedDate: new Date(),
+        updatedDate: new Date().toString(),
         user: link.user,
       };
       this.edit.link.editing = false;
@@ -286,13 +290,15 @@ export default {
         this.updatedProject = {
           ...this.updatedProject,
           description: value,
-          updatedDate: new Date(),
+          startDate: new Date(this.updatedProject.startDate).toString(),
+          updatedDate: new Date().toString(),
         };
       } else if (type === 'title') {
         this.updatedProject = {
           ...this.updatedProject,
           title: value,
-          updatedDate: new Date(),
+          startDate: new Date(this.updatedProject.startDate).toString(),
+          updatedDate: new Date().toString(),
         };
       }
       this.editProject(this.updatedProject);
@@ -313,8 +319,14 @@ export default {
       this.updatedProject = {
         ...this.updatedProject,
         status: this.status,
-        updatedDate: new Date(),
+        startDate: new Date(this.updatedProject.startDate).toString(),
+        updatedDate: new Date().toString(),
       };
+      if (this.status === 'completed' || this.status === 'closed') {
+        this.updatedProject.endDate = new Date().toString();
+      } else {
+        this.updatedProject.endDate = null;
+      }
       this.editProject(this.updatedProject);
     },
   },

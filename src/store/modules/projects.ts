@@ -14,25 +14,38 @@ const initialState: ProjectState = {
 const actions: ActionTree<ProjectState, any> = {
   addProject: ({commit}, proj: Project): any => {
     fb.projectsCollection.add(proj).then(() => {
+      let newProj: Project;
       fb.projectsCollection.orderBy('startDate', 'asc')
         .onSnapshot((querySnapshot: any) => {
           querySnapshot.forEach((doc: any) => {
-            const newProj = doc.data();
+            newProj = doc.data();
             newProj.startDate = new Date(doc.data().startDate);
             newProj.updatedDate = new Date(doc.data().updatedDate);
             if (newProj.endDate) {
               newProj.endDate = new Date(doc.data().endDate);
             }
             newProj.id = doc.id;
-            commit(MutationType.ADD_PROJECT, newProj);
           });
+          commit(MutationType.ADD_PROJECT, newProj);
         });
     }).catch((err: any) => {
       console.log(err.message);
     });
   },
   editProject: ({commit}, proj: Project): any => {
-    commit(MutationType.EDIT_PROJECT, proj);
+    fb.projectsCollection.doc(proj.id).update(proj).then(() => {
+      const newProj = {
+        ...proj,
+        startDate: new Date(proj.startDate),
+        updatedDate: new Date(proj.updatedDate),
+      };
+      if (proj.endDate) {
+        newProj.endDate = new Date(proj.endDate);
+      }
+      commit(MutationType.EDIT_PROJECT, newProj);
+    }).catch((err: any) => {
+      console.log(err.message);
+    });
   },
   removeProject: ({commit}, proj: Project): any => {
     commit(MutationType.REMOVE_PROJECT, proj);

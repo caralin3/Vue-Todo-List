@@ -75,12 +75,12 @@ import { uid } from '@/utils/guid';
       const newProj: FirebaseProject = {
         creator: this.currentUser,
         description: this.description,
-        endDate: this.endDate,
+        endDate: this.endDate.toString(),
         features: [],
-        startDate: this.startDate,
+        startDate: this.startDate.toString(),
         status: this.status,
         title: this.title,
-        updatedDate: this.startDate,
+        updatedDate: this.startDate.toString(),
         // FIXME: Version adding
         versions: [this.versionName],
       };
