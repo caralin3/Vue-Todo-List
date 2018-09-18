@@ -1,12 +1,13 @@
 import { mount } from '@vue/test-utils';
-import SelectInput from '@/components/SelectInput.vue';
-import { statusOptions } from '@/utils/constants';
+import SelectUserInput from '@/components/SelectUserInput.vue';
+import { getUserOptions } from '@/utils/constants';
+import { User } from '@/types';
 import '@/utils/filters';
 
-describe('SelectInput', () => {
+describe('SelectUserInput', () => {
   const value = 'Selected Value';
-  const options = statusOptions;
-  const wrapper: any = mount(SelectInput, {
+  const options: User[] = getUserOptions();
+  const wrapper: any = mount(SelectUserInput, {
     propsData: {
       label: 'Label',
       options,

@@ -4,9 +4,9 @@ export type priorityType = 'minor' | 'major' | 'critical' | 'blocker';
 
 export interface User {
   email: string;
-  first: string;
+  firstName: string;
   id: string;
-  last: string;
+  lastName: string;
 }
 
 export interface Comment {

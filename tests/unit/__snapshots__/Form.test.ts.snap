@@ -15,14 +15,12 @@ exports[`Form renders the correct markup 1`] = `
 >
   <label
     class="textInput_label"
-    for="textInput"
   >
     
   </label>
    
   <input
     class="textInput_input"
-    id="textInput"
     type="text"
   />
 </p>

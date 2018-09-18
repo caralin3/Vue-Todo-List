@@ -2,9 +2,9 @@ import { Project, Feature, WorkHistory, User, Comment, Version, Item, Link } fro
 
 export const User1: User = {
   email: 'email',
-  first: 'First',
+  firstName: 'First',
   id: '0',
-  last: 'Last',
+  lastName: 'Last',
 };
 
 export const Comment1: Comment = {

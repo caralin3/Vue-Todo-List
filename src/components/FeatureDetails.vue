@@ -28,7 +28,7 @@
       <div class="featureDetails_detailsData">
         <span class="featureDetails_detailsLabel">Assignee:</span>
         <span class="featureDetails_detailsText-edit" v-if="!edit.assignee" @click="toggleEdit('assignee')">
-          <span v-if="assignee.first === 'Select User'">
+          <span v-if="assignee.firstName === 'Select User'">
             <i class="fas fa-user-circle featureDetails_details-userIcon" />
             {{ feature.assignee | name }}
           </span>
@@ -275,10 +275,10 @@ export default {
   },
   data: () => ({
     assignee: {
-      first: 'Select User',
+      firstName: 'Select User',
       id: '0',
       email: '',
-      last: '',
+      lastName: '',
     } as User,
     edit: {
       assignee: false,
@@ -295,10 +295,10 @@ export default {
     featureLinks: [] as Link[],
     projId: String,
     reporter: {
-      first: 'Select User',
+      firstName: 'Select User',
       id: '0',
       email: '',
-      last: '',
+      lastName: '',
     } as User,
     priority: 'Select Priority' as priorityType,
     priorityOptions,

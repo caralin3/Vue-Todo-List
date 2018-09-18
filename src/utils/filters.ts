@@ -25,7 +25,7 @@ Vue.filter('time', (value: Date) => {
 
 Vue.filter('name', (value: User) => {
     if (value) {
-      return value.first + ' ' + value.last;
+      return value.firstName + ' ' + value.lastName;
     }
   },
 );

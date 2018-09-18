@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SelectUserInput receives the correct props 1`] = `
+Object {
+  "0": Object {
+    "email": "",
+    "firstName": "Select",
+    "id": "",
+    "lastName": "User",
+  },
+}
+`;
+
+exports[`SelectUserInput receives the correct props: Selected Value 1`] = `"Selected Value"`;
+
+exports[`SelectUserInput renders the correct markup 1`] = `
+<p
+  class="selectInput"
+>
+  <label
+    class="selectInput_label"
+    for="Label"
+  >
+    Label
+  </label>
+   
+  <select
+    class="selectInput_input"
+    id="Label"
+  >
+    <option
+      value=""
+    >
+      Select User
+    </option>
+  </select>
+</p>
+`;

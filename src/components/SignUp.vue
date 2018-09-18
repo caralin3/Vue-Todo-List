@@ -2,8 +2,8 @@
   <div class="signup">
     <h2 class="signup_title">Sign Up</h2>
     <Form class="signup_form" buttonText="Sign Up" :toggleDialog="() => null" :submit="onSignUp">
-      <TextInput class="signup_input" label="First Name" v-model="first" />
-      <TextInput class="signup_input" label="Last Name" v-model="last" />
+      <TextInput class="signup_input" label="First Name" v-model="firstName" />
+      <TextInput class="signup_input" label="Last Name" v-model="lastName" />
       <TextInput class="signup_input" label="Email" v-model="email" />
       <PasswordInput class="signup_input" label="Password" v-model="password" />
       <PasswordInput class="signup_input" label="Confirm Password" v-model="passwordConfirm" />
@@ -35,8 +35,8 @@ export default {
   data: () => ({
     email: String,
     errorMsg: String,
-    first: String,
-    last: String,
+    firstName: String,
+    lastName: String,
     password: String,
     passwordConfirm: String,
     performingRequest: false,
@@ -52,15 +52,15 @@ export default {
         .then((user: any) => {
           const currentUser: User = {
             email: this.email,
-            first: this.first,
+            firstName: this.firstName,
             id: user.user.uid,
-            last: this.last,
+            lastName: this.lastName,
           };
           this.setCurrentUser(currentUser);
           // create user object
           fb.usersCollection.doc(user.user.uid).set({
-            firstName: this.first,
-            lastName: this.last,
+            firstNameName: this.firstName,
+            lastNameName: this.lastName,
             email: this.email,
           }).then(() => {
             this.fetchUserProfile(user);

@@ -31,7 +31,7 @@
       <div class="bugDetails_detailsData">
         <span class="bugDetails_detailsLabel">Assignee:</span>
         <span class="bugDetails_detailsText-edit" v-if="!edit.assignee" @click="toggleEdit('assignee')">
-          <span v-if="assignee.first === 'Select User'">
+          <span v-if="assignee.firstName === 'Select User'">
             <i class="fas fa-user-circle bugDetails_details-userIcon" />
             {{ bug.assignee | name }}
           </span>
@@ -262,10 +262,10 @@ export default {
   },
   data: () => ({
     assignee: {
-      first: 'Select User',
+      firstName: 'Select User',
       id: '0',
       email: '',
-      last: '',
+      lastName: '',
     } as User,
     edit: {
       assignee: false,
@@ -282,10 +282,10 @@ export default {
     bugLinks: [] as Link[],
     projId: String,
     reporter: {
-      first: 'Select User',
+      firstName: 'Select User',
       id: '0',
       email: '',
-      last: '',
+      lastName: '',
     } as User,
     priority: 'Select Priority' as priorityType,
     priorityOptions,

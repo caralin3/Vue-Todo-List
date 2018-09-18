@@ -28,7 +28,7 @@
       <div class="taskDetails_detailsData">
         <span class="taskDetails_detailsLabel">Assignee:</span>
         <span class="taskDetails_detailsText-edit" v-if="!edit.assignee" @click="toggleEdit('assignee')">
-          <span v-if="assignee.first === 'Select User'">
+          <span v-if="assignee.firstName === 'Select User'">
             <i class="fas fa-user-circle taskDetails_details-userIcon" />
             {{ task.assignee | name }}
           </span>
@@ -259,10 +259,10 @@ export default {
   },
   data: () => ({
     assignee: {
-      first: 'Select User',
+      firstName: 'Select User',
       id: '0',
       email: '',
-      last: '',
+      lastName: '',
     } as User,
     edit: {
       assignee: false,
@@ -279,10 +279,10 @@ export default {
     taskLinks: [] as Link[],
     projId: String,
     reporter: {
-      first: 'Select User',
+      firstName: 'Select User',
       id: '0',
       email: '',
-      last: '',
+      lastName: '',
     } as User,
     priority: 'Select Priority' as priorityType,
     priorityOptions,

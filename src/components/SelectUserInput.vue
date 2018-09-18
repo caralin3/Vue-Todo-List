@@ -4,12 +4,12 @@
     <select
       class="selectInput_input"
       :id="label"
-      :defaultValue="value"
+      :defaultValue="value.id"
       @blur="onBlur"
       @focus="onFocus"
       @change="onChange($event.target.value)"
     >
-      <option v-for="(option, index) in options" :value="option" :key="index">{{ option | capitalize }}</option>
+      <option v-if="option.firstName && option.lastName" v-for="(option, index) in options" :value="option.id" :key="index">{{ option | name }}</option>
     </select>
   </p>
 </template>

@@ -8,14 +8,14 @@ exports[`ProjectsHeader renders the correct markup 1`] = `
 >
   <label
     class="textInput_label"
-    for="textInput"
+    for="Label"
   >
     Label
   </label>
    
   <input
     class="textInput_input"
-    id="textInput"
+    id="Label"
     placeholder=""
     type="text"
   />

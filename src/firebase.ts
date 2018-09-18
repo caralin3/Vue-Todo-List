@@ -27,9 +27,9 @@ db.settings(settings);
 // firebase collections
 const usersCollection = db.collection('users');
 const projectsCollection = db.collection('projects');
-// const featuresCollection = db.collection('features');
-// const itemsCollection = db.collection('items');
-// const commentsCollection = db.collection('comments');
+const featuresCollection = db.collection('features');
+const itemsCollection = db.collection('items');
+const commentsCollection = db.collection('comments');
 
 export {
   db,

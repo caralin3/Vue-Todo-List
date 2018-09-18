@@ -4,8 +4,8 @@
       <Form buttonText="Add Feature" :toggleDialog="dismissDialog" :submit="onSubmitForm">
         <div class="addFeature_dialog">
           <TextInput :class="'addFeature_textInput'" label="Feature Name" placeholder="" v-model="title" />
-          <SelectInput :class="'addFeature_select'" label="Assignee" v-model="assignee" :options="userOptions" :onBlur="() => null" :onFocus="() => null" />
-          <SelectInput :class="'addFeature_select'" label="Reporter" v-model="reporter" :options="userOptions" :onBlur="() => null" :onFocus="() => null" />
+          <SelectUserInput :class="'addFeature_select'" label="Assignee" v-model="assigneeId" :options="userOptions" :onBlur="() => null" :onFocus="() => null" />
+          <SelectUserInput :class="'addFeature_select'" label="Reporter" v-model="reporterId" :options="userOptions" :onBlur="() => null" :onFocus="() => null" />
           <TextAreaInput :class="'addFeature_textAreaInput'" label="Feature Description" placeholder="" v-model="description" />
           <DateInput :class="'addFeature_dateInput'" label="Start Date" v-model="startDate" />
           <DateInput :class="'addFeature_dateInput'" label="End Date" v-model="endDate" />
@@ -20,46 +20,64 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import { mapActions } from 'vuex';
+import * as fb from '@/firebase';
 import DateInput from '@/components/DateInput.vue';
 import Dialog from '@/components/Dialog.vue';
-import SelectInput from '@/components/SelectInput.vue';
 import Form from '@/components/Form.vue';
 import ProjectList from '@/components/ProjectList.vue';
 import ProjectsHeader from '@/components/ProjectsHeader.vue';
+import SelectInput from '@/components/SelectInput.vue';
+import SelectUserInput from '@/components/SelectUserInput.vue';
 import TextAreaInput from '@/components/TextAreaInput.vue';
 import TextInput from '@/components/TextInput.vue';
 import { User1 } from '@/store/state';
 import { Feature, User, statusType, priorityType, Version } from '@/types';
-import { priorityOptions, statusOptions } from '@/utils/constants';
+import { priorityOptions, statusOptions, getUserOptions } from '@/utils/constants';
 import { uid } from '@/utils/guid';
 
 @Component({
   components: {
     DateInput,
     Dialog,
-    SelectInput,
     Form,
     ProjectsHeader,
     ProjectList,
+    SelectInput,
+    SelectUserInput,
     TextAreaInput,
     TextInput,
   },
   props: {
     toggleDialog: Function,
   },
+  created(this: any) {
+    this.userOptions = getUserOptions();
+  },
   data: () => ({
-    assignee: String,
+    assignee: {
+      email: '',
+      firstName: 'Select',
+      id: '',
+      lastName: 'User',
+    } as User,
+    assigneeId: '',
     description: '',
     endDate: '',
     priority: 'Select Priority' as priorityType,
     priorityOptions,
-    reporter: String,
+    reporter: {
+      email: '',
+      firstName: 'Select',
+      id: '',
+      lastName: 'User',
+    } as User,
+    reporterId: '',
     startDate: new Date(),
     status: 'todo' as statusType,
     statusOptions,
     title: '',
-    // FIXME:
-    userOptions: ['First Last', 'Second Last'],
+    users: [] as User[],
+    userOptions: [] as string[],
   }),
   methods: {
     ...mapActions('features', [
@@ -87,6 +105,22 @@ import { uid } from '@/utils/guid';
         workFlow: [],
       };
       this.addFeature(newFeature);
+    },
+  },
+  watch: {
+    assigneeId(this: any) {
+      for (const user of this.userOptions) {
+        if (user.id === this.assigneeId) {
+          this.assignee = user;
+        }
+      }
+    },
+    reporterId(this: any) {
+      for (const user of this.userOptions) {
+        if (user.id === this.reporterId) {
+          this.reporter = user;
+        }
+      }
     },
   },
 })
