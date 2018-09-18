@@ -8,6 +8,7 @@ import { links } from './modules/links';
 import { projects } from './modules/projects';
 import { MutationType } from './mutation-types';
 import { RootState } from './types';
+import { FirebaseProject } from '@/types';
 
 const debug = process.env.NODE_ENV !== 'production';
 
@@ -16,6 +17,7 @@ Vue.use(Vuex);
 // Handle page reload
 fb.auth.onAuthStateChanged((user: any) => {
   if (user) {
+    // Set current user
     fb.usersCollection.doc(user.uid).get()
       .then((curr: any) => {
         const currentUser = {
@@ -30,6 +32,22 @@ fb.auth.onAuthStateChanged((user: any) => {
 
     fb.usersCollection.doc(user.uid).onSnapshot((doc: any) => {
       store.commit(MutationType.SET_USER_PROFILE, doc.data());
+    });
+
+    // realtime updates for projects collection
+    fb.projectsCollection.orderBy('startDate', 'asc').onSnapshot((querySnapshot: any) => {
+      const projectList: FirebaseProject[] = [];
+      querySnapshot.forEach((doc: any) => {
+        const project = doc.data();
+        project.startDate = new Date(doc.data().startDate);
+        project.updatedDate = new Date(doc.data().updatedDate);
+        if (project.endDate) {
+          project.endDate = new Date(doc.data().endDate);
+        }
+        project.id = doc.id;
+        projectList.push(project);
+      });
+      store.commit('projects/' + MutationType.SET_PROJECTS, projectList);
     });
   }
 });

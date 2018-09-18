@@ -31,7 +31,7 @@ import ProjectsHeader from '@/components/ProjectsHeader.vue';
 import TextAreaInput from '@/components/TextAreaInput.vue';
 import TextInput from '@/components/TextInput.vue';
 import { RootState } from '@/store/types';
-import { Project, User, statusType } from '@/types';
+import { FirebaseProject, Project, User, statusType } from '@/types';
 import { statusOptions } from '@/utils/constants';
 import { uid } from '@/utils/guid';
 
@@ -53,7 +53,7 @@ import { uid } from '@/utils/guid';
   data: () => ({
     description: '',
     endDate: '',
-    startDate: new Date(),
+    startDate: new Date().toString(),
     status: 'todo' as statusType,
     statusOptions,
     title: '',
@@ -72,12 +72,11 @@ import { uid } from '@/utils/guid';
       this.toggleDialog();
     },
     onSubmitForm(this: any) {
-      const newProj: Project = {
+      const newProj: FirebaseProject = {
         creator: this.currentUser,
         description: this.description,
         endDate: this.endDate,
         features: [],
-        id: uid(8),
         startDate: this.startDate,
         status: this.status,
         title: this.title,

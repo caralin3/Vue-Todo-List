@@ -1,14 +1,15 @@
 <template>
   <div class="projects">
     <ProjectsHeader :toggleDialog="toggleDialog" />
-    <ProjectList />
+    <ProjectList v-if="projects.length > 0" />
+    <h3 v-else class="projects_none">You don't have any projects yet.</h3>
     <AddProjectDialog v-if="show" :toggleDialog="toggleDialog" />
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import { mapActions } from 'vuex';
+import { mapState } from 'vuex';
 import AddProjectDialog from '@/components/AddProjectDialog.vue';
 import DateInput from '@/components/DateInput.vue';
 import Dialog from '@/components/Dialog.vue';
@@ -38,6 +39,11 @@ import { uid } from '@/utils/guid';
   data: () => ({
     show: false,
   }),
+  computed: {
+    ...mapState({
+      projects: (state: any) => state.projects.projects,
+    }),
+  },
   methods: {
     toggleDialog(this: any) {
       this.show = !this.show;

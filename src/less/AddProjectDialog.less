@@ -29,21 +29,22 @@
 
   &_textAreaInput {
     display: grid;
-    gap: 2.5rem;
+    gap: 3.5rem;
     grid-area: textArea;
     grid-template: "label input";
-    width: 20rem;
+    justify-content: left;
+    width: 100%;
   
     label {
       font-weight: bold;
       grid-area: label;
-      width: 10rem;
+      margin: auto;
+      width: 100%;
     }
   
     input {
       grid-area: input;
       height: 5rem;
-      width: 15rem;
     }
   }  
 

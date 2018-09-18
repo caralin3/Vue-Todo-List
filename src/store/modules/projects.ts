@@ -1,19 +1,35 @@
 import { GetterTree, MutationTree, ActionTree } from 'vuex';
+import * as fb from '@/firebase';
 import { Project } from '@/types';
 import { MutationType } from '@/store/mutation-types';
-import { Project1 } from '@/store/state';
 
 export interface ProjectState {
   projects: Project[];
 }
 
 const initialState: ProjectState = {
-  projects: [Project1, Project1, Project1],
+  projects: [],
 };
 
 const actions: ActionTree<ProjectState, any> = {
   addProject: ({commit}, proj: Project): any => {
-    commit(MutationType.ADD_PROJECT, proj);
+    fb.projectsCollection.add(proj).then(() => {
+      fb.projectsCollection.orderBy('startDate', 'asc')
+        .onSnapshot((querySnapshot: any) => {
+          querySnapshot.forEach((doc: any) => {
+            const newProj = doc.data();
+            newProj.startDate = new Date(doc.data().startDate);
+            newProj.updatedDate = new Date(doc.data().updatedDate);
+            if (newProj.endDate) {
+              newProj.endDate = new Date(doc.data().endDate);
+            }
+            newProj.id = doc.id;
+            commit(MutationType.ADD_PROJECT, newProj);
+          });
+        });
+    }).catch((err: any) => {
+      console.log(err.message);
+    });
   },
   editProject: ({commit}, proj: Project): any => {
     commit(MutationType.EDIT_PROJECT, proj);
@@ -23,6 +39,9 @@ const actions: ActionTree<ProjectState, any> = {
   },
   removeAllProjects: ({commit}): any => {
     commit(MutationType.REMOVE_ALL_PROJECTS);
+  },
+  setProjects: ({commit}, proj: Project): any => {
+    commit(MutationType.SET_PROJECTS, proj);
   },
 };
 
@@ -41,6 +60,9 @@ const mutations: MutationTree<ProjectState> = {
   },
   [MutationType.REMOVE_ALL_PROJECTS]: (state: ProjectState) => {
     state.projects = [];
+  },
+  [MutationType.SET_PROJECTS]: (state: ProjectState, projList: Project[]) => {
+    state.projects = projList;
   },
 };
 

@@ -75,6 +75,20 @@ export interface Feature {
   workFlow: string[];
 }
 
+export interface FirebaseProject {
+  comments?: string[];
+  creator: User;
+  description: string;
+  endDate?: Date;
+  features: string[];
+  links?: string[];
+  startDate: Date;
+  status: statusType;
+  title: string;
+  updatedDate: Date;
+  versions: string[];
+}
+
 export interface Project {
   comments?: string[];
   creator: User;
