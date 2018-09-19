@@ -117,13 +117,15 @@ export default {
   },
   methods: {
     loadState(this: any) {
-      const index: number = this.projects.findIndex((p: any) => p.id === this.id);
-      const featIds = this.projects[index].features;
-      this.feats = [];
-      for (const id of featIds) {
-        for (const f of this.features) {
-          if (f.id === id) {
-            this.feats.push(f);
+      if (this.projects.length > 0) {
+        const index: number = this.projects.findIndex((p: any) => p.id === this.id);
+        const featIds = this.projects[index].features;
+        this.feats = [];
+        for (const id of featIds) {
+          for (const f of this.features) {
+            if (f.id === id) {
+              this.feats.push(f);
+            }
           }
         }
       }

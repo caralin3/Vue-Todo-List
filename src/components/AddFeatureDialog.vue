@@ -31,7 +31,7 @@ import SelectUserInput from '@/components/SelectUserInput.vue';
 import TextAreaInput from '@/components/TextAreaInput.vue';
 import TextInput from '@/components/TextInput.vue';
 import { User1 } from '@/store/state';
-import { Feature, User, statusType, priorityType, Version } from '@/types';
+import { FirebaseFeature, User, statusType, priorityType, Version, Feature } from '@/types';
 import { getUserOptions, priorityOptions, statusOptions } from '@/utils/constants';
 import { uid } from '@/utils/guid';
 
@@ -79,25 +79,25 @@ import { uid } from '@/utils/guid';
     userOptions: [] as string[],
   }),
   methods: {
-    ...mapActions('features', [
-      'addFeature',
-    ]),
+    ...mapActions({
+      addFeature: 'features/addFeature',
+    }),
     dismissDialog(this: any) {
       this.toggleDialog();
     },
     onSubmitForm(this: any) {
-      const newFeature: Feature = {
+      const newFeature: FirebaseFeature = {
         assignee: this.assignee,
         description: this.description,
         endDate: this.endDate,
         items: [],
-        id: uid(8),
         priority: this.priority,
+        projectId: this.$route.params.id,
         reporter: this.reporter,
-        startDate: this.startDate,
+        startDate: this.startDate.toString(),
         status: this.status,
         title: this.title,
-        updatedDate: this.startDate,
+        updatedDate: this.startDate.toString(),
         // FIXME: Version adding
         version: {} as Version,
         // FIXME: Workflow adding
