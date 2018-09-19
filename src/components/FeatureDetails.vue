@@ -28,7 +28,7 @@
       <div class="featureDetails_detailsData">
         <span class="featureDetails_detailsLabel">Assignee:</span>
         <span class="featureDetails_detailsText-edit" v-if="!edit.assignee" @click="toggleEdit('assignee')">
-          <span v-if="feature.assignee.firstName === 'Select'">
+          <span v-if="feature.assignee.firstName !== 'Select'">
             <i class="fas fa-user-circle featureDetails_details-userIcon" />
             {{ feature.assignee | name }}
           </span>
@@ -57,16 +57,16 @@
         <span class="featureDetails_detailsLabel">Reporter:</span>
         <span class="featureDetails_detailsText-edit" v-if="!edit.reporter" @click="toggleEdit('reporter')">
           <span v-if="feature.reporter && reporter">
-            <span v-if="feature.reporter.firstName === 'Select'">
+            <span v-if="feature.reporter.firstName !== 'Select'">
               <i class="fas fa-user-circle featureDetails_details-userIcon" />
               {{ feature.reporter | name }}
             </span>
-            <span v-else>
+            <span v-if="feature.reporter.firstName === 'Select'"> None</span>
+            <!-- <span v-else>
               <i class="fas fa-user-circle featureDetails_details-userIcon" />
               {{ reporter | name }}
-            </span>
+            </span> -->
           </span>
-          <span v-else> None</span>
         </span>
         <SelectUserInput
           :class="'featureDetails_select'"

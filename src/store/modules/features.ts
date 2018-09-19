@@ -1,4 +1,5 @@
 import { GetterTree, MutationTree, ActionTree } from 'vuex';
+import * as firebase from 'firebase';
 import * as fb from '@/firebase';
 import { Feature } from '@/types';
 import { MutationType } from '@/store/mutation-types';
@@ -27,6 +28,9 @@ const actions: ActionTree<FeatureState, any> = {
             newFeature.id = doc.id;
           });
           commit(MutationType.ADD_FEATURE, newFeature);
+          fb.projectsCollection.doc(feature.projectId).update({
+            features: firebase.firestore.FieldValue.arrayUnion(newFeature.id),
+          });
         });
     }).catch((err: any) => {
       console.log(err.message);

@@ -18,7 +18,6 @@
 </template>
 
 <script lang="ts">
-import * as admin from 'firebase-admin';
 import { Component, Vue } from 'vue-property-decorator';
 import { mapActions } from 'vuex';
 import * as fb from '@/firebase';
@@ -82,34 +81,9 @@ import { uid } from '@/utils/guid';
   methods: {
     ...mapActions({
       addFeature: 'features/addFeature',
-      editProject: 'projects/editProject',
     }),
     dismissDialog(this: any) {
       this.toggleDialog();
-    },
-    updateProject(this: any, feature: Feature) {
-      const projId = this.$route.params.id;
-      // fb.projectsCollection.doc(projId).get().then((docs: any) => {
-      //   console.log(docs);
-      // })
-      fb.projectsCollection.doc(projId).update({
-        features: admin.firestore.FieldValue.arrayUnion(feature),
-      }).then((proj) => {
-        console.log(projId);
-        console.log(feature);
-        console.log(proj);
-        // const newProj = {
-        //   ...proj,
-        //   startDate: new Date(proj.startDate),
-        //   updatedDate: new Date(proj.updatedDate),
-        // };
-        // if (proj.endDate) {
-        //   newProj.endDate = new Date(proj.endDate);
-        // }
-        // commit(MutationType.EDIT_PROJECT, newProj);
-      }).catch((err: any) => {
-        console.log(err.message);
-      });
     },
     onSubmitForm(this: any) {
       const newFeature: FirebaseFeature = {
@@ -130,7 +104,6 @@ import { uid } from '@/utils/guid';
         workFlow: [],
       };
       this.addFeature(newFeature);
-      this.updateProject(newFeature);
     },
   },
   watch: {
