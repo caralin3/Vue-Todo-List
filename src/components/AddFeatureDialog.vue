@@ -72,7 +72,7 @@ import { uid } from '@/utils/guid';
       lastName: 'User',
     } as User,
     reporterId: '',
-    startDate: new Date(),
+    startDate: new Date().toString(),
     status: 'todo' as statusType,
     statusOptions,
     title: '',

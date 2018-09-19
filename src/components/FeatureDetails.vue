@@ -2,6 +2,7 @@
   <div class="featureDetails">
     <div class="featureDetails_header">
       <h2 class="featureDetails_title">
+        <i class="fas fa-list-alt feature" />
         <span
           class="featureDetails_detailsText-edit"
           contenteditable="true"
@@ -9,7 +10,6 @@
         >
           {{ feature.title }}
         </span>
-        <i class="fas fa-list-alt feature" />
       </h2>
       <div class="featureDetails_buttons">
         <button class="featureDetails_workflowButton" type="button" @click="toggleDialog">View Workflow</button>
@@ -392,13 +392,15 @@ export default {
         this.updatedFeature = {
           ...this.updatedFeature,
           description: value,
-          updatedDate: new Date(),
+          startDate: new Date(this.updatedFeature.startDate).toString(),
+          updatedDate: new Date().toString(),
         };
       } else if (type === 'title') {
         this.updatedFeature = {
           ...this.updatedFeature,
           title: value,
-          updatedDate: new Date(),
+          startDate: new Date(this.updatedFeature.startDate).toString(),
+          updatedDate: new Date().toString(),
         };
       }
       this.editFeature(this.updatedFeature);
@@ -432,7 +434,8 @@ export default {
       this.updatedFeature = {
         ...this.updatedFeature,
         assignee: this.assignee,
-        updatedDate: new Date(),
+        startDate: new Date(this.updatedFeature.startDate).toString(),
+        updatedDate: new Date().toString(),
       };
       this.editFeature(this.updatedFeature);
     },
@@ -444,7 +447,8 @@ export default {
       this.updatedFeature = {
         ...this.updatedFeature,
         priority: this.priority,
-        updatedDate: new Date(),
+        startDate: new Date(this.updatedFeature.startDate).toString(),
+        updatedDate: new Date().toString(),
       };
       this.editFeature(this.updatedFeature);
     },
@@ -458,7 +462,8 @@ export default {
       this.updatedFeature = {
         ...this.updatedFeature,
         reporter: this.reporter,
-        updatedDate: new Date(),
+        startDate: new Date(this.updatedFeature.startDate).toString(),
+        updatedDate: new Date().toString(),
       };
       this.editFeature(this.updatedFeature);
     },
@@ -466,8 +471,9 @@ export default {
       this.edit.status = !this.edit.status;
       this.updatedFeature = {
         ...this.updatedFeature,
+        startDate: new Date(this.updatedFeature.startDate).toString(),
         status: this.status,
-        updatedDate: new Date(),
+        updatedDate: new Date().toString(),
       };
       this.editFeature(this.updatedFeature);
     },

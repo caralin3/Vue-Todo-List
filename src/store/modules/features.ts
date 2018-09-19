@@ -29,6 +29,7 @@ const actions: ActionTree<FeatureState, any> = {
           });
           commit(MutationType.ADD_FEATURE, newFeature);
           fb.projectsCollection.doc(feature.projectId).update({
+            updatedDate: feature.updatedDate,
             features: firebase.firestore.FieldValue.arrayUnion(newFeature.id),
           });
         });
@@ -47,6 +48,9 @@ const actions: ActionTree<FeatureState, any> = {
         newFeature.endDate = new Date(feature.endDate);
       }
       commit(MutationType.EDIT_FEATURE, newFeature);
+      fb.projectsCollection.doc(feature.projectId).update({
+        updatedDate: feature.updatedDate,
+      });
     }).catch((err: any) => {
       console.log(err.message);
     });

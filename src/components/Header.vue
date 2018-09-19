@@ -1,7 +1,7 @@
 <template>
   <div class="header">
     <h1>
-      <router-link class="header_title" to="/" :exact="true">Todo</router-link>
+      <router-link class="header_title" :to="currentUser === null ? '/' : '/projects'" :exact="true">Todo</router-link>
     </h1>
     <div class="header_nav">
       <router-link v-if="currentUser === null" to="/" :exact="true">Home</router-link>
