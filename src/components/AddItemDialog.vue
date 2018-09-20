@@ -102,6 +102,7 @@ import { uid } from '@/utils/guid';
         endDate: this.endDate,
         featureId: this.featureId,
         priority: this.priority,
+        projectId: this.$route.params.id,
         reporter: this.reporter,
         startDate: this.startDate.toString(),
         status: this.status,

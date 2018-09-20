@@ -65,6 +65,7 @@ export interface FirebaseItem {
   featureId: string;
   links?: string[];
   priority: priorityType;
+  projectId: string;
   reporter?: User;
   startDate: Date;
   status: statusType;
@@ -84,6 +85,7 @@ export interface Item {
   id: string;
   links?: string[];
   priority: priorityType;
+  projectId: string;
   reporter?: User;
   startDate: Date;
   status: statusType;
