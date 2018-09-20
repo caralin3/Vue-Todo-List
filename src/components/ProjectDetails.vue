@@ -193,7 +193,6 @@ export default {
   },
   created(this: any) {
     this.id = this.$route.params.id;
-    this.loadFirebase();
     if (this.projects.length > 0) {
       const index: number = this.projects.findIndex((p: any) => p.id === this.id);
       this.proj = this.projects[index];
@@ -245,27 +244,6 @@ export default {
           }
         }
       }
-    },
-    loadFirebase(this: any) {
-      // realtime updates for projects collection
-      fb.projectsCollection.orderBy('startDate', 'asc').onSnapshot((querySnapshot: any) => {
-        if (querySnapshot.docChanges().length === querySnapshot.docs.length) {
-          const projectList: Project[] = [];
-
-          querySnapshot.forEach((doc: any) => {
-            const project = doc.data();
-            project.startDate = new Date(doc.data().startDate);
-            project.updatedDate = new Date(doc.data().updatedDate);
-            if (project.endDate) {
-              project.endDate = new Date(doc.data().endDate.toString());
-            }
-            project.id = doc.id;
-            projectList.push(project);
-          });
-
-          this.setProjects(projectList);
-        }
-      });
     },
     loadProjectState(this: any) {
       const index: number = this.projects.findIndex((p: any) => p.id === this.proj.id);
@@ -341,7 +319,25 @@ export default {
   watch: {
     features(this: any) {
       console.log('Features changed');
-      this.loadFirebase();
+      // realtime updates for projects collection
+      fb.projectsCollection.orderBy('startDate', 'asc').onSnapshot((querySnapshot: any) => {
+        if (querySnapshot.docChanges().length === querySnapshot.docs.length) {
+          const projectList: Project[] = [];
+
+          querySnapshot.forEach((doc: any) => {
+            const project = doc.data();
+            project.startDate = new Date(doc.data().startDate);
+            project.updatedDate = new Date(doc.data().updatedDate);
+            if (project.endDate) {
+              project.endDate = new Date(doc.data().endDate.toString());
+            }
+            project.id = doc.id;
+            projectList.push(project);
+          });
+
+          this.setProjects(projectList);
+        }
+      });
     },
     status(this: any) {
       this.edit.status = !this.edit.status;
