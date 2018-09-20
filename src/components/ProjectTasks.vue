@@ -136,7 +136,6 @@ export default {
       if (this.openDetails === true) {
         this.$router.push({ path: this.$route.path, query: { filter: 'tasks', id: task.id}});
         this.selected = task;
-        // this.task = task;
       } else {
         this.$router.push({ path: this.$route.path, query: { filter: 'tasks'}});
         this.selected = {};
