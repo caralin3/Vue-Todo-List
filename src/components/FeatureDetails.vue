@@ -369,9 +369,9 @@ export default {
     handleCommentChange(this: any, value: string, comm: Comment) {
       this.updatedComment = {
         id: comm.id,
-        startDate: comm.startDate,
+        startDate: comm.startDate.toString(),
         text: value,
-        updatedDate: new Date(),
+        updatedDate: new Date().toString(),
         user: comm.user,
       };
       this.editComment(this.updatedComment);
@@ -379,9 +379,9 @@ export default {
     handleLinkChange(this: any, value: string, link: Link) {
       this.updatedLink = {
         id: link.id,
-        startDate: link.startDate,
+        startDate: link.startDate.toString(),
         to: value,
-        updatedDate: new Date(),
+        updatedDate: new Date().toString(),
         user: link.user,
       };
       this.edit.link.editing = false;

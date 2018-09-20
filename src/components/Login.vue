@@ -30,7 +30,7 @@ import Form from '@/components/Form.vue';
 import PasswordInput from '@/components/PasswordInput.vue';
 import TextInput from '@/components/TextInput.vue';
 import * as fb from '@/firebase';
-import { RootState } from '@/store/types';
+import { RootState } from '@/types';
 
 export default {
   components: {

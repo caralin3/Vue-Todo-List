@@ -117,17 +117,8 @@ export default {
   },
   methods: {
     loadState(this: any) {
-      if (this.projects.length > 0) {
-        const index: number = this.projects.findIndex((p: any) => p.id === this.id);
-        const featIds = this.projects[index].features;
-        this.feats = [];
-        for (const id of featIds) {
-          for (const f of this.features) {
-            if (f.id === id) {
-              this.feats.push(f);
-            }
-          }
-        }
+      if (this.features.length > 0) {
+        this.feats = this.features.filter((feature: Feature) => feature.projectId === this.id);
       }
     },
     toggleDialog(this: any) {
@@ -137,7 +128,7 @@ export default {
       this.openDetails = !this.openDetails;
     },
     clickFeature(this: any, feature: Feature) {
-      // this.$router.push({ path: '/projects/' + this.id, query: { filter: 'features', id: feature.id}});
+      this.$router.push({ path: '/projects/' + this.id, query: { filter: 'features', id: feature.id}});
       if (feature.id === this.selected.id) {
         this.toggleDetails();
       } else {

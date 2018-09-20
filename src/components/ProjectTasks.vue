@@ -107,7 +107,7 @@ export default {
     openDetails: false as boolean,
     proj: {} as Project,
     selected: {} as Item,
-    show: false  as boolean,
+    show: false,
   }),
   computed: {
     ...mapState({
@@ -118,25 +118,31 @@ export default {
   },
   methods: {
     loadState(this: any) {
-      const index: number = this.projects.findIndex((p: any) => p.id === this.id);
-      const featIds = this.projects[index].features;
-      const taskIds: string[] = [];
-      this.tasks = [];
-      const feats: Feature[] = [];
-      for (const fid of featIds) {
-        for (const f of this.features) {
-          if (f.id === fid) {
-            feats.push(f);
+      if (this.projects.length > 0) {
+        const index: number = this.projects.findIndex((p: any) => p.id === this.id);
+        const featIds = this.projects[index].features;
+        const taskIds: string[] = [];
+        this.tasks = [];
+        const feats: Feature[] = [];
+        for (const fid of featIds) {
+          for (const f of this.features) {
+            if (f.id === fid) {
+              feats.push(f);
+            }
           }
         }
-      }
 
-      for (const tid of featIds) {
-        for (const t of this.items) {
-          if (t.id === tid && t.type === 'task') {
-            this.tasks.push(t);
+        console.log(feats);
+
+        for (const tid of featIds) {
+          for (const t of this.items) {
+            if (t.id === tid && t.type === 'task') {
+              this.tasks.push(t);
+              console.log(t);
+            }
           }
         }
+        console.log(this.tasks);
       }
     },
     toggleDialog(this: any) {

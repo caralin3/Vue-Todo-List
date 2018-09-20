@@ -7,8 +7,7 @@ import { items } from './modules/items';
 import { links } from './modules/links';
 import { projects } from './modules/projects';
 import { MutationType } from './mutation-types';
-import { RootState } from './types';
-import { Feature, Project } from '@/types';
+import { Feature, Project, RootState, Item } from '@/types';
 
 const debug = process.env.NODE_ENV !== 'production';
 
@@ -73,6 +72,46 @@ fb.auth.onAuthStateChanged((user: any) => {
         store.commit('features/' + MutationType.SET_FEATURES, featureList);
       }
     });
+
+    // realtime updates for items collection
+    fb.itemsCollection.orderBy('startDate', 'asc').onSnapshot((querySnapshot: any) => {
+      if (querySnapshot.docChanges().length === querySnapshot.docs.length) {
+        const itemList: Item[] = [];
+
+        querySnapshot.forEach((doc: any) => {
+          const item = doc.data();
+          item.startDate = new Date(doc.data().startDate);
+          item.updatedDate = new Date(doc.data().updatedDate);
+          if (item.endDate) {
+            item.endDate = new Date(doc.data().endDate.toString());
+          }
+          item.id = doc.id;
+          itemList.push(item);
+        });
+
+        store.commit('items/' + MutationType.SET_ITEMS, itemList);
+      }
+    });
+
+    // realtime updates for comments collection
+    // fb.commentsCollection.orderBy('startDate', 'asc').onSnapshot((querySnapshot: any) => {
+    //   if (querySnapshot.docChanges().length === querySnapshot.docs.length) {
+    //     const commentList: Item[] = [];
+
+    //     querySnapshot.forEach((doc: any) => {
+    //       const comment = doc.data();
+    //       comment.startDate = new Date(doc.data().startDate);
+    //       comment.updatedDate = new Date(doc.data().updatedDate);
+    //       if (comment.endDate) {
+    //         comment.endDate = new Date(doc.data().endDate.toString());
+    //       }
+    //       comment.id = doc.id;
+    //       commentList.push(comment);
+    //     });
+
+    //     store.commit('comments/' + MutationType.SET_COMMENTS, commentList);
+    //   }
+    // });
   }
 });
 

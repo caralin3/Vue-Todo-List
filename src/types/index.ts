@@ -1,3 +1,8 @@
+export interface RootState {
+  currentUser: any;
+  userProfile: object;
+}
+
 export type itemType = 'bug' | 'task' | 'component';
 export type statusType = 'todo' | 'inProgress' | 'completed' | 'closed';
 export type priorityType = 'minor' | 'major' | 'critical' | 'blocker';
@@ -9,10 +14,24 @@ export interface User {
   lastName: string;
 }
 
+export interface FirebaseComment {
+  startDate: Date;
+  text: string;
+  updatedDate?: Date;
+  user: User;
+}
+
 export interface Comment {
   id: string;
   startDate: Date;
   text: string;
+  updatedDate?: Date;
+  user: User;
+}
+
+export interface FirebaseLink {
+  startDate: Date;
+  to: string;
   updatedDate?: Date;
   user: User;
 }
@@ -36,6 +55,24 @@ export interface Version {
   id: string;
   startDate: Date;
   title: string;
+}
+
+export interface FirebaseItem {
+  assignee: User;
+  comments?: string[];
+  description: string;
+  endDate?: Date;
+  featureId: string;
+  links?: string[];
+  priority: priorityType;
+  reporter?: User;
+  startDate: Date;
+  status: statusType;
+  title: string;
+  type: itemType;
+  updatedDate: Date;
+  version: Version;
+  workFlow: string[];
 }
 
 export interface Item {
