@@ -127,7 +127,6 @@ export default {
       this.openDetails = !this.openDetails;
     },
     clickTask(this: any, task: Item) {
-      this.$router.push({ path: this.$route.path, query: { filter: 'tasks', id: task.id}});
       if (task.id === this.selected.id) {
         this.toggleDetails();
       } else {
@@ -135,8 +134,12 @@ export default {
       }
 
       if (this.openDetails === true) {
+        this.$router.push({ path: this.$route.path, query: { filter: 'tasks', id: task.id}});
         this.selected = task;
         // this.task = task;
+      } else {
+        this.$router.push({ path: this.$route.path, query: { filter: 'tasks'}});
+        this.selected = {};
       }
     },
     setFilter(this: any, data: string, sortDir: string) {

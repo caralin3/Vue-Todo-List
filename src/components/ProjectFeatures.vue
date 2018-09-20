@@ -105,7 +105,6 @@ export default {
       sortDir: 'desc',
     },
     openDetails: false as boolean,
-    proj: {} as Project,
     selected: {} as Feature,
     show: false  as boolean,
   }),
@@ -128,7 +127,6 @@ export default {
       this.openDetails = !this.openDetails;
     },
     clickFeature(this: any, feature: Feature) {
-      this.$router.push({ path: '/projects/' + this.id, query: { filter: 'features', id: feature.id}});
       if (feature.id === this.selected.id) {
         this.toggleDetails();
       } else {
@@ -136,8 +134,11 @@ export default {
       }
 
       if (this.openDetails === true) {
+        this.$router.push({ path: '/projects/' + this.id, query: { filter: 'features', id: feature.id}});
         this.selected = feature;
-        this.feature = feature;
+      } else {
+        this.$router.push({ path: '/projects/' + this.id, query: { filter: 'features'}});
+        this.selected = {};
       }
     },
     setFilter(this: any, data: string, sortDir: string) {
