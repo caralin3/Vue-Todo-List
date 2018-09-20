@@ -29,8 +29,8 @@
         <div class="projectDetails_detailsData">
           <span class="projectDetails_detailsLabel">Created:</span>
           <span class="projectDetails_detailsText">
-            {{ proj.startDate | date }}
-            {{ proj.startDate | time }}
+            {{ new Date(proj.startDate) | date }}
+            {{ new Date(proj.startDate) | time }}
           </span>
         </div>
         <div class="projectDetails_detailsData">
@@ -57,8 +57,8 @@
         <div class="projectDetails_detailsData">
           <span class="projectDetails_detailsLabel">Updated:</span>
           <span class="projectDetails_detailsText">
-            {{ proj.updatedDate | date }}
-            {{ proj.updatedDate | time }}
+            {{ new Date(proj.updatedDate) | date }}
+            {{ new Date(proj.updatedDate) | time }}
           </span>
         </div>
         <div class="projectDetails_detailsData">
@@ -67,8 +67,8 @@
         <div class="projectDetails_detailsData">
           <span class="projectDetails_detailsLabel">Completed:</span>
           <span class="projectDetails_detailsText" v-if="proj.endDate">
-            {{ proj.endDate | date }}
-            {{ proj.endDate | time }}
+            {{ new Date(proj.endDate) | date }}
+            {{ new Date(proj.endDate) | time }}
           </span>
           <span class="projectDetails_detailsText" v-else>TBD</span>
         </div>
@@ -123,7 +123,7 @@
             <i class="fas fa-arrow-down" :class="feature.priority" v-if="feature.priority === 'minor'" />
           </span>
           <span class="projectDetails_featureDate">
-            Updated: {{ feature.updatedDate | date }} {{ feature.updatedDate | time }}
+            Updated: {{ new Date(feature.updatedDate) | date }} {{ new Date(feature.updatedDate) | time }}
           </span>
         </router-link>
       </div>
@@ -144,19 +144,19 @@
             commented on
           </span>
           <span class="projectDetails_commentDate">
-            {{ comment.startDate | date }}
-            {{ comment.startDate | time }}
+            {{ new Date(comment.startDate) | date }}
+            {{ new Date(comment.startDate) | time }}
           </span>
           <span v-if="updatedComment.updatedDate || comment.updatedDate">
             updated on
           </span>
           <span class="projectDetails_commentDate" v-if="updatedComment.updatedDate && !comment.updatedDate">
-            {{ updatedComment.updatedDate | date }}
-            {{ updatedComment.updatedDate | time }}
+            {{ new Date(updatedComment.updatedDate) | date }}
+            {{ new Date(updatedComment.updatedDate) | time }}
           </span>
           <span class="projectDetails_commentDate" v-if="updatedComment.updatedDate || comment.updatedDate">
-            {{ comment.updatedDate | date }}
-            {{ comment.updatedDate | time }}
+            {{ new Date(comment.updatedDate) | date }}
+            {{ new Date(comment.updatedDate) | time }}
           </span>
           <p
             class="projectDetails_commentText"
@@ -265,8 +265,7 @@ export default {
       }
     },
     toggleAddDialog(this: any) {
-      this.showAddDialog = !this.showAddDialog,
-      console.log(this.showAddDialog);
+      this.showAddDialog = !this.showAddDialog;
     },
     handleCommentChange(this: any, value: string, comm: Comment) {
       this.updatedComment = {

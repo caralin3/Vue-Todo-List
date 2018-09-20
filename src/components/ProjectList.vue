@@ -12,7 +12,7 @@
           </div>
           <div class="projectItem_created">
             <span class="projectItem_by">Created by: {{ proj.creator | name }}</span>
-            <span class="projectItem_date">Created on: {{ proj.startDate | date }}</span>
+            <span class="projectItem_date">Created on: {{ new Date(proj.startDate) | date }}</span>
           </div>
           <p class="projectItem_description" v-if="proj.description !== ''">{{ proj.description }}</p>
           <p class="projectItem_description" v-else>No description</p>
@@ -20,7 +20,7 @@
             <h5 class="projectItem_latestTitle">Latest Update</h5>
             <div class="projectItem_featureDetails">
               <div class="projectItem_featureTitle">{{ proj.features[0].title }}</div>
-              <div class="projectItem_featureDate">Last Updated: {{ proj.features[0].updatedDate | date }}</div>
+              <div class="projectItem_featureDate">Last Updated: {{ new Date(proj.features[0].updatedDate) | date }}</div>
             </div>
           </div>
         </div>

@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import VuexPersistence from 'vuex-persist';
 import * as fb from '@/firebase';
 import { comments } from './modules/comments';
 import { features } from './modules/features';
@@ -13,6 +14,11 @@ import { Feature, Project } from '@/types';
 const debug = process.env.NODE_ENV !== 'production';
 
 Vue.use(Vuex);
+
+const vuexPersist = new VuexPersistence({
+  storage: window.localStorage,
+  strictMode: debug,
+});
 
 // Handle page reload
 fb.auth.onAuthStateChanged((user: any) => {
@@ -111,6 +117,7 @@ const store = new Vuex.Store<RootState>({
     [MutationType.SET_USER_PROFILE]: (state: RootState, profile: any) => {
       state.userProfile = profile;
     },
+    [MutationType.RESTORE_MUTATION]: vuexPersist.RESTORE_MUTATION,
   },
   modules: {
     comments,
@@ -120,6 +127,7 @@ const store = new Vuex.Store<RootState>({
     projects,
   },
   strict: debug,
+  plugins: [vuexPersist.plugin],
 });
 
 export default store;
