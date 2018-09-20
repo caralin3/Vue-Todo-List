@@ -78,15 +78,9 @@ import { uid } from '@/utils/guid';
     title: '',
     userOptions: [] as string[],
   }),
-  computed: {
-    ...mapState({
-      features: (state: any) => state.features.features,
-    }),
-  },
   methods: {
     ...mapActions({
       addFeature: 'features/addFeature',
-      setProjects: 'projects/setProjects',
     }),
     dismissDialog(this: any) {
       this.toggleDialog();
@@ -119,28 +113,6 @@ import { uid } from '@/utils/guid';
           this.assignee = user;
         }
       }
-    },
-    features(this: any) {
-      console.log('Features changed');
-      // realtime updates for projects collection
-      fb.projectsCollection.orderBy('startDate', 'asc').onSnapshot((querySnapshot: any) => {
-        if (querySnapshot.docChanges().length === querySnapshot.docs.length) {
-          const projectList: Project[] = [];
-
-          querySnapshot.forEach((doc: any) => {
-            const project = doc.data();
-            project.startDate = new Date(doc.data().startDate);
-            project.updatedDate = new Date(doc.data().updatedDate);
-            if (project.endDate) {
-              project.endDate = new Date(doc.data().endDate.toString());
-            }
-            project.id = doc.id;
-            projectList.push(project);
-          });
-
-          this.setProjects(projectList);
-        }
-      });
     },
     reporterId(this: any) {
       for (const user of this.userOptions) {

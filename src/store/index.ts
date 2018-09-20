@@ -60,24 +60,24 @@ fb.auth.onAuthStateChanged((user: any) => {
     // });
 
     // realtime updates for features collection
-    // fb.featuresCollection.orderBy('startDate', 'asc').onSnapshot((querySnapshot: any) => {
-    //   if (querySnapshot.docChanges().length === querySnapshot.docs.length) {
-    //     const featureList: Feature[] = [];
+    fb.featuresCollection.orderBy('startDate', 'asc').onSnapshot((querySnapshot: any) => {
+      if (querySnapshot.docChanges().length === querySnapshot.docs.length) {
+        const featureList: Feature[] = [];
 
-    //     querySnapshot.forEach((doc: any) => {
-    //       const feature = doc.data();
-    //       feature.startDate = new Date(doc.data().startDate);
-    //       feature.updatedDate = new Date(doc.data().updatedDate);
-    //       if (feature.endDate) {
-    //         feature.endDate = new Date(doc.data().endDate.toString());
-    //       }
-    //       feature.id = doc.id;
-    //       featureList.push(feature);
-    //     });
+        querySnapshot.forEach((doc: any) => {
+          const feature = doc.data();
+          feature.startDate = new Date(doc.data().startDate);
+          feature.updatedDate = new Date(doc.data().updatedDate);
+          if (feature.endDate) {
+            feature.endDate = new Date(doc.data().endDate.toString());
+          }
+          feature.id = doc.id;
+          featureList.push(feature);
+        });
 
-    //     store.commit('features/' + MutationType.SET_FEATURES, featureList);
-    //   }
-    // });
+        store.commit('features/' + MutationType.SET_FEATURES, featureList);
+      }
+    });
 
     // realtime updates for items collection
     // fb.itemsCollection.orderBy('startDate', 'asc').onSnapshot((querySnapshot: any) => {
