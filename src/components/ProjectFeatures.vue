@@ -55,8 +55,8 @@
         <tbody v-for="feature in feats" v-bind:key="feature.id">
           <tr class="projectFeatures_feature" :class="{'projectFeatures_selected': selected && feature.id === selected.id}" @click="clickFeature(feature)">
             <td>{{ feature.title }}</td>
-            <td v-if="!openDetails">{{ feature.startDate | date }} {{ feature.startDate | time }}</td>
-            <td v-if="!openDetails">{{ feature.updatedDate | date }} {{ feature.updatedDate | time }}</td>
+            <td v-if="!openDetails">{{ new Date(feature.startDate) | date }} {{ new Date(feature.startDate) | time }}</td>
+            <td v-if="!openDetails">{{ new Date(feature.updatedDate) | date }} {{ new Date(feature.updatedDate) | time }}</td>
             <td>
               <i class="fas fa-ban" :class="feature.priority" v-if="feature.priority === 'blocker'" />
               <i class="fas fa-exclamation-triangle" :class="feature.priority" v-if="feature.priority === 'critical'" />

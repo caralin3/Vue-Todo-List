@@ -27,7 +27,7 @@ const actions: ActionTree<FeatureState, any> = {
             }
             newFeature.id = doc.id;
           });
-          // commit(MutationType.ADD_FEATURE, newFeature);
+          commit(MutationType.ADD_FEATURE, newFeature);
           fb.projectsCollection.doc(feature.projectId).update({
             updatedDate: feature.updatedDate,
             features: firebase.firestore.FieldValue.arrayUnion(newFeature.id),

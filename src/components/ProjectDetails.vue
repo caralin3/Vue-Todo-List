@@ -317,6 +317,28 @@ export default {
     },
   },
   watch: {
+    features(this: any) {
+      console.log('Features changed');
+      // realtime updates for projects collection
+      fb.projectsCollection.orderBy('startDate', 'asc').onSnapshot((querySnapshot: any) => {
+        if (querySnapshot.docChanges().length === querySnapshot.docs.length) {
+          const projectList: Project[] = [];
+
+          querySnapshot.forEach((doc: any) => {
+            const project = doc.data();
+            project.startDate = new Date(doc.data().startDate);
+            project.updatedDate = new Date(doc.data().updatedDate);
+            if (project.endDate) {
+              project.endDate = new Date(doc.data().endDate.toString());
+            }
+            project.id = doc.id;
+            projectList.push(project);
+          });
+
+          this.setProjects(projectList);
+        }
+      });
+    },
     status(this: any) {
       this.edit.status = !this.edit.status;
       this.updatedProject = {

@@ -19,7 +19,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import { mapActions } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 import * as fb from '@/firebase';
 import DateInput from '@/components/DateInput.vue';
 import Dialog from '@/components/Dialog.vue';
@@ -31,7 +31,7 @@ import SelectUserInput from '@/components/SelectUserInput.vue';
 import TextAreaInput from '@/components/TextAreaInput.vue';
 import TextInput from '@/components/TextInput.vue';
 import { User1 } from '@/store/state';
-import { FirebaseFeature, User, statusType, priorityType, Version, Feature } from '@/types';
+import { FirebaseFeature, User, statusType, priorityType, Version, Feature, Project } from '@/types';
 import { getUserOptions, priorityOptions, statusOptions } from '@/utils/constants';
 import { uid } from '@/utils/guid';
 
@@ -78,9 +78,15 @@ import { uid } from '@/utils/guid';
     title: '',
     userOptions: [] as string[],
   }),
+  computed: {
+    ...mapState({
+      features: (state: any) => state.features.features,
+    }),
+  },
   methods: {
     ...mapActions({
       addFeature: 'features/addFeature',
+      setProjects: 'projects/setProjects',
     }),
     dismissDialog(this: any) {
       this.toggleDialog();
@@ -113,6 +119,28 @@ import { uid } from '@/utils/guid';
           this.assignee = user;
         }
       }
+    },
+    features(this: any) {
+      console.log('Features changed');
+      // realtime updates for projects collection
+      fb.projectsCollection.orderBy('startDate', 'asc').onSnapshot((querySnapshot: any) => {
+        if (querySnapshot.docChanges().length === querySnapshot.docs.length) {
+          const projectList: Project[] = [];
+
+          querySnapshot.forEach((doc: any) => {
+            const project = doc.data();
+            project.startDate = new Date(doc.data().startDate);
+            project.updatedDate = new Date(doc.data().updatedDate);
+            if (project.endDate) {
+              project.endDate = new Date(doc.data().endDate.toString());
+            }
+            project.id = doc.id;
+            projectList.push(project);
+          });
+
+          this.setProjects(projectList);
+        }
+      });
     },
     reporterId(this: any) {
       for (const user of this.userOptions) {

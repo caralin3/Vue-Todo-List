@@ -15,17 +15,15 @@ const actions: ActionTree<ProjectState, any> = {
   addProject: ({commit}, proj: Project): any => {
     fb.projectsCollection.add(proj).then(() => {
       let newProj: Project;
-      fb.projectsCollection.orderBy('startDate', 'asc')
-        .onSnapshot((querySnapshot: any) => {
-          querySnapshot.forEach((doc: any) => {
-            newProj = doc.data();
-            newProj.startDate = new Date(doc.data().startDate);
-            newProj.updatedDate = new Date(doc.data().updatedDate);
-            if (newProj.endDate) {
-              newProj.endDate = new Date(doc.data().endDate);
-            }
-            newProj.id = doc.id;
-          });
+      fb.projectsCollection.orderBy('startDate', 'desc').limit(1).get()
+        .then((querySnapshot: any) => {
+          newProj = querySnapshot.docs[0].data();
+          newProj.startDate = new Date(querySnapshot.docs[0].data().startDate);
+          newProj.updatedDate = new Date(querySnapshot.docs[0].data().updatedDate);
+          if (newProj.endDate) {
+            newProj.endDate = new Date(querySnapshot.docs[0].data().endDate);
+          }
+          newProj.id = querySnapshot.docs[0].id;
           commit(MutationType.ADD_PROJECT, newProj);
         });
     }).catch((err: any) => {

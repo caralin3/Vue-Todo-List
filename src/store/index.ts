@@ -39,65 +39,65 @@ fb.auth.onAuthStateChanged((user: any) => {
       store.commit(MutationType.SET_USER_PROFILE, doc.data());
     });
 
-    // realtime updates for projects collection
-    fb.projectsCollection.orderBy('startDate', 'asc').onSnapshot((querySnapshot: any) => {
-      if (querySnapshot.docChanges().length === querySnapshot.docs.length) {
-        const projectList: Project[] = [];
+    // // realtime updates for projects collection
+    // fb.projectsCollection.orderBy('startDate', 'asc').onSnapshot((querySnapshot: any) => {
+    //   if (querySnapshot.docChanges().length === querySnapshot.docs.length) {
+    //     const projectList: Project[] = [];
 
-        querySnapshot.forEach((doc: any) => {
-          const project = doc.data();
-          project.startDate = new Date(doc.data().startDate);
-          project.updatedDate = new Date(doc.data().updatedDate);
-          if (project.endDate) {
-            project.endDate = new Date(doc.data().endDate.toString());
-          }
-          project.id = doc.id;
-          projectList.push(project);
-        });
+    //     querySnapshot.forEach((doc: any) => {
+    //       const project = doc.data();
+    //       project.startDate = new Date(doc.data().startDate);
+    //       project.updatedDate = new Date(doc.data().updatedDate);
+    //       if (project.endDate) {
+    //         project.endDate = new Date(doc.data().endDate.toString());
+    //       }
+    //       project.id = doc.id;
+    //       projectList.push(project);
+    //     });
 
-        store.commit('projects/' + MutationType.SET_PROJECTS, projectList);
-      }
-    });
+    //     store.commit('projects/' + MutationType.SET_PROJECTS, projectList);
+    //   }
+    // });
 
     // realtime updates for features collection
-    fb.featuresCollection.orderBy('startDate', 'asc').onSnapshot((querySnapshot: any) => {
-      if (querySnapshot.docChanges().length === querySnapshot.docs.length) {
-        const featureList: Feature[] = [];
+    // fb.featuresCollection.orderBy('startDate', 'asc').onSnapshot((querySnapshot: any) => {
+    //   if (querySnapshot.docChanges().length === querySnapshot.docs.length) {
+    //     const featureList: Feature[] = [];
 
-        querySnapshot.forEach((doc: any) => {
-          const feature = doc.data();
-          feature.startDate = new Date(doc.data().startDate);
-          feature.updatedDate = new Date(doc.data().updatedDate);
-          if (feature.endDate) {
-            feature.endDate = new Date(doc.data().endDate.toString());
-          }
-          feature.id = doc.id;
-          featureList.push(feature);
-        });
+    //     querySnapshot.forEach((doc: any) => {
+    //       const feature = doc.data();
+    //       feature.startDate = new Date(doc.data().startDate);
+    //       feature.updatedDate = new Date(doc.data().updatedDate);
+    //       if (feature.endDate) {
+    //         feature.endDate = new Date(doc.data().endDate.toString());
+    //       }
+    //       feature.id = doc.id;
+    //       featureList.push(feature);
+    //     });
 
-        store.commit('features/' + MutationType.SET_FEATURES, featureList);
-      }
-    });
+    //     store.commit('features/' + MutationType.SET_FEATURES, featureList);
+    //   }
+    // });
 
     // realtime updates for items collection
-    fb.itemsCollection.orderBy('startDate', 'asc').onSnapshot((querySnapshot: any) => {
-      if (querySnapshot.docChanges().length === querySnapshot.docs.length) {
-        const itemList: Item[] = [];
+    // fb.itemsCollection.orderBy('startDate', 'asc').onSnapshot((querySnapshot: any) => {
+    //   if (querySnapshot.docChanges().length === querySnapshot.docs.length) {
+    //     const itemList: Item[] = [];
 
-        querySnapshot.forEach((doc: any) => {
-          const item = doc.data();
-          item.startDate = new Date(doc.data().startDate);
-          item.updatedDate = new Date(doc.data().updatedDate);
-          if (item.endDate) {
-            item.endDate = new Date(doc.data().endDate.toString());
-          }
-          item.id = doc.id;
-          itemList.push(item);
-        });
+    //     querySnapshot.forEach((doc: any) => {
+    //       const item = doc.data();
+    //       item.startDate = new Date(doc.data().startDate);
+    //       item.updatedDate = new Date(doc.data().updatedDate);
+    //       if (item.endDate) {
+    //         item.endDate = new Date(doc.data().endDate.toString());
+    //       }
+    //       item.id = doc.id;
+    //       itemList.push(item);
+    //     });
 
-        store.commit('items/' + MutationType.SET_ITEMS, itemList);
-      }
-    });
+    //     store.commit('items/' + MutationType.SET_ITEMS, itemList);
+    //   }
+    // });
 
     // realtime updates for comments collection
     // fb.commentsCollection.orderBy('startDate', 'asc').onSnapshot((querySnapshot: any) => {
