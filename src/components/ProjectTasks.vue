@@ -85,7 +85,7 @@ import {mapActions, mapGetters, mapState, mapMutations} from 'vuex';
 import AddItemDialog from '@/components/AddItemDialog.vue';
 import TaskDetails from '@/components/TaskDetails.vue';
 import ProjectHeader from '@/components/ProjectHeader.vue';
-import { Item, Feature, Project } from '@/types';
+import { Item } from '@/types';
 
 export default {
   components: {
@@ -105,38 +105,19 @@ export default {
       sortDir: 'desc',
     },
     openDetails: false as boolean,
-    proj: {} as Project,
     selected: {} as Item,
-    show: false  as boolean,
+    show: false,
   }),
   computed: {
     ...mapState({
       items: (state: any) => state.items.items,
       features: (state: any) => state.features.features,
-      projects: (state: any) => state.projects.projects,
     }),
   },
   methods: {
     loadState(this: any) {
-      const index: number = this.projects.findIndex((p: any) => p.id === this.id);
-      const featIds = this.projects[index].features;
-      const taskIds: string[] = [];
-      this.tasks = [];
-      const feats: Feature[] = [];
-      for (const fid of featIds) {
-        for (const f of this.features) {
-          if (f.id === fid) {
-            feats.push(f);
-          }
-        }
-      }
-
-      for (const tid of featIds) {
-        for (const t of this.items) {
-          if (t.id === tid && t.type === 'task') {
-            this.tasks.push(t);
-          }
-        }
+      if (this.items.length > 0) {
+        this.tasks = this.items.filter((item: Item) => item.projectId === this.id && item.type === 'task');
       }
     },
     toggleDialog(this: any) {
@@ -153,8 +134,11 @@ export default {
       }
 
       if (this.openDetails === true) {
+        this.$router.push({ path: this.$route.path, query: { filter: 'tasks', id: task.id}});
         this.selected = task;
-        // this.task = task;
+      } else {
+        this.$router.push({ path: this.$route.path, query: { filter: 'tasks'}});
+        this.selected = {};
       }
     },
     setFilter(this: any, data: string, sortDir: string) {

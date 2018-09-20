@@ -105,7 +105,6 @@ export default {
       sortDir: 'desc',
     },
     openDetails: false as boolean,
-    proj: {} as Project,
     selected: {} as Feature,
     show: false  as boolean,
   }),
@@ -117,17 +116,8 @@ export default {
   },
   methods: {
     loadState(this: any) {
-      if (this.projects.length > 0) {
-        const index: number = this.projects.findIndex((p: any) => p.id === this.id);
-        const featIds = this.projects[index].features;
-        this.feats = [];
-        for (const id of featIds) {
-          for (const f of this.features) {
-            if (f.id === id) {
-              this.feats.push(f);
-            }
-          }
-        }
+      if (this.features.length > 0) {
+        this.feats = this.features.filter((feature: Feature) => feature.projectId === this.id);
       }
     },
     toggleDialog(this: any) {
@@ -137,7 +127,6 @@ export default {
       this.openDetails = !this.openDetails;
     },
     clickFeature(this: any, feature: Feature) {
-      // this.$router.push({ path: '/projects/' + this.id, query: { filter: 'features', id: feature.id}});
       if (feature.id === this.selected.id) {
         this.toggleDetails();
       } else {
@@ -145,8 +134,11 @@ export default {
       }
 
       if (this.openDetails === true) {
+        this.$router.push({ path: '/projects/' + this.id, query: { filter: 'features', id: feature.id}});
         this.selected = feature;
-        this.feature = feature;
+      } else {
+        this.$router.push({ path: '/projects/' + this.id, query: { filter: 'features'}});
+        this.selected = {};
       }
     },
     setFilter(this: any, data: string, sortDir: string) {

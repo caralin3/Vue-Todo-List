@@ -346,9 +346,9 @@ export default {
     handleCommentChange(this: any, value: string, comm: Comment) {
       this.updatedComment = {
         id: comm.id,
-        startDate: comm.startDate,
+        startDate: comm.startDate.toString(),
         text: value,
-        updatedDate: new Date(),
+        updatedDate: new Date().toString(),
         user: comm.user,
       };
       this.editComment(this.updatedComment);
@@ -356,9 +356,9 @@ export default {
     handleLinkChange(this: any, value: string, link: Link) {
       this.updatedLink = {
         id: link.id,
-        startDate: link.startDate,
+        startDate: link.startDate.toString(),
         to: value,
-        updatedDate: new Date(),
+        updatedDate: new Date().toString(),
         user: link.user,
       };
       this.edit.link.editing = false;
@@ -369,13 +369,15 @@ export default {
         this.updatedItem = {
           ...this.updatedItem,
           description: value,
-          updatedDate: new Date(),
+          startDate: new Date(this.updatedItem.startDate).toString(),
+          updatedDate: new Date().toString(),
         };
       } else if (type === 'title') {
         this.updatedItem = {
           ...this.updatedItem,
+          startDate: new Date(this.updatedItem.startDate).toString(),
           title: value,
-          updatedDate: new Date(),
+          updatedDate: new Date().toString(),
         };
       }
       this.editItem(this.updatedItem);
@@ -409,7 +411,8 @@ export default {
       this.updatedItem = {
         ...this.updatedItem,
         assignee: this.assignee,
-        updatedDate: new Date(),
+        startDate: new Date(this.updatedItem.startDate).toString(),
+        updatedDate: new Date().toString(),
       };
       this.editItem(this.updatedItem);
     },
@@ -421,7 +424,8 @@ export default {
       this.updatedItem = {
         ...this.updatedItem,
         priority: this.priority,
-        updatedDate: new Date(),
+        startDate: new Date(this.updatedItem.startDate).toString(),
+        updatedDate: new Date().toString(),
       };
       this.editItem(this.updatedItem);
     },
@@ -435,7 +439,8 @@ export default {
       this.updatedItem = {
         ...this.updatedItem,
         reporter: this.reporter,
-        updatedDate: new Date(),
+        startDate: new Date(this.updatedItem.startDate).toString(),
+        updatedDate: new Date().toString(),
       };
       this.editItem(this.updatedItem);
     },
@@ -444,7 +449,8 @@ export default {
       this.updatedItem = {
         ...this.updatedItem,
         status: this.status,
-        updatedDate: new Date(),
+        startDate: new Date(this.updatedItem.startDate).toString(),
+        updatedDate: new Date().toString(),
       };
       this.editItem(this.updatedItem);
     },

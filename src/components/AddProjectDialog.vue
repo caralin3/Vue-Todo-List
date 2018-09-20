@@ -30,8 +30,7 @@ import ProjectList from '@/components/ProjectList.vue';
 import ProjectsHeader from '@/components/ProjectsHeader.vue';
 import TextAreaInput from '@/components/TextAreaInput.vue';
 import TextInput from '@/components/TextInput.vue';
-import { RootState } from '@/store/types';
-import { FirebaseProject, Project, User, statusType } from '@/types';
+import { FirebaseProject, Project, User, RootState, statusType } from '@/types';
 import { statusOptions } from '@/utils/constants';
 import { uid } from '@/utils/guid';
 

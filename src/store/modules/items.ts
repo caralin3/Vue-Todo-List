@@ -1,4 +1,6 @@
 import { GetterTree, MutationTree, ActionTree } from 'vuex';
+import * as firebase from 'firebase';
+import * as fb from '@/firebase';
 import { Item } from '@/types';
 import { MutationType } from '@/store/mutation-types';
 import { Item1, Item2, Item3 } from '@/store/state';
@@ -13,16 +15,55 @@ const initialState: ItemState = {
 
 const actions: ActionTree<ItemState, any> = {
   addItem: ({commit}, item: Item): any => {
-    commit(MutationType.ADD_ITEM, item);
+    fb.itemsCollection.add(item).then(() => {
+      let newItem: Item;
+      fb.itemsCollection.orderBy('startDate', 'asc')
+        .onSnapshot((querySnapshot: any) => {
+          querySnapshot.forEach((doc: any) => {
+            newItem = doc.data();
+            newItem.startDate = new Date(doc.data().startDate);
+            newItem.updatedDate = new Date(doc.data().updatedDate);
+            if (newItem.endDate) {
+              newItem.endDate = new Date(doc.data().endDate);
+            }
+            newItem.id = doc.id;
+          });
+          commit(MutationType.ADD_ITEM, item);
+          fb.featuresCollection.doc(item.featureId).update({
+            updatedDate: item.updatedDate,
+            items: firebase.firestore.FieldValue.arrayUnion(newItem.id),
+          });
+        });
+    }).catch((err: any) => {
+      console.log(err.message);
+    });
   },
   editItem: ({commit}, item: Item): any => {
-    commit(MutationType.EDIT_ITEM, item);
+    fb.itemsCollection.doc(item.id).update(item).then(() => {
+      const newItem = {
+        ...item,
+        startDate: new Date(item.startDate),
+        updatedDate: new Date(item.updatedDate),
+      };
+      if (item.endDate) {
+        newItem.endDate = new Date(item.endDate);
+      }
+      commit(MutationType.EDIT_ITEM, item);
+      fb.featuresCollection.doc(item.featureId).update({
+        updatedDate: item.updatedDate,
+      });
+    }).catch((err: any) => {
+      console.log(err.message);
+    });
   },
   removeItem: ({commit}, item: Item): any => {
     commit(MutationType.REMOVE_ITEM, item);
   },
   removeAllItems: ({commit}): any => {
     commit(MutationType.REMOVE_ALL_ITEMS);
+  },
+  setItems: ({commit}, item: Item): any => {
+    commit(MutationType.SET_FEATURES, item);
   },
 };
 
@@ -41,6 +82,9 @@ const mutations: MutationTree<ItemState> = {
   },
   [MutationType.REMOVE_ALL_ITEMS]: (state: ItemState) => {
     state.items = [];
+  },
+  [MutationType.SET_ITEMS]: (state: ItemState, itemList: Item[]) => {
+    state.items = itemList;
   },
 };
 

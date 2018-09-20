@@ -17,7 +17,7 @@
 import Vue from 'vue';
 import { mapActions, mapState } from 'vuex';
 import * as fb from '@/firebase';
-import { RootState } from '@/store/types';
+import { RootState } from '@/types';
 
 export default {
   computed: {

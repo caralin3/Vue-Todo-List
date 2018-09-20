@@ -1,5 +1,5 @@
 import * as fb from '@/firebase';
-import { User } from '@/types';
+import { User, Feature, Version } from '@/types';
 
 export const statusOptions: string[] = ['Select Status', 'todo', 'inProgress', 'completed', 'closed'];
 
@@ -23,3 +23,29 @@ export const getUserOptions = () => {
   });
   return users;
 };
+
+export const getFeatureOptions = () => {
+  const features: Feature[] = [{
+    assignee: {} as User,
+    description: '',
+    id: '',
+    items: [],
+    priority: 'minor',
+    projectId: '',
+    startDate: new Date(),
+    status: 'todo',
+    title: 'Select Feature',
+    updatedDate: new Date(),
+    version: {} as Version,
+    workFlow: [],
+  }];
+  fb.featuresCollection.get().then((docs: any) => {
+    docs.forEach((doc: any) => {
+      const feature = doc.data();
+      feature.id = doc.id;
+      features.push(feature);
+    });
+  });
+  return features;
+};
+
