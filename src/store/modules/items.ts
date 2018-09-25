@@ -17,18 +17,16 @@ const actions: ActionTree<ItemState, any> = {
   addItem: ({commit}, item: Item): any => {
     fb.itemsCollection.add(item).then(() => {
       let newItem: Item;
-      fb.itemsCollection.orderBy('startDate', 'asc')
-        .onSnapshot((querySnapshot: any) => {
-          querySnapshot.forEach((doc: any) => {
-            newItem = doc.data();
-            newItem.startDate = new Date(doc.data().startDate);
-            newItem.updatedDate = new Date(doc.data().updatedDate);
-            if (newItem.endDate) {
-              newItem.endDate = new Date(doc.data().endDate);
-            }
-            newItem.id = doc.id;
-          });
-          commit(MutationType.ADD_ITEM, item);
+      fb.itemsCollection.orderBy('startDate', 'desc').limit(1).get()
+        .then((querySnapshot: any) => {
+          newItem = querySnapshot.docs[0].data();
+          newItem.startDate = new Date(querySnapshot.docs[0].data().startDate);
+          newItem.updatedDate = new Date(querySnapshot.docs[0].data().updatedDate);
+          if (newItem.endDate) {
+            newItem.endDate = new Date(querySnapshot.docs[0].data().endDate);
+          }
+          newItem.id = querySnapshot.docs[0].id;
+          commit(MutationType.ADD_ITEM, newItem);
           fb.featuresCollection.doc(item.featureId).update({
             updatedDate: item.updatedDate,
             items: firebase.firestore.FieldValue.arrayUnion(newItem.id),

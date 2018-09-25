@@ -49,8 +49,8 @@
       <div class="taskDetails_detailsData">
         <span class="taskDetails_detailsLabel">Created:</span>
         <span class="taskDetails_detailsText">
-          {{ task.startDate | date }}
-          {{ task.startDate | time }}
+          {{ new Date(task.startDate) | date }}
+          {{ new Date(task.startDate) | time }}
         </span>
       </div>
       <div class="taskDetails_detailsData">
@@ -80,8 +80,8 @@
       <div class="taskDetails_detailsData">
         <span class="taskDetails_detailsLabel">Updated:</span>
         <span class="taskDetails_detailsText">
-          {{ task.updatedDate | date }}
-          {{ task.updatedDate | time }}
+          {{ new Date(task.updatedDate) | date }}
+          {{ new Date(task.updatedDate) | time }}
         </span>
       </div>
       <div class="taskDetails_detailsData">
@@ -114,8 +114,8 @@
       <div class="taskDetails_detailsData">
         <span class="taskDetails_detailsLabel">Completed:</span>
         <span class="taskDetails_detailsText" v-if="task.endDate">
-          {{ task.endDate | date }}
-          {{ task.endDate | time }}
+          {{ new Date(task.endDate) | date }}
+          {{ new Date(task.endDate) | time }}
         </span>
         <span class="taskDetails_detailsText" v-else>TBD</span>
       </div>
@@ -189,7 +189,7 @@
           <span class="taskDetails_featureTitle">{{ taskFeature.title }}</span>
         </span>
         <span class="taskDetails_featureDate">
-          Updated: {{ taskFeature.updatedDate | date }} {{ taskFeature.updatedDate | time }}
+          Updated: {{ new Date(taskFeature.updatedDate) | date }} {{ new Date(taskFeature.updatedDate) | time }}
         </span>
       </router-link>
     </div>
@@ -207,19 +207,19 @@
           commented on
         </span>
         <span class="taskDetails_commentDate">
-          {{ comment.startDate | date }}
-          {{ comment.startDate | time }}
+          {{ new Date(comment.startDate) | date }}
+          {{ new Date(comment.startDate) | time }}
         </span>
         <span v-if="updatedComment.updatedDate || comment.updatedDate">
             updated on
         </span>
         <span class="featureDetails_commentDate" v-if="updatedComment.updatedDate && !comment.updatedDate">
-          {{ updatedComment.updatedDate | date }}
-          {{ updatedComment.updatedDate | time }}
+          {{ new Date(updatedComment.updatedDate) | date }}
+          {{ new Date(updatedComment.updatedDate) | time }}
         </span>
         <span class="featureDetails_commentDate" v-if="updatedComment.updatedDate || comment.updatedDate">
-          {{ comment.updatedDate | date }}
-          {{ comment.updatedDate | time }}
+          {{ new Date(comment.updatedDate) | date }}
+          {{ new Date(comment.updatedDate) | time }}
         </span>
         <p
           class="taskDetails_commentText"

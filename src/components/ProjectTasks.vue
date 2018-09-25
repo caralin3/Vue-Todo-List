@@ -55,8 +55,8 @@
         <tbody v-for="task in tasks" v-bind:key="task.id">
           <tr class="projectTasks_task" :class="{'projectTasks_selected': selected && task.id === selected.id}" @click="clickTask(task)">
             <td>{{ task.title }}</td>
-            <td v-if="!openDetails">{{ task.startDate | date }} {{ task.startDate | time }}</td>
-            <td v-if="!openDetails">{{ task.updatedDate | date }} {{ task.updatedDate | time }}</td>
+            <td v-if="!openDetails">{{ new Date(task.startDate) | date }} {{ new Date(task.startDate) | time }}</td>
+            <td v-if="!openDetails">{{ new Date(task.updatedDate) | date }} {{ new Date(task.updatedDate) | time }}</td>
             <td>
               <i class="fas fa-ban" :class="task.priority" v-if="task.priority === 'blocker'" />
               <i class="fas fa-exclamation-triangle" :class="task.priority" v-if="task.priority === 'critical'" />
