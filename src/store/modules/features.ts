@@ -55,9 +55,11 @@ const actions: ActionTree<FeatureState, any> = {
     });
   },
   removeFeature: ({commit}, feature: Feature): any => {
+    // TODO: Remove from Firebase
     commit(MutationType.REMOVE_FEATURE, feature);
   },
   removeAllFeatures: ({commit}): any => {
+    // TODO: Remove from Firebase
     commit(MutationType.REMOVE_ALL_FEATURES);
   },
   setFeatures: ({commit}, feature: Feature): any => {

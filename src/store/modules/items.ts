@@ -3,14 +3,13 @@ import * as firebase from 'firebase';
 import * as fb from '@/firebase';
 import { Item } from '@/types';
 import { MutationType } from '@/store/mutation-types';
-import { Item1, Item2, Item3 } from '@/store/state';
 
 export interface ItemState {
   items: Item[];
 }
 
 const initialState: ItemState = {
-  items: [Item1, Item2, Item3],
+  items: [],
 };
 
 const actions: ActionTree<ItemState, any> = {
@@ -55,9 +54,11 @@ const actions: ActionTree<ItemState, any> = {
     });
   },
   removeItem: ({commit}, item: Item): any => {
+    // TODO: Remove from Firebase
     commit(MutationType.REMOVE_ITEM, item);
   },
   removeAllItems: ({commit}): any => {
+    // TODO: Remove from Firebase
     commit(MutationType.REMOVE_ALL_ITEMS);
   },
   setItems: ({commit}, item: Item): any => {

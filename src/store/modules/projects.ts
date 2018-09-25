@@ -46,9 +46,11 @@ const actions: ActionTree<ProjectState, any> = {
     });
   },
   removeProject: ({commit}, proj: Project): any => {
+    // TODO: Remove from Firebase
     commit(MutationType.REMOVE_PROJECT, proj);
   },
   removeAllProjects: ({commit}): any => {
+    // TODO: Remove from Firebase
     commit(MutationType.REMOVE_ALL_PROJECTS);
   },
   setProjects: ({commit}, proj: Project): any => {
