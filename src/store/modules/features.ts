@@ -16,7 +16,7 @@ const actions: ActionTree<FeatureState, any> = {
   addFeature: ({commit}, feature: Feature): any => {
     fb.featuresCollection.add(feature).then(() => {
       let newFeature: Feature;
-      fb.projectsCollection.orderBy('startDate', 'desc').limit(1).get()
+      fb.featuresCollection.orderBy('startDate', 'desc').limit(1).get()
         .then((querySnapshot: any) => {
           newFeature = querySnapshot.docs[0].data();
           newFeature.startDate = new Date(querySnapshot.docs[0].data().startDate);
