@@ -46,8 +46,37 @@ const actions: ActionTree<ProjectState, any> = {
     });
   },
   removeProject: ({commit}, proj: Project): any => {
-    // TODO: Remove from Firebase
-    commit(MutationType.REMOVE_PROJECT, proj);
+    fb.projectsCollection.doc(proj.id).get().then((doc: any) => {
+      for (const fid of doc.data().features) {
+        fb.featuresCollection.doc(fid).get().then((featDoc: any) => {
+          for (const id of featDoc.data().items) {
+            // Delete associated items
+            fb.itemsCollection.doc(id).delete().then(() => {
+              console.log(`Item ${id} successfully deleted!`);
+            }).catch((err: any) => {
+              console.log(err.message);
+            });
+          }
+        }).catch((err: any) => {
+          console.log(err.message);
+        });
+        // Delete associated features
+        fb.featuresCollection.doc(fid).delete().then(() => {
+          console.log(`Feature ${fid} successfully deleted!`);
+        }).catch((err: any) => {
+          console.log(err.message);
+        });
+      }
+    }).catch((err: any) => {
+      console.log(err.message);
+    });
+    // Delete Project
+    fb.projectsCollection.doc(proj.id).delete().then(() => {
+      console.log(`Project ${proj.id} successfully deleted!`);
+      commit(MutationType.REMOVE_PROJECT, proj);
+    }).catch((err: any) => {
+      console.log(err.message);
+    });
   },
   removeAllProjects: ({commit}): any => {
     // TODO: Remove from Firebase

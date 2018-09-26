@@ -55,8 +55,30 @@ const actions: ActionTree<FeatureState, any> = {
     });
   },
   removeFeature: ({commit}, feature: Feature): any => {
-    // TODO: Remove from Firebase
-    commit(MutationType.REMOVE_FEATURE, feature);
+    // Delete associated items
+    fb.featuresCollection.doc(feature.id).get().then((featDoc: any) => {
+      for (const id of featDoc.data().items) {
+        fb.itemsCollection.doc(id).delete().then(() => {
+          console.log(`Item ${id} successfully deleted!`);
+        }).catch((err: any) => {
+          console.log(err.message);
+        });
+      }
+    }).catch((err: any) => {
+      console.log(err.message);
+    });
+    // Delete feature id from project
+    fb.projectsCollection.doc(feature.projectId).update({
+      updatedDate: new Date().toString(),
+      features: firebase.firestore.FieldValue.arrayRemove(feature.id),
+    });
+    // Delete feature
+    fb.featuresCollection.doc(feature.id).delete().then(() => {
+      console.log(`Feature ${feature.id} successfully deleted!`);
+      commit(MutationType.REMOVE_FEATURE, feature);
+    }).catch((err: any) => {
+      console.log(err.message);
+    });
   },
   removeAllFeatures: ({commit}): any => {
     // TODO: Remove from Firebase

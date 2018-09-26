@@ -54,8 +54,26 @@ const actions: ActionTree<ItemState, any> = {
     });
   },
   removeItem: ({commit}, item: Item): any => {
-    // TODO: Remove from Firebase
-    commit(MutationType.REMOVE_ITEM, item);
+    // Delete item id from feature
+    fb.featuresCollection.doc(item.featureId).update({
+      updatedDate: new Date().toString(),
+      features: firebase.firestore.FieldValue.arrayRemove(item.id),
+    }).catch((err: any) => {
+      console.log(err.message);
+    });
+    // Update project update time
+    fb.projectsCollection.doc(item.projectId).update({
+      updatedDate: new Date().toString(),
+    }).catch((err: any) => {
+      console.log(err.message);
+    });
+    // Delete item
+    fb.itemsCollection.doc(item.id).delete().then(() => {
+      console.log(`Item ${item.id} successfully deleted!`);
+      commit(MutationType.REMOVE_ITEM, item);
+    }).catch((err: any) => {
+      console.log(err.message);
+    });
   },
   removeAllItems: ({commit}): any => {
     // TODO: Remove from Firebase
