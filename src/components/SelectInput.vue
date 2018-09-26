@@ -2,7 +2,7 @@
   <p class="selectInput">
     <label class="selectInput_label" :for="label">{{ label }}</label>
     <select
-      class="selectInput_input"
+      :class="`${rootClass}_input`"
       :id="label"
       :defaultValue="value"
       @blur="onBlur"
@@ -23,6 +23,7 @@ export default {
     onBlur: Function,
     onFocus: Function,
     options: Array,
+    rootClass: String,
     value: String,
   },
   methods: {

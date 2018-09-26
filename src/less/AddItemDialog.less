@@ -24,6 +24,12 @@
     input {
       grid-area: input;
     }
+
+    @media only screen and (max-width: 640px) {
+      gap: 1rem;
+      grid-template: "label" "input";
+      width: 80%;
+    }
   }
   
 
@@ -45,6 +51,12 @@
       height: 5rem;
       width: 15rem;
     }
+
+    @media only screen and (max-width: 640px) {
+      gap: 1rem;
+      grid-template: "label" "input";
+      width: 80%;
+    }
   }  
 
   &_dateInput {
@@ -61,6 +73,12 @@
   
     input {
       grid-area: input;
+    }
+
+    @media only screen and (max-width: 640px) {
+      gap: 1rem;
+      grid-template: "label" "input";
+      width: 80%;
     }
   }  
 
@@ -80,6 +98,12 @@
       grid-area: input;
       height: 2rem;
       width: 15rem;
+    }
+
+    @media only screen and (max-width: 640px) {
+      gap: 1rem;
+      grid-template: "label" "input";
+      width: 80%;
     }
   }
   

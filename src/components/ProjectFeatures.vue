@@ -106,7 +106,7 @@ export default {
     },
     openDetails: false as boolean,
     selected: {} as Feature,
-    show: false  as boolean,
+    show: false as boolean,
   }),
   computed: {
     ...mapState({

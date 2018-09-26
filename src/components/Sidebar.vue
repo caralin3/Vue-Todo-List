@@ -7,11 +7,14 @@
       <i class="fas fa-bars sidebar_menu" @click="onClick" />
     </div>
     <div class="sidebar_nav" :class="{'sidebar_active': active}">
+      <router-link :to="{ path: '/projects/' + this.id, query: { filter: 'activity'}}">Activity</router-link>
       <router-link :to="{ path: '/projects/' + this.id, query: { filter: 'board'}}">Board</router-link>
       <router-link :to="{ path: '/projects/' + this.id, query: { filter: 'features'}}">Features</router-link>
-      <router-link :to="{ path: '/projects/' + this.id, query: { filter: 'tasks'}}">Tasks</router-link>
+      <router-link :to="{ path: '/projects/' + this.id, query: { filter: 'items'}}">Items</router-link>
+      <router-link :to="{ path: '/projects/' + this.id, query: { filter: 'members'}}">Team Members</router-link>
+      <!-- <router-link :to="{ path: '/projects/' + this.id, query: { filter: 'tasks'}}">Tasks</router-link>
       <router-link :to="{ path: '/projects/' + this.id, query: { filter: 'components'}}">Components</router-link>
-      <router-link :to="{ path: '/projects/' + this.id, query: { filter: 'bugs'}}">Bugs</router-link>
+      <router-link :to="{ path: '/projects/' + this.id, query: { filter: 'bugs'}}">Bugs</router-link> -->
     </div>
   </div>
 </template>

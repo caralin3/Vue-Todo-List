@@ -3,11 +3,6 @@
     align-self: center;
   }
 
-  &_creatorLabel {
-    font-weight: bold;
-    padding-right: 8.7rem;
-  }
-
   &_textInput {
     display: grid;
     gap: 2.5rem;
@@ -23,6 +18,12 @@
   
     input {
       grid-area: input;
+    }
+
+    @media only screen and (max-width: 640px) {
+      gap: 1rem;
+      grid-template: "label" "input";
+      width: 80%;
     }
   }
   
@@ -45,6 +46,12 @@
       height: 5rem;
       width: 15rem;
     }
+
+    @media only screen and (max-width: 640px) {
+      gap: 1rem;
+      grid-template: "label" "input";
+      width: 80%;
+    }
   }  
 
   &_dateInput {
@@ -61,6 +68,12 @@
   
     input {
       grid-area: input;
+    }
+
+    @media only screen and (max-width: 640px) {
+      gap: 1rem;
+      grid-template: "label" "input";
+      width: 80%;
     }
   }  
 
@@ -81,6 +94,11 @@
       height: 2rem;
       width: 15rem;
     }
+
+    @media only screen and (max-width: 640px) {
+      gap: 1rem;
+      grid-template: "label" "input";
+      width: 80%;
+    }
   }
-  
 }
