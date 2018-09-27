@@ -72,8 +72,8 @@ export default Vue.extend({
   methods: {
     onClick(this: any, item: any) {
       if (this.selected && this.selected.id === item.id) {
-        this.selected = {};
         this.$router.push({ path: this.$route.path, query: { filter: 'features'}});
+        this.selected = {};
       } else {
         this.selected = item;
         this.$router.push({ path: this.$route.path, query: { filter: 'features', id: item.id}});
@@ -81,6 +81,14 @@ export default Vue.extend({
     },
     toggleDialog(this: any) {
       this.show = !this.show;
+    },
+  },
+
+  watch: {
+    '$route.query.id'(this: any) {
+      if (!this.$route.query.id) {
+        this.selected = {};
+      }
     },
   },
 });
@@ -91,7 +99,7 @@ export default Vue.extend({
 @import '../less/button.less';
 
 .itemList {
-  margin: 2rem;
+  padding: 2rem;
 
   &_header {
     align-items: center;

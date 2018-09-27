@@ -89,8 +89,13 @@ export default Vue.extend({
 
   &_header {
     align-items: center;
+    border-bottom: 1px solid @madison;
     display: flex;
     justify-content: space-between;
+  }
+
+  &_title {
+    margin: 0;
   }
 
   &_container {
@@ -98,6 +103,7 @@ export default Vue.extend({
     display: flex;
     flex-direction: column;
     justify-content: center;
+    padding: 2rem 0;
   }
 
   &_details {

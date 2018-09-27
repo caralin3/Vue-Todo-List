@@ -1,6 +1,6 @@
 <template>
   <div class="detailsHeader">
-    <span class="detailsHeader">
+    <span class="detailsHeader_text">
       <bug-icon v-if="icon === 'bug'" />
       <component-icon v-if="icon === 'component'" />
       <feature-icon v-if="icon === 'feature'" />
@@ -72,8 +72,15 @@ export default Vue.extend({
 
 .detailsHeader {
   align-items: center;
+  // border-bottom: 1px solid @madison;
   display: flex;
   justify-content: space-between;
+
+  &_text {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+  }
 
   &_title {
     margin: 0;

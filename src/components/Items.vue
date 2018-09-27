@@ -1,9 +1,9 @@
 <template>
   <div class="items" :class="{'items-open': itemId}">
-    <div class="items_list">
+    <div class="items_list" :class="{'items_list-close': itemId}">
       <item-list :icon="icon" :items="itemList" />
     </div>
-    <div class="items_details" v-if="itemId">
+    <div class="items_details" :class="{'items_details-open': itemId}" v-if="itemId">
       <item-details :on-close="close" :item="currentItem"  />
     </div>
   </div>
@@ -78,23 +78,44 @@ export default Vue.extend({
 <style lang="less" scoped>
 @import '../less/variables.less';
 
-.items {  
+.items {
+
   &-open {
     display: grid;
     grid-template:
       "list details"
       ~'/' 1fr 2fr;
+
+    @media only screen and (max-width: 780px) {
+      display: flex;
+    }
   }
 
   &_list {
     grid-area: list;
+
+    &-close {
+      @media only screen and (max-width: 780px) {
+        display: none;
+      }
+    }
   }
 
   &_details {
-    padding: 2rem 1rem 2rem 0;
     grid-area: details;
+    padding: 2rem 2rem 2rem 0;
+
+    @media only screen and (max-width: 780px) {
+      display: none;
+    }
+
+    &-open {
+      @media only screen and (max-width: 780px) {
+        display: block;
+        padding: 2rem 1.5rem 2rem 1rem;
+      }
+    }
   }
-  
 }
 </style>
 

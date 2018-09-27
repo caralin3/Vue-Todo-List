@@ -265,6 +265,11 @@ export default Vue.extend({
 .detailsData {
   padding: 1rem;
 
+  &_title {
+    border-bottom: 1px solid @madison;
+    padding-bottom: 0.5rem;
+  }
+
   &_container {
     display: grid;
     grid-column-gap: 1rem;

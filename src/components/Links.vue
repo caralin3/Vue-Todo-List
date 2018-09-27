@@ -81,8 +81,17 @@ export default Vue.extend({
 
   &_header {
     align-items: center;
+    border-bottom: 1px solid @madison;
     display: flex;
     justify-content: space-between;
+  }
+
+  &_title {
+    margin: 0;
+  }
+
+  &_container {
+    padding: 1rem 0 0 1rem;
   }
 
   &_linkRow {

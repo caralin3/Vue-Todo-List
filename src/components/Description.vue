@@ -41,6 +41,11 @@ export default Vue.extend({
 .description {
   padding: 1rem;
 
+  &_title {
+    border-bottom: 1px solid @madison;
+    padding-bottom: 0.5rem;
+  }
+
   &_text {
     padding: 0.3rem 0.5rem;
 
