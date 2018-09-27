@@ -49,3 +49,88 @@ export default {
 };
 </script>
 
+<style lang="less" scoped>
+@import '../less/variables.less';
+@import '../less/button.less';
+
+.forgot {
+  align-items: center;
+  background-color: fade(@medium-sea-green, 20%);
+  display: flex;
+  flex-direction: column;
+  margin: 3rem auto;
+  padding: 2rem;
+  width: 75%;
+
+  &_title {
+    color: @madison;
+  }
+
+  &_form {
+    align-items: flex-end;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
+  &_input {
+    display: grid;
+    grid-column-gap: 1rem;
+    grid-template: "label input";
+
+    label {
+      font-weight: bold;
+      grid-area: label;
+    }
+
+    input {
+      grid-area: input;
+    }
+  }
+
+  &_login {
+    color: @madison;
+    padding: 1rem 0.5rem;
+
+    &-link {
+      color: @madison;      
+      
+      &:hover {
+        color: @medium-sea-green;
+        text-decoration: underline;
+      }
+    }
+  }
+
+  &_sent {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  &_loginButton {
+    .button;
+  }
+}
+
+@media only screen and (max-width: 640px) {
+  .login {  
+    
+    &_input {
+      display: grid;
+      grid-row-gap: 1rem;
+      grid-template: "label" "input";
+  
+      label {
+        font-weight: bold;
+        grid-area: label;
+      }
+  
+      input {
+        grid-area: input;
+      }
+    }
+  }
+}
+</style>

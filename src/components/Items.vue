@@ -92,7 +92,6 @@ export default Vue.extend({
 @import '../less/variables.less';
 
 .items {
-
   &_header {
     align-items: center;
     display: flex;

@@ -3,8 +3,8 @@
     <Dialog title="Add Item" :toggleDialog="dismissDialog">
       <Form buttonText="Add Item" :toggleDialog="dismissDialog" :submit="onSubmitForm">
         <div class="addItem_dialog">
-          <SelectUserInput :class="'addFeature_select'" label="Assignee" v-model="assigneeId" :options="userOptions" :onBlur="() => null" :onFocus="() => null" />
-          <SelectUserInput :class="'addFeature_select'" label="Reporter" v-model="reporterId" :options="userOptions" :onBlur="() => null" :onFocus="() => null" />
+          <SelectUserInput :class="'addItem_select'" label="Assignee" v-model="assigneeId" :options="userOptions" :onBlur="() => null" :onFocus="() => null" />
+          <SelectUserInput :class="'addItem_select'" label="Reporter" v-model="reporterId" :options="userOptions" :onBlur="() => null" :onFocus="() => null" />
           <TextInput :class="'addItem_textInput'" label="Item Name" placeholder="" v-model="title" />
           <SelectFeatureInput :class="'addItem_select'" label="Feature" v-model="featureId" :options="featureOptions" :onBlur="() => null" :onFocus="() => null" />
           <TextAreaInput :class="'addItem_textAreaInput'" label="Item Description" placeholder="" v-model="description" />
@@ -136,3 +136,114 @@ import { uid } from '@/utils/guid';
 })
 export default class AddItemDialog extends Vue {}
 </script>
+
+<style lang="less" scoped>
+@import '../less/variables.less';
+
+.addItem {
+  &_dialog {
+    align-self: center;
+  }
+
+  &_creatorLabel {
+    font-weight: bold;
+    padding-right: 8.7rem;
+  }
+
+  &_textInput {
+    display: grid;
+    gap: 2.5rem;
+    grid-template: "label input";
+    width: 20rem;
+  
+    label {
+      font-weight: bold;
+      grid-area: label;
+      width: 10rem;
+    }
+  
+    input {
+      grid-area: input;
+    }
+
+    @media only screen and (max-width: 640px) {
+      gap: 1rem;
+      grid-template: "label" "input";
+      width: 80%;
+    }
+  }
+  
+
+  &_textAreaInput {
+    display: grid;
+    gap: 2.5rem;
+    grid-template: "label input";
+    width: 20rem;
+  
+    label {
+      font-weight: bold;
+      grid-area: label;
+      width: 10rem;
+    }
+  
+    input {
+      grid-area: input;
+      height: 5rem;
+      width: 15rem;
+    }
+
+    @media only screen and (max-width: 640px) {
+      gap: 1rem;
+      grid-template: "label" "input";
+      width: 80%;
+    }
+  }  
+
+  &_dateInput {
+    display: grid;
+    gap: 1rem;
+    grid-template: "label input";
+  
+    label {
+      font-weight: bold;
+      grid-area: label;
+      width: 10rem;
+    }
+  
+    input {
+      grid-area: input;
+    }
+
+    @media only screen and (max-width: 640px) {
+      gap: 1rem;
+      grid-template: "label" "input";
+      width: 80%;
+    }
+  }  
+
+  &_select {
+    display: grid;
+    gap: 2.5rem;
+    grid-template: "label input";
+  
+    label {
+      font-weight: bold;
+      grid-area: label;
+      width: 10rem;
+    }
+  
+    select {
+      grid-area: input;
+      height: 2rem;
+      width: 15rem;
+    }
+
+    @media only screen and (max-width: 640px) {
+      gap: 1rem;
+      grid-template: "label" "input";
+      width: 80%;
+    }
+  } 
+}
+</style>
+

@@ -52,3 +52,18 @@ import { uid } from '@/utils/guid';
 })
 export default class Projects extends Vue {}
 </script>
+
+<style lang="less" scoped>
+@import '../less/variables.less';
+
+.projects {
+  display: flex;
+  flex-direction: column;
+
+  &_none {
+    align-self: center;
+    justify-self: center;
+  }
+}
+
+</style>

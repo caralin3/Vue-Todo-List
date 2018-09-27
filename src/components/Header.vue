@@ -45,3 +45,66 @@ export default {
 };
 </script>
 
+<style lang="less" scoped>
+@import '../less/variables.less';
+@import '../less/button.less';
+
+.header {
+  background-color: @medium-sea-green;
+  box-shadow: 3px 3px 5px rgba(114, 113, 113, 0.4);
+  display: flex;
+  justify-content: space-between;
+  padding-left: 2rem;
+  width: 100%;
+
+  &_title {
+    color: @madison;
+  }
+
+  &_nav {
+    margin-right: 2rem;
+    padding: 2rem;
+
+    a {
+      color: @madison;
+      font-weight: bold;
+      padding: 0.5rem 1rem;
+
+      &:hover {
+        color: @white;
+      }
+
+      &.router-link-active {
+        color: @white;
+      }
+    }
+
+    &-logout {
+      color: @madison;
+      font-size: 1rem;
+      font-weight: bold;
+
+      &:focus,
+      &:hover {
+        color: @white;
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 640px) {
+  .header {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 0 0 1rem 0;
+
+    &_nav {
+      margin: 0;
+      padding: 0;
+    }
+  }
+}
+</style>

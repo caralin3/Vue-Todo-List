@@ -25,3 +25,41 @@ import SignUp from '@/components/SignUp.vue';
 })
 export default class Home extends Vue {}
 </script>
+
+<style lang="less" scoped>
+@import '../less/variables.less';
+
+.home {
+  // align-items: center;
+  background-color: fade(@medium-sea-green, 20%);
+  display: grid;
+  grid-column-gap: 1rem;
+  grid-template:
+    "left signup"
+    ~'/' 1fr 1fr;
+  margin: 3rem auto;
+  width: 80%;
+
+  &_left {
+    align-items: center;
+    grid-area: left;
+    display: flex;
+    flex-direction: column;
+    padding: 3rem 0;
+  }
+
+  &_title {
+    color: @madison;
+  }
+
+  &_text {
+    color: @madison;
+  }
+
+  &_signup {
+    background: none !important;
+    grid-area: signup;
+  }
+}
+</style>
+

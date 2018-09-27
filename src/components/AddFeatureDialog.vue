@@ -125,3 +125,110 @@ import { uid } from '@/utils/guid';
 })
 export default class AddFeatureDialog extends Vue {}
 </script>
+
+<style lang="less" scoped>
+@import '../less/variables.less';
+@import '../less/button.less';
+
+.addFeature {
+  &_dialog {
+    align-self: center;
+  }
+
+  &_textInput {
+    display: grid;
+    gap: 2.5rem;
+    grid-template: "label input";
+    width: 20rem;
+  
+    label {
+      font-weight: bold;
+      grid-area: label;
+      width: 10rem;
+    }
+  
+    input {
+      grid-area: input;
+    }
+
+    @media only screen and (max-width: 640px) {
+      gap: 1rem;
+      grid-template: "label" "input";
+      width: 80%;
+    }
+  }
+  
+
+  &_textAreaInput {
+    display: grid;
+    gap: 2.5rem;
+    grid-template: "label input";
+    width: 20rem;
+  
+    label {
+      font-weight: bold;
+      grid-area: label;
+      width: 10rem;
+    }
+  
+    input {
+      grid-area: input;
+      height: 5rem;
+      width: 15rem;
+    }
+
+    @media only screen and (max-width: 640px) {
+      gap: 1rem;
+      grid-template: "label" "input";
+      width: 80%;
+    }
+  }  
+
+  &_dateInput {
+    display: grid;
+    gap: 1rem;
+    grid-template: "label input";
+  
+    label {
+      font-weight: bold;
+      grid-area: label;
+      width: 10rem;
+    }
+  
+    input {
+      grid-area: input;
+    }
+
+    @media only screen and (max-width: 640px) {
+      gap: 1rem;
+      grid-template: "label" "input";
+      width: 80%;
+    }
+  }  
+
+  &_select {
+    display: grid;
+    gap: 2.5rem;
+    grid-template: "label input";
+  
+    label {
+      font-weight: bold;
+      grid-area: label;
+      width: 10rem;
+    }
+  
+    select {
+      grid-area: input;
+      height: 2rem;
+      width: 15rem;
+    }
+
+    @media only screen and (max-width: 640px) {
+      gap: 1rem;
+      grid-template: "label" "input";
+      width: 80%;
+    }
+  }
+}
+</style>
+

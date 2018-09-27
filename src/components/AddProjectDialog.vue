@@ -89,3 +89,114 @@ import { uid } from '@/utils/guid';
 })
 export default class AddProjectDialog extends Vue {}
 </script>
+
+<style lang="less" scoped>
+.addProject {
+  &_dialog {
+    align-self: center;
+  }
+
+  &_creatorLabel {
+    font-weight: bold;
+    padding-right: 12rem;
+    
+    @media only screen and (max-width: 640px) {
+      padding-right: 1rem;
+    }
+  }
+
+  &_textInput {
+    display: grid;
+    gap: 2.5rem;
+    grid-template: "label input";
+  
+    label {
+      font-weight: bold;
+      grid-area: label;
+      width: 10rem;
+    }
+  
+    input {
+      grid-area: input;
+    }
+
+    @media only screen and (max-width: 640px) {
+      gap: 1rem;
+      grid-template: "label" "input";
+      width: 80%;
+    }
+  }
+  
+  &_textAreaInput {
+    display: grid;
+    gap: 4.5rem;
+    grid-template: "label input";
+    justify-content: left;
+    width: 100%;
+  
+    label {
+      font-weight: bold;
+      grid-area: label;
+      margin: auto;
+      width: 100%;
+    }
+  
+    input {
+      grid-area: input;
+      height: 5rem;
+    }
+
+    @media only screen and (max-width: 640px) {
+      gap: 1.5rem;
+      grid-template: "label" "input";
+      width: 80%;
+    }
+  }  
+
+  &_dateInput {
+    display: grid;
+    gap: 1rem;
+    grid-template: "label input";
+  
+    label {
+      font-weight: bold;
+      grid-area: label;
+      width: 10rem;
+    }
+  
+    input {
+      grid-area: input;
+    }
+
+    @media only screen and (max-width: 640px) {
+      gap: 1rem;
+      grid-template: "label" "input";
+      width: 80%;
+    }
+  }  
+
+  &_selectStatus {
+    display: grid;
+    gap: 2.5rem;
+    grid-template: "label input";
+  
+    label {
+      font-weight: bold;
+      grid-area: label;
+      width: 10rem;
+    }
+  
+    select {
+      grid-area: input;
+      height: 2rem;
+      width: 15rem;
+    }
+
+    @media only screen and (max-width: 640px) {
+      gap: 1rem;
+      grid-template: "label" "input";
+      width: 80%;
+    }
+  } 
+}
+</style>

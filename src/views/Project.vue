@@ -1,6 +1,6 @@
 <template>
   <div class="project">
-    <sidebar :title="title" />
+    <sidebar :title="projectTitle" />
     <div class="project_container" v-if="filter === 'activity'">
       <ProjectBoard />
     </div>
@@ -8,22 +8,13 @@
       <ProjectBoard />
     </div>
     <div class="project_container" v-if="filter === 'features'">
-      <items :itemList="feats" />
+      <items :itemList="featureList" />
     </div>
     <div class="project_container" v-if="filter === 'items'">
       <items :itemList="itemList" />
     </div>
-    <div class="project_container" v-if="filter === 'tasks'">
-      <ProjectTasks />
-    </div>
-    <div class="project_container" v-if="filter === 'components'">
-      <ProjectComponents />
-    </div>
-    <div class="project_container" v-if="filter === 'bugs'">
-      <ProjectBugs />
-    </div>
     <div class="project_container" v-if="filter === 'members'">
-      <ProjectBugs />
+      <ProjectBoard />
     </div>
     <div class="project_container" v-if="!filter">
       <ProjectDetails />
@@ -36,10 +27,7 @@ import Vue from 'vue';
 import {mapActions, mapGetters, mapState, mapMutations} from 'vuex';
 import Items from '@/components/Items.vue';
 import ProjectBoard from '@/components/ProjectBoard.vue';
-import ProjectBugs from '@/components/ProjectBugs.vue';
-import ProjectComponents from '@/components/ProjectComponents.vue';
 import ProjectDetails from '@/components/ProjectDetails.vue';
-import ProjectTasks from '@/components/ProjectTasks.vue';
 import Sidebar from '@/components/Sidebar.vue';
 import { Feature, Item } from '@/types';
 
@@ -49,22 +37,18 @@ export default Vue.extend({
   components: {
     Items,
     ProjectBoard,
-    ProjectBugs,
-    ProjectComponents,
     ProjectDetails,
-    ProjectTasks,
     Sidebar,
   },
 
   data: () => ({
-    feats: [] as Feature[],
+    id: '',
     filter: '',
-    itemList: [] as Item[],
-    title: '',
   }),
 
   created(this: any) {
-    this.loadState();
+    this.id = this.$route.params.id;
+    this.getFilter();
   },
 
   computed: {
@@ -73,29 +57,19 @@ export default Vue.extend({
       items: (state: any) => state.items.items,
       projects: (state: any) => state.projects.projects,
     }),
+    projectTitle(this: any) {
+      const project = this.projects.filter((proj: any) => proj.id === this.id)[0];
+      return this.title = project.title;
+    },
+    featureList(this: any) {
+      return this.features.filter((feature: Feature) => feature.projectId === this.id);
+    },
+    itemList(this: any) {
+      return this.items.filter((item: Item) => item.projectId === this.id);
+    },
   },
 
   methods: {
-    loadState(this: any) {
-      const id = this.$route.params.id;
-      this.getFilter();
-
-      // Get project title for sidebar
-      if (this.projects && this.projects.length > 0) {
-        const project = this.projects.filter((proj: any) => proj.id === id)[0];
-        this.title = project.title;
-      }
-
-      // Get features
-      if (this.features && this.features.length > 0) {
-        this.feats = this.features.filter((feature: Feature) => feature.projectId === id);
-      }
-
-      // Get items
-      if (this.items && this.items.length > 0) {
-        this.itemList = this.items.filter((item: Item) => item.projectId === id);
-      }
-    },
     getFilter(this: any) {
       this.filter = this.$route.query.filter;
     },
@@ -108,3 +82,29 @@ export default Vue.extend({
   },
 });
 </script>
+
+<style lang="less" scoped>
+@import '../less/variables.less';
+
+.project {
+  display: grid;
+  grid-template: "sidebar body" ~'/' minmax(auto, 15%) 1fr;
+
+  @media only screen and (max-width: 640px) {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+  }
+
+  &_container {
+    grid-area: body;
+
+    @media only screen and (max-width: 640px) {
+      width: 100%;
+    }
+  }
+}
+</style>
+

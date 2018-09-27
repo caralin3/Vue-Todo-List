@@ -44,3 +44,105 @@ export default {
   },
 };
 </script>
+
+<style lang="less" scoped>
+@import '../less/variables.less';
+@import '../less/button.less';
+
+.projectList {
+  display: grid;
+  gap: 3.5rem;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(auto-fill, 1fr);
+  justify-items: center;
+  padding: 1rem 2rem 3rem;
+
+  @media only screen and (max-width: 640px) {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+}
+
+.projectItem {
+  background-color: @medium-sea-green;
+  color: @madison;
+  padding: 1.5rem;
+  height: 12rem;
+  width: 20rem;
+
+  &_overlay {
+    left: 50%;
+    opacity: 0;
+    position: relative;
+    top: 6rem;
+    text-align: center;
+    transition: .5s ease;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    z-index: 1;
+  }
+
+  &_link {
+    background-color: @white;
+    color: @medium-sea-green;
+    padding: 1rem 2rem;
+  }
+
+  &_header,
+  &_created,
+  &_featureDetails {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &_title {
+    margin: 0;
+  }
+
+  &_by,
+  &_date {
+    font-size: 0.8rem;
+    line-height: 2;
+  }
+
+  &_description {
+    margin: 0;
+    padding: 0.5rem 0;
+    width: 100%;
+  }
+
+  &_latest {
+    padding: 0.5rem 0 1rem 0;
+  }
+
+  &_latestTitle {
+    margin: 0;
+  }
+
+  &_featureTitle,
+  &_featureDate {
+    font-size: 0.9rem;
+    line-height: 2;
+  }
+
+  @media only screen and (max-width: 640px) {
+    margin: 1.5rem auto;
+    padding: 1rem;
+    height: 12rem;
+    width: 90%;
+  }
+}
+
+.projectItem:hover {
+  .projectItem_details {
+    opacity: 0.3;
+  }
+
+  .projectItem_overlay {
+    opacity: 1;
+  }
+}
+</style>

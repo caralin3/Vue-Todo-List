@@ -26,3 +26,29 @@ export default {
   },
 };
 </script>
+
+<style lang="less" scoped>
+@import '../less/variables.less';
+@import '../less/button.less';
+
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 1.5rem 0;
+
+  &_container {
+    display: grid;
+    gap: 5rem;
+    grid-template: 
+      "textLabel textInput"
+      "label input" ~'/' 1fr 1fr;
+  }
+
+  &_button {
+    .button;
+    align-self: center;
+    margin-top: 1.5rem;
+  }
+}
+</style>

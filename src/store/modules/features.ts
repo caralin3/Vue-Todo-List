@@ -19,7 +19,6 @@ const actions: ActionTree<FeatureState, any> = {
       fb.featuresCollection.orderBy('startDate', 'desc').get()
         .then((querySnapshot: any) => {
           newFeature = querySnapshot.docs[0].data();
-          console.log(newFeature);
           newFeature.startDate = new Date(querySnapshot.docs[0].data().startDate);
           newFeature.updatedDate = new Date(querySnapshot.docs[0].data().updatedDate);
           if (newFeature.endDate) {

@@ -33,3 +33,30 @@ export default {
   },
 };
 </script>
+
+<style lang="less" scoped>
+@import '../less/variables.less';
+@import '../less/button.less';
+
+.projectsHeader {
+  align-items: center;
+  color: @madison;
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+
+  &_text {
+    align-items: center;
+    display: flex;
+    justify-content: flex-start;
+  }
+
+  &_count {
+    padding: 0 1rem;
+  }
+
+  &_button {
+    .button;
+  }
+}
+</style>

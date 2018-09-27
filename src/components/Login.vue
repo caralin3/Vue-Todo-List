@@ -88,3 +88,86 @@ export default {
 };
 </script>
 
+<style lang="less" scoped>
+@import '../less/variables.less';
+@import '../less/button.less';
+
+.login {
+  align-items: center;
+  background-color: fade(@medium-sea-green, 20%);
+  display: flex;
+  flex-direction: column;
+  margin: 3rem auto;
+  width: 75%;
+
+  &_title {
+    color: @madison;
+  }
+
+  &_form {
+    align-items: flex-end;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
+  &_input {
+    display: grid;
+    grid-column-gap: 1rem;
+    grid-template: "label input";
+
+    label {
+      font-weight: bold;
+      grid-area: label;
+    }
+
+    input {
+      grid-area: input;
+    }
+  }
+
+  &_forgot {
+    color: @madison;
+
+    &:hover {
+      color: @medium-sea-green;
+      text-decoration: underline;
+    }
+  }
+
+  &_signup {
+    &-text {
+      color: @madison;
+      padding: 1rem 0.5rem;
+    }
+
+    &-link {
+      color: @madison;      
+      
+      &:hover {
+        color: @medium-sea-green;
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 640px) {
+  .login {  
+    &_input {
+      display: grid;
+      grid-row-gap: 1rem;
+      grid-template: "label" "input";
+  
+      label {
+        font-weight: bold;
+        grid-area: label;
+      }
+  
+      input {
+        grid-area: input;
+      }
+    }
+  }
+}
+</style>

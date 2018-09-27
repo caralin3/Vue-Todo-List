@@ -80,3 +80,9 @@ export default Vue.extend({
   },
 });
 </script>
+
+<style lang="less" scoped>
+@import '../less/variables.less';
+@import '../less/button.less';
+
+</style>
