@@ -2,16 +2,51 @@
   <div class="sidebar">
     <div class="sidebar_header">
       <h1 class="sidebar_title">
-        <router-link :to="this.$route.path">{{ title }}</router-link>
+        {{ title }}
       </h1>
       <i class="fas fa-bars sidebar_menu" @click="onClick" />
     </div>
     <div class="sidebar_nav" :class="{'sidebar_active': active}">
-      <router-link :to="{ path: this.$route.path, query: { filter: 'activity'}}">Activity</router-link>
-      <router-link :to="{ path: this.$route.path, query: { filter: 'board'}}">Board</router-link>
-      <router-link :to="{ path: this.$route.path, query: { filter: 'features'}}">Features</router-link>
-      <router-link :to="{ path: this.$route.path, query: { filter: 'items'}}">Items</router-link>
-      <router-link :to="{ path: this.$route.path, query: { filter: 'members'}}">Team Members</router-link>
+      <router-link
+        :class="{'sidebar_nav-active': filter === 'activity'}"
+        :to="{ path: this.$route.path, query: { filter: 'activity'}}"
+      >
+        <span :class="{'sidebar_nav-active-text': filter === 'activity'}">
+          Activity
+        </span>
+      </router-link>
+      <router-link
+        :class="{'sidebar_nav-active': filter === 'board'}"
+        :to="{ path: this.$route.path, query: { filter: 'board'}}"
+      >
+        <span :class="{'sidebar_nav-active-text': filter === 'board'}">
+          Board
+        </span>
+      </router-link>
+      <router-link
+        :class="{'sidebar_nav-active': filter === 'features'}"
+        :to="{ path: this.$route.path, query: { filter: 'features'}}"
+      >
+        <span :class="{'sidebar_nav-active-text': filter === 'features'}">
+          Features
+        </span>
+      </router-link>
+      <router-link
+        :class="{'sidebar_nav-active': filter === 'items'}"
+        :to="{ path: this.$route.path, query: { filter: 'items'}}"
+      >
+        <span :class="{'sidebar_nav-active-text': filter === 'items'}">
+          Items
+        </span>
+      </router-link>
+      <router-link
+        :class="{'sidebar_nav-active': filter === 'members'}"
+        :to="{ path: this.$route.path, query: { filter: 'members'}}"
+      >
+        <span :class="{'sidebar_nav-active-text': filter === 'members'}">
+          Team Members
+        </span>
+      </router-link>
     </div>
   </div>
 </template>
@@ -31,11 +66,22 @@ export default Vue.extend({
 
   data: () => ({
     active: false,
+    filter: '',
   }),
+
+  created(this: any) {
+    this.filter = this.$route.query.filter;
+  },
 
   methods: {
     onClick(this: any) {
       this.active = !this.active;
+    },
+  },
+
+  watch: {
+    '$route.query.filter'(this: any) {
+      this.filter = this.$route.query.filter;
     },
   },
 });
@@ -46,7 +92,6 @@ export default Vue.extend({
 
 .sidebar {
   align-items: center;
-  // background-color: fade(@medium-sea-green, 20%);
   box-shadow: 3px 3px 5px rgba(114, 113, 113, 0.4);
   display: flex;
   flex-direction: column;
@@ -62,14 +107,6 @@ export default Vue.extend({
     font-size: 1.5rem;
     padding: 1rem 2rem;
     text-align: center;
-
-    a {
-      color: @madison;
-
-      &.router-link-exact-active {
-        color: @medium-sea-green;
-      }
-    }
   }
 
   &_nav {
@@ -83,7 +120,6 @@ export default Vue.extend({
       font-weight: bold;
       padding: 1rem 0;
       text-align: center;
-      // transition: 0.2s ease;
       width: 100%;
 
       &:hover {
@@ -91,10 +127,13 @@ export default Vue.extend({
         box-shadow: 2px 1px 3px rgba(114, 113, 113, 0.4);
         color: @white;
       }
+    }
 
-      &.router-link-exact-active {
-        background-color: @medium-sea-green;
-        box-shadow: 2px 1px 3px rgba(114, 113, 113, 0.4);
+    &-active {
+      background-color: @medium-sea-green;
+      box-shadow: 2px 1px 3px rgba(114, 113, 113, 0.4);
+
+      &-text {
         color: @white;
       }
     }
@@ -127,6 +166,15 @@ export default Vue.extend({
 
     &_nav {
       display: none;
+
+        &-active {
+        background-color: @medium-sea-green;
+        box-shadow: 2px 1px 3px rgba(114, 113, 113, 0.4);
+
+        &-text {
+          color: @white;
+        }
+      }
     }
 
     &_active {
@@ -140,16 +188,9 @@ export default Vue.extend({
         font-weight: bold;
         padding: 1rem 0;
         text-align: center;
-        // transition: 0.2s ease;
         width: 100%;
   
         &:hover {
-          background-color: @medium-sea-green;
-          box-shadow: 2px 1px 3px rgba(114, 113, 113, 0.4);
-          color: @white;
-        }
-  
-        &.router-link-exact-active {
           background-color: @medium-sea-green;
           box-shadow: 2px 1px 3px rgba(114, 113, 113, 0.4);
           color: @white;
