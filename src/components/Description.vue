@@ -4,7 +4,7 @@
     <p 
       class="description_text"
       contenteditable="true"
-      @blur="handleTextChange($event.target.innerText)"
+      @blur="handleChange($event.target.innerText)"
     >
       {{ text }}
     </p>
@@ -13,12 +13,14 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import { mapActions, mapState } from 'vuex';
 
 export default Vue.extend({
   name: 'Description',
 
   props: {
+    onChange: {
+      type: Function,
+    },
     text: {
       default: '',
       type: String,
@@ -26,19 +28,8 @@ export default Vue.extend({
   },
 
   methods: {
-    ...mapActions({
-      editFeature: 'features/editFeature',
-      editItem: 'items/editItem',
-    }),
-    handleTextChange(this: any, value: string) {
-      console.log(value);
-    //   this.updatedFeature = {
-    //     ...this.updatedFeature,
-    //     description: value,
-    //     startDate: new Date(this.updatedFeature.startDate).toString(),
-    //     updatedDate: new Date().toString(),
-    //   };
-    //   this.editFeature(this.updatedFeature);
+    handleChange(this: any, value: string) {
+      this.onChange('description', value);
     },
   },
 });
@@ -48,6 +39,8 @@ export default Vue.extend({
 @import '../less/variables.less';
 
 .description {
+  padding: 1rem;
+
   &_text {
     padding: 0.3rem 0.5rem;
 

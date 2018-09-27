@@ -3,8 +3,7 @@
     <div class="links_header">
       <h3 class="links_title">Links</h3>
       <add-button :onClick="() => null" />
-    </div>
-    
+    </div>    
     <div class="links_container" v-if="links && links.length > 0">
       <div class="links_linkList" v-for="link in links" :key="link.id">
         <div class="links_linkRow"
@@ -78,6 +77,8 @@ export default Vue.extend({
 @import '../less/variables.less';
 
 .links {
+  padding: 1rem;
+
   &_header {
     align-items: center;
     display: flex;

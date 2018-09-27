@@ -5,12 +5,11 @@
       <div class="detailsData_details">
         <span class="detailsData_details-label">Assignee:</span>
         <span class="detailsData_details-edit" v-if="!edit.assignee" @click="toggleEdit('assignee')">
+          <i class="fas fa-user-circle detailsData_details-userIcon" />
           <span v-if="item.assignee.firstName !== 'Select'">
-            <i class="fas fa-user-circle detailsData_details-userIcon" />
             {{ item.assignee | name }}
           </span>
           <span v-else>
-            <i class="fas fa-user-circle detailsData_details-userIcon" />
             {{ assignee | name }}
           </span>
         </span>
@@ -33,14 +32,13 @@
       <div class="detailsData_details">
         <span class="detailsData_details-label">Reporter:</span>
         <span class="detailsData_details-edit" v-if="!edit.reporter" @click="toggleEdit('reporter')">
-          <span v-if="!item.reporter"> None</span>
-          <span v-if="item.reporter && reporter">
-            <span v-if="item.reporter.firstName !== 'Select'">
-              <i class="fas fa-user-circle detailsData_details-userIcon" />
+          <i class="fas fa-user-circle detailsData_details-userIcon" />
+          <span v-if="item.reporter">
+            <span v-if="item.reporter.firstName === 'Select' && reporter.firstName === 'Select'"> None</span>
+            <span v-else-if="item.reporter.firstName !== 'Select' && reporter.firstName === 'Select'">
               {{ item.reporter | name }}
             </span>
             <span v-else>
-              <i class="fas fa-user-circle detailsData_details-userIcon" />
               {{ reporter | name }}
             </span>
           </span>
@@ -65,14 +63,11 @@
         <span class="detailsData_details-label">Priority:</span>
         <span class="detailsData_details-edit" v-if="!edit.priority" @click="toggleEdit('priority')">
            <span v-if="priority === 'Select Priority'">
-            <i class="fas fa-ban" :class="item.priority" v-if="item.priority === 'blocker'" />
-            <i class="fas fa-exclamation-triangle" :class="item.priority" v-if="item.priority === 'critical'" />
-            <i class="fas fa-arrow-up" :class="item.priority" v-if="item.priority === 'major'" />
-            <i class="fas fa-arrow-down" :class="item.priority" v-if="item.priority === 'minor'" />
+            <priority-icon class="listItem_priorityIcon" :priority="item.priority"/>
             {{ item.priority | capitalize }}
           </span>
           <span v-else>
-            <priority-icon class="listItem_priorityIcon" :priority="item.priority"/>
+            <priority-icon class="listItem_priorityIcon" :priority="priority"/>
             {{ priority | capitalize }}
           </span>
         </span>
@@ -101,7 +96,7 @@
             {{ item.status | capitalize }}
           </span>
           <span v-else>
-            <status-icon class="listItem_statusIcon" :status="item.status" />
+            <status-icon class="listItem_statusIcon" :status="status" />
             {{ status | capitalize }}
           </span>
         </span>
@@ -131,8 +126,8 @@ import PriorityIcon from './PriorityIcon.vue';
 import StatusIcon from './StatusIcon.vue';
 import SelectInput from './SelectInput.vue';
 import SelectUserInput from './SelectUserInput.vue';
-import { Feature, priorityType, statusType, User } from '@/types';
-import { priorityOptions, statusOptions, getUserOptions } from '@/utils/constants';
+import { Feature, Item, priorityType, statusType, User } from '@/types';
+import { priorityOptions, statusOptions, userOptions } from '@/utils/constants';
 
 export default Vue.extend({
   name: 'DetailsData',
@@ -164,7 +159,7 @@ export default Vue.extend({
       reporter: false,
       status: false,
     },
-    projId: String,
+    filter: '',
     reporter: {
       email: '',
       firstName: 'Select',
@@ -174,15 +169,15 @@ export default Vue.extend({
     reporterId: '',
     priority: 'Select Priority' as priorityType,
     priorityOptions,
-    show: false,
-    showItemDialog: false,
     status: 'Select Status' as statusType,
     statusOptions,
-    userOptions: [] as string[],
+    update: {} as Feature | Item,
+    userOptions,
   }),
 
   created(this: any) {
-    this.userOptions = getUserOptions();
+    this.filter = this.$route.query.filter;
+    this.update = this.item;
   },
 
   computed: {
@@ -197,22 +192,6 @@ export default Vue.extend({
       editFeature: 'features/editFeature',
       editItem: 'items/editItem',
     }),
-    initalizeFeatureArrays(ids: string[], stateArray: any[], featureArray: any[]) {
-      for (const id of ids) {
-        for (const v of stateArray) {
-          if (v.id === id) {
-            featureArray.push(v);
-          }
-        }
-      }
-    },
-    loadFeatureState(this: any) {
-      const index: number = this.features.findIndex((f: Feature) => f.id === this.feature.id);
-      this.updatedFeature = this.features[index];
-    },
-    toggleDialog(this: any) {
-      this.show = !this.show;
-    },
     toggleEdit(this: any, type: string) {
       if (type === 'assignee') {
         this.edit.assignee = !this.edit.assignee;
@@ -224,61 +203,57 @@ export default Vue.extend({
         this.edit.status = !this.edit.status;
       }
     },
+    doEdit(this: any, item: Feature | Item) {
+      if (this.filter === 'features') {
+        this.editFeature(item);
+      } else {
+        this.editItem(item);
+      }
+    },
   },
 
   watch: {
     assigneeId(this: any) {
       this.edit.assignee = !this.edit.assignee;
-      for (const user of this.userOptions) {
-        if (user.id === this.assigneeId) {
-          this.assignee = user;
-        }
-      }
-      this.updatedFeature = {
-        ...this.updatedFeature,
+      this.assignee = this.userOptions.filter((user: User) => user.id === this.assigneeId)[0];
+      this.update = {
+        ...this.update,
         assignee: this.assignee,
-        startDate: new Date(this.updatedFeature.startDate).toString(),
+        startDate: new Date(this.update.startDate).toString(),
         updatedDate: new Date().toString(),
       };
-      this.editFeature(this.updatedFeature);
-    },
-    feature(this: any) {
-      this.loadFeatureState();
+      this.doEdit(this.update);
     },
     priority(this: any) {
       this.edit.priority = !this.edit.priority;
-      this.updatedFeature = {
-        ...this.updatedFeature,
+      this.update = {
+        ...this.update,
         priority: this.priority,
-        startDate: new Date(this.updatedFeature.startDate).toString(),
+        startDate: new Date(this.update.startDate).toString(),
         updatedDate: new Date().toString(),
       };
-      this.editFeature(this.updatedFeature);
+      this.doEdit(this.update);
     },
     reporterId(this: any) {
       this.edit.reporter = !this.edit.reporter;
-      for (const user of this.userOptions) {
-        if (user.id === this.reporterId) {
-          this.reporter = user;
-        }
-      }
-      this.updatedFeature = {
-        ...this.updatedFeature,
+      this.reporter = this.userOptions.filter((user: User) => user.id === this.reporterId)[0];
+      this.update = {
+        ...this.update,
         reporter: this.reporter,
-        startDate: new Date(this.updatedFeature.startDate).toString(),
+        startDate: new Date(this.update.startDate).toString(),
         updatedDate: new Date().toString(),
       };
-      this.editFeature(this.updatedFeature);
+      this.doEdit(this.update);
     },
     status(this: any) {
       this.edit.status = !this.edit.status;
-      this.updatedFeature = {
-        ...this.updatedFeature,
-        startDate: new Date(this.updatedFeature.startDate).toString(),
+      this.update = {
+        ...this.update,
+        startDate: new Date(this.update.startDate).toString(),
         status: this.status,
         updatedDate: new Date().toString(),
       };
-      this.editFeature(this.updatedFeature);
+      this.doEdit(this.update);
     },
   },
 });
@@ -288,10 +263,7 @@ export default Vue.extend({
 @import '../less/variables.less';
 
 .detailsData {
-  // @media only screen and (max-width: 640px) {
-  //   margin: 0 auto;
-  //   width: 100%;
-  // }
+  padding: 1rem;
 
   &_container {
     display: grid;

@@ -1,6 +1,6 @@
 <template>
   <div class="project">
-    <Sidebar />
+    <sidebar :title="title" />
     <div class="project_container" v-if="filter === 'activity'">
       <ProjectBoard />
     </div>
@@ -8,13 +8,7 @@
       <ProjectBoard />
     </div>
     <div class="project_container" v-if="filter === 'features'">
-      <!-- <ProjectFeatures /> -->
-      <!-- <item-list icon="feature" :items="features" /> -->
-      <!-- <item-details /> -->
-      <!-- <details-header :title="features[0].title" :onClose="() => console.log('clicked')" /> -->
-      <!-- <details-data :item="features[0]" /> -->
-      <!-- <description text="Lorem ipsum" /> -->
-      <links :links="links" />
+      <items icon="feature" :itemList="feats" />
     </div>
     <div class="project_container" v-if="filter === 'items'">
       <ProjectTasks />
@@ -38,58 +32,80 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import Vue from 'vue';
 import {mapActions, mapGetters, mapState, mapMutations} from 'vuex';
-import Links from '@/components/Links.vue';
-import ItemDetails from '@/components/ItemDetails.vue';
-import Description from '@/components/Description.vue';
-import DetailsData from '@/components/DetailsData.vue';
-import DetailsHeader from '@/components/DetailsHeader.vue';
-import ItemList from '@/components/ItemList.vue';
+import Items from '@/components/Items.vue';
 import ProjectBoard from '@/components/ProjectBoard.vue';
 import ProjectBugs from '@/components/ProjectBugs.vue';
 import ProjectComponents from '@/components/ProjectComponents.vue';
 import ProjectDetails from '@/components/ProjectDetails.vue';
-import ProjectFeatures from '@/components/ProjectFeatures.vue';
 import ProjectTasks from '@/components/ProjectTasks.vue';
 import Sidebar from '@/components/Sidebar.vue';
-import { Feature, Link } from '@/types';
-import { Feature1, Feature2, Feature3, Feature4, Link1, Link2 } from '@/store/state';
+import { Feature, Item } from '@/types';
 
-@Component({
+export default Vue.extend({
+  name: 'Project',
+
   components: {
-    Links,
-    Description,
-    DetailsData,
-    DetailsHeader,
-    ItemDetails,
-    ItemList,
+    Items,
     ProjectBoard,
     ProjectBugs,
     ProjectComponents,
     ProjectDetails,
-    ProjectFeatures,
     ProjectTasks,
     Sidebar,
   },
-  created(this: any) {
-    this.getFilter();
-  },
+
   data: () => ({
-    filter: String,
-    features: [Feature1, Feature2, Feature3, Feature4] as Feature[],
-    links: [Link1, Link2] as Link[],
+    feats: [] as Feature[],
+    filter: '',
+    itemList: [] as Item[],
+    title: '',
   }),
+
+  created(this: any) {
+    this.loadState();
+  },
+
+  computed: {
+    ...mapState({
+      features: (state: any) => state.features.features,
+      items: (state: any) => state.items.features,
+      projects: (state: any) => state.projects.projects,
+    }),
+  },
+
   methods: {
+    loadState(this: any) {
+      const id = this.$route.params.id;
+      this.getFilter();
+
+      // Get project title for sidebar
+      if (this.projects && this.projects.length > 0) {
+        const project = this.projects.filter((proj: any) => proj.id === id)[0];
+        this.title = project.title;
+      }
+
+      // Get features
+      if (this.features && this.features.length > 0) {
+        this.feats = this.features.filter((feature: Feature) => feature.projectId === id);
+      }
+
+      // Get items
+      if (this.items && this.items.length > 0) {
+        this.itemList = this.items.filter((item: Item) => item.projectId === id);
+      }
+
+    },
     getFilter(this: any) {
       this.filter = this.$route.query.filter;
     },
   },
+
   watch: {
     '$route.query.filter'(this: any) {
       this.getFilter();
     },
   },
-})
-export default class Project extends Vue {}
+});
 </script>

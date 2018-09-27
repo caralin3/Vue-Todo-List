@@ -15,7 +15,7 @@ export default Vue.extend({
 <style lang="less" scoped>
 @import '../less/variables.less';
 
-.details {
+.detailsPanel {
   background-color: fade(@medium-sea-green, 20%);
   color: @madison;
   padding: 2rem;

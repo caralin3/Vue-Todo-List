@@ -34,6 +34,8 @@ export const getUserOptions = () => {
   return users;
 };
 
+export const userOptions = getUserOptions();
+
 export const getFeatureOptions = () => {
   const features: Feature[] = [{
     assignee: {} as User,
@@ -59,3 +61,4 @@ export const getFeatureOptions = () => {
   return features;
 };
 
+export const featureOptions = getFeatureOptions();

@@ -7,7 +7,7 @@
       <h2
         class="detailsHeader_title"
         contenteditable="true"
-        @blur="handleTitleChange($event.target.innerText)"
+        @blur="handleChange($event.target.innerText)"
       >
         {{ title }}
       </h2>
@@ -36,6 +36,9 @@ export default Vue.extend({
   },
 
   props: {
+    onChange: {
+      type: Function,
+    },
     onClose: {
       type: Function,
     },
@@ -57,15 +60,8 @@ export default Vue.extend({
   },
 
   methods: {
-    handleTitleChange(this: any, value: string) {
-      console.log(value);
-      // this.updatedFeature = {
-      //   ...this.updatedFeature,
-      //   title: value,
-      //   startDate: new Date(this.updatedFeature.startDate).toString(),
-      //   updatedDate: new Date().toString(),
-      // };
-      // this.editFeature(this.updatedFeature);
+    handleChange(this: any, value: string) {
+      this.onChange('title', value);
     },
   },
 });
@@ -81,7 +77,6 @@ export default Vue.extend({
 
   &_title {
     margin: 0;
-    padding: 0 1rem;
 
     &:hover {
       border: 1px solid @madison;

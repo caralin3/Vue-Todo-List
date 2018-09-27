@@ -73,10 +73,10 @@ export default Vue.extend({
     onClick(this: any, item: any) {
       if (this.selected && this.selected.id === item.id) {
         this.selected = {};
-        this.$router.push({ path: '/projects/' + this.id, query: { filter: 'features'}});
+        this.$router.push({ path: this.$route.path, query: { filter: 'features'}});
       } else {
         this.selected = item;
-        this.$router.push({ path: '/projects/' + this.id, query: { filter: 'features', id: item.id}});
+        this.$router.push({ path: this.$route.path, query: { filter: 'features', id: item.id}});
       }
     },
     toggleDialog(this: any) {
