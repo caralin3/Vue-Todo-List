@@ -16,18 +16,21 @@
 <script lang="ts">
 import Vue from 'vue';
 
-export default {
+export default Vue.extend({
+  name: 'PasswordInput',
+
   props: {
     label: String,
     placeholder: String,
     password: String,
   },
+
   methods: {
     onChange(this: any, value: string) {
       this.$emit('input', value);
     },
   },
-};
+});
 </script>
 
 <style lang="less" scoped>

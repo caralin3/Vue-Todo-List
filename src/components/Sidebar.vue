@@ -55,7 +55,7 @@
 import Vue from 'vue';
 
 export default Vue.extend({
-  name: 'sidebar',
+  name: 'Sidebar',
 
   props: {
     title: {

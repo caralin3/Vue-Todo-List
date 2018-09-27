@@ -4,7 +4,7 @@
     <h3 v-if="!emailSent">An email will be sent to reset your password.</h3>
     <div v-if="!emailSent">
       <Form class="forgot_form" buttonText="Send Email" :toggleDialog="() => null" :submit="onForgotPass">
-        <TextInput class="forgot_input" label="Email" v-model.trim="email" />
+        <text-input class="forgot_input" label="Email" v-model.trim="email" />
       </Form>
       <p>
         <span class="forgot_login">Already have an account?</span>
@@ -25,17 +25,21 @@ import Form from '@/components/Form.vue';
 import PasswordInput from '@/components/PasswordInput.vue';
 import TextInput from '@/components/TextInput.vue';
 
-export default {
+export default Vue.extend({
+  name: 'ForgotPassword',
+
   components: {
     Form,
     PasswordInput,
     TextInput,
   },
+
   data: () => ({
     email: String,
     emailSent: false,
     errorMsg: String,
   }),
+
   methods: {
     onForgotPass(this: any) {
       fb.auth.sendPasswordResetEmail(this.email).then((user: any) => {
@@ -46,7 +50,7 @@ export default {
       });
     },
   },
-};
+});
 </script>
 
 <style lang="less" scoped>

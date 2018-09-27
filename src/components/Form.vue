@@ -9,12 +9,15 @@
 import Vue from 'vue';
 import {mapActions, mapGetters, mapState, mapMutations} from 'vuex';
 
-export default {
+export default Vue.extend({
+  name: 'Form',
+
   props: {
     buttonText: String,
     submit: Function,
     toggleDialog: Function,
   },
+
   methods: {
     dismissDialog(this: any) {
       this.toggleDialog();
@@ -24,7 +27,7 @@ export default {
       this.dismissDialog();
     },
   },
-};
+});
 </script>
 
 <style lang="less" scoped>

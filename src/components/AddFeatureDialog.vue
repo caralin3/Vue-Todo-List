@@ -3,14 +3,47 @@
     <Dialog title="Add Feature" :toggleDialog="dismissDialog">
       <Form buttonText="Add Feature" :toggleDialog="dismissDialog" :submit="onSubmitForm">
         <div class="addFeature_dialog">
-          <TextInput :class="'addFeature_textInput'" label="Feature Name" placeholder="" v-model="title" />
-          <SelectUserInput :class="'addFeature_select'" label="Assignee" v-model="assigneeId" :options="userOptions" :onBlur="() => null" :onFocus="() => null" />
-          <SelectUserInput :class="'addFeature_select'" label="Reporter" v-model="reporterId" :options="userOptions" :onBlur="() => null" :onFocus="() => null" />
-          <TextAreaInput :class="'addFeature_textAreaInput'" label="Feature Description" placeholder="" v-model="description" />
-          <DateInput :class="'addFeature_dateInput'" label="Start Date" v-model="startDate" />
-          <DateInput :class="'addFeature_dateInput'" label="End Date" v-model="endDate" />
-          <SelectInput :class="'addFeature_select'" label="Priority" v-model="priority" :options="priorityOptions" :onBlur="() => null" :onFocus="() => null" />
-          <SelectInput :class="'addFeature_select'" label="Status" v-model="status" :options="statusOptions" :onBlur="() => null" :onFocus="() => null" />
+          <text-input :class="'addFeature_textInput'" label="Feature Name" placeholder="" v-model="title" />
+          <select-user-input
+            :class="'addFeature_select'"
+            label="Assignee"
+            v-model="assigneeId"
+            :options="userOptions"
+            :onBlur="() => null" 
+            :onFocus="() => null"
+          />
+          <select-user-input
+            :class="'addFeature_select'"
+            label="Reporter"
+            v-model="reporterId"
+            :options="userOptions"
+            :onBlur="() => null"
+            :onFocus="() => null"
+          />
+          <text-area-input
+            :class="'addFeature_textAreaInput'"
+            label="Feature Description"
+            placeholder=""
+            v-model="description"
+          />
+          <!-- <date-input :class="'addFeature_dateInput'" label="Start Date" v-model="startDate" />
+          <date-input :class="'addFeature_dateInput'" label="End Date" v-model="endDate" /> -->
+          <select-input
+            :class="'addFeature_select'"
+            label="Priority"
+            v-model="priority"
+            :options="priorityOptions"
+            :onBlur="() => null"
+            :onFocus="() => null"
+          />
+          <select-input
+            :class="'addFeature_select'"
+            label="Status"
+            v-model="status"
+            :options="statusOptions"
+            :onBlur="() => null"
+            :onFocus="() => null"
+          />
         </div>
       </Form>
     </Dialog>
@@ -18,9 +51,8 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import Vue from 'vue';
 import { mapActions, mapState } from 'vuex';
-import * as fb from '@/firebase';
 import DateInput from '@/components/DateInput.vue';
 import Dialog from '@/components/Dialog.vue';
 import Form from '@/components/Form.vue';
@@ -30,12 +62,12 @@ import SelectInput from '@/components/SelectInput.vue';
 import SelectUserInput from '@/components/SelectUserInput.vue';
 import TextAreaInput from '@/components/TextAreaInput.vue';
 import TextInput from '@/components/TextInput.vue';
-import { User1 } from '@/store/state';
-import { FirebaseFeature, User, statusType, priorityType, Version, Feature, Project } from '@/types';
-import { getUserOptions, priorityOptions, statusOptions } from '@/utils/constants';
-import { uid } from '@/utils/guid';
+import { FirebaseFeature, User, statusType, priorityType, Version } from '@/types';
+import { priorityOptions, statusOptions, userOptions } from '@/utils/constants';
 
-@Component({
+export default Vue.extend({
+  name: 'AddFeatureDialog',
+
   components: {
     DateInput,
     Dialog,
@@ -47,12 +79,13 @@ import { uid } from '@/utils/guid';
     TextAreaInput,
     TextInput,
   },
+
   props: {
-    toggleDialog: Function,
+    toggleDialog: {
+      type: Function,
+    },
   },
-  created(this: any) {
-    this.userOptions = getUserOptions();
-  },
+
   data: () => ({
     assignee: {
       email: '',
@@ -76,8 +109,9 @@ import { uid } from '@/utils/guid';
     status: 'todo' as statusType,
     statusOptions,
     title: '',
-    userOptions: [] as string[],
+    userOptions,
   }),
+
   methods: {
     ...mapActions({
       addFeature: 'features/addFeature',
@@ -106,6 +140,7 @@ import { uid } from '@/utils/guid';
       this.addFeature(newFeature);
     },
   },
+
   watch: {
     assigneeId(this: any) {
       for (const user of this.userOptions) {
@@ -122,8 +157,7 @@ import { uid } from '@/utils/guid';
       }
     },
   },
-})
-export default class AddFeatureDialog extends Vue {}
+});
 </script>
 
 <style lang="less" scoped>

@@ -19,13 +19,16 @@ import { mapActions, mapState } from 'vuex';
 import * as fb from '@/firebase';
 import { RootState } from '@/types';
 
-export default {
+export default Vue.extend({
+  name: 'Header',
+
   computed: {
     ...mapState({
       currentUser: (state: RootState) => state.currentUser,
       userProfile: (state: RootState) => state.userProfile,
     }),
   },
+
   methods: {
     ...mapActions([
       'resetData',
@@ -42,7 +45,7 @@ export default {
       );
     },
   },
-};
+});
 </script>
 
 <style lang="less" scoped>

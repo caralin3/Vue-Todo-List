@@ -185,12 +185,15 @@ import SelectInput from '@/components/SelectInput.vue';
 import { Comment, Feature, FirebaseProject, Link, Project, statusType, Version } from '@/types';
 import { statusOptions } from '@/utils/constants';
 
-export default {
+export default Vue.extend({
+  name: 'ProjectDetails',
+
   components: {
     AddFeatureDialog,
     Dialog,
     SelectInput,
   },
+
   created(this: any) {
     this.id = this.$route.params.id;
     // this.loadFirebase();
@@ -200,6 +203,7 @@ export default {
       this.loadProjectState();
     }
   },
+
   data: () => ({
     id: String,
     proj: {} as Project,
@@ -222,6 +226,7 @@ export default {
     updatedProject: {} as Project,
     updatedLink: {} as Link,
   }),
+
   computed: {
     ...mapState({
       comments: (state: any) => state.comments.comments,
@@ -230,6 +235,7 @@ export default {
       links: (state: any) => state.links.links,
     }),
   },
+
   methods: {
     ...mapActions({
       editComment: 'comments/editComment',
@@ -267,6 +273,7 @@ export default {
         }
       }
     },
+
     loadProjectState(this: any) {
       const index: number = this.projects.findIndex((p: any) => p.id === this.proj.id);
       this.updatedProject = this.projects[index];
@@ -338,6 +345,7 @@ export default {
       this.edit.status = !this.edit.status;
     },
   },
+
   watch: {
     // features(this: any) {
     //   console.log('Features changed');
@@ -359,7 +367,7 @@ export default {
       this.editProject(this.updatedProject);
     },
   },
-};
+});
 </script>
 
 <style lang="less" scoped>

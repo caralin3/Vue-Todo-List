@@ -17,7 +17,9 @@
 <script lang="ts">
 import Vue from 'vue';
 
-export default {
+export default Vue.extend({
+  name: 'SelectInput',
+
   props: {
     label: String,
     onBlur: Function,
@@ -26,10 +28,11 @@ export default {
     rootClass: String,
     value: String,
   },
+
   methods: {
     onChange(this: any, value: string) {
       this.$emit('input', value);
     },
   },
-};
+});
 </script>

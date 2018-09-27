@@ -72,7 +72,6 @@ export default Vue.extend({
 
 .detailsHeader {
   align-items: center;
-  // border-bottom: 1px solid @madison;
   display: flex;
   justify-content: space-between;
 

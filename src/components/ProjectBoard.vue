@@ -10,9 +10,10 @@ import Vue from 'vue';
 import {mapActions, mapGetters, mapState, mapMutations} from 'vuex';
 import { Item, Feature, Project } from '@/types';
 
-export default {
-  components: {
-  },
+export default Vue.extend({
+  name: 'ProjectBoard',
+
+  components: {},
 
   created(this: any) {
     this.id = this.$route.params.id;
@@ -34,7 +35,7 @@ export default {
       this.show = !this.show;
     },
   },
-};
+});
 </script>
 
 <style lang="less" scoped>

@@ -8,29 +8,27 @@
         Create different features for each project.
       </p>
     </span>
-    <SignUp class="home_signup" />
+    <sign-up class="home_signup" />
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import Vue from 'vue';
 import SignUp from '@/components/SignUp.vue';
 
-@Component({
+export default Vue.extend({
+  name: 'Home',
+
   components: {
     SignUp,
   },
-  data: () => ({
-  }),
-})
-export default class Home extends Vue {}
+});
 </script>
 
 <style lang="less" scoped>
 @import '../less/variables.less';
 
 .home {
-  // align-items: center;
   background-color: fade(@medium-sea-green, 20%);
   display: grid;
   grid-column-gap: 1rem;

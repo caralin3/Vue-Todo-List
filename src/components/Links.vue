@@ -11,7 +11,9 @@
           :contenteditable="editedLink.editing && editedLink.id === link.id"
           @blur="handleLinkChange($event.target.innerText, link)"
         >
-          <a class="links_link" :href="updatedLink.to ? updatedLink.to : link.to" target="_blank">{{ link.to }}</a>
+          <a class="links_link" :href="updatedLink.to ? updatedLink.to : link.to" target="_blank">
+            {{ link.to }}
+          </a>
           <edit-button class="links_edit" :onClick="() => toggleEditLink(link.id)" />
         </div>
       </div>

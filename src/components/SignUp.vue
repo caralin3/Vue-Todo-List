@@ -16,7 +16,6 @@
 </template>
 
 <script lang="ts">
-import firebase from 'firebase';
 import Vue from 'vue';
 import { mapActions } from 'vuex';
 import * as fb from '@/firebase';
@@ -26,12 +25,15 @@ import TextInput from '@/components/TextInput.vue';
 import { MutationType } from '@/store/mutation-types';
 import { User } from '@/types';
 
-export default {
+export default Vue.extend({
+  name: 'SignUp',
+
   components: {
     Form,
     PasswordInput,
     TextInput,
   },
+
   data: () => ({
     email: String,
     errorMsg: String,
@@ -41,6 +43,7 @@ export default {
     passwordConfirm: String,
     performingRequest: false,
   }),
+
   methods: {
     ...mapActions([
       'setCurrentUser',
@@ -79,7 +82,7 @@ export default {
       );
     },
   },
-};
+});
 </script>
 
 <style lang="less" scoped>

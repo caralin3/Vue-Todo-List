@@ -3,16 +3,61 @@
     <Dialog title="Add Item" :toggleDialog="dismissDialog">
       <Form buttonText="Add Item" :toggleDialog="dismissDialog" :submit="onSubmitForm">
         <div class="addItem_dialog">
-          <SelectUserInput :class="'addItem_select'" label="Assignee" v-model="assigneeId" :options="userOptions" :onBlur="() => null" :onFocus="() => null" />
-          <SelectUserInput :class="'addItem_select'" label="Reporter" v-model="reporterId" :options="userOptions" :onBlur="() => null" :onFocus="() => null" />
-          <TextInput :class="'addItem_textInput'" label="Item Name" placeholder="" v-model="title" />
-          <SelectFeatureInput :class="'addItem_select'" label="Feature" v-model="featureId" :options="featureOptions" :onBlur="() => null" :onFocus="() => null" />
-          <TextAreaInput :class="'addItem_textAreaInput'" label="Item Description" placeholder="" v-model="description" />
-          <DateInput :class="'addItem_dateInput'" label="Start Date" v-model="startDate" />
-          <DateInput :class="'addItem_dateInput'" label="End Date" v-model="endDate" />
-          <SelectInput :class="'addItem_select'" label="Type" v-model="type" :options="itemTypeOptions" :onBlur="() => null" :onFocus="() => null" />
-          <SelectInput :class="'addItem_select'" label="Priority" v-model="priority" :options="priorityOptions" :onBlur="() => null" :onFocus="() => null" />
-          <SelectInput :class="'addItem_select'" label="Status" v-model="status" :options="statusOptions" :onBlur="() => null" :onFocus="() => null" />
+          <select-user-input
+            :class="'addItem_select'"
+            label="Assignee"
+            v-model="assigneeId"
+            :options="userOptions"
+            :onBlur="() => null"
+            :onFocus="() => null"
+          />
+          <select-user-input
+            :class="'addItem_select'"
+            label="Reporter"
+            v-model="reporterId"
+            :options="userOptions"
+            :onBlur="() => null"
+            :onFocus="() => null"
+          />
+          <text-input :class="'addItem_textInput'" label="Item Name" placeholder="" v-model="title" />
+          <select-feature-input
+            :class="'addItem_select'" 
+            label="Feature"
+            v-model="featureId"
+            :options="featureOptions"
+            :onBlur="() => null"
+            :onFocus="() => null"
+          />
+          <text-area-input
+            :class="'addItem_textAreaInput'"
+            label="Item Description"
+            placeholder=""
+            v-model="description"
+          />
+          <!-- <date-input :class="'addItem_dateInput'" label="Start Date" v-model="startDate" />
+          <date-input :class="'addItem_dateInput'" label="End Date" v-model="endDate" /> -->
+          <select-input
+            :class="'addItem_select'"
+            label="Type"
+            v-model="type"
+            :options="itemTypeOptions" 
+            :onBlur="() => null"
+            :onFocus="() => null"
+          />
+          <select-input
+            :class="'addItem_select'"
+            label="Priority" v-model="priority"
+            :options="priorityOptions"
+            :onBlur="() => null"
+            :onFocus="() => null"
+          />
+          <select-input
+            :class="'addItem_select'"
+            label="Status" v-model="status"
+            :options="statusOptions"
+            :onBlur="() => null"
+            :onFocus="() => null"
+          />
         </div>
       </Form>
     </Dialog>
@@ -20,7 +65,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import Vue from 'vue';
 import { mapActions } from 'vuex';
 import DateInput from '@/components/DateInput.vue';
 import Dialog from '@/components/Dialog.vue';
@@ -32,11 +77,12 @@ import SelectInput from '@/components/SelectInput.vue';
 import SelectUserInput from '@/components/SelectUserInput.vue';
 import TextAreaInput from '@/components/TextAreaInput.vue';
 import TextInput from '@/components/TextInput.vue';
-import { FirebaseItem, User, statusType, priorityType, Version, itemType } from '@/types';
-import { getUserOptions, itemTypeOptions, priorityOptions, statusOptions, getFeatureOptions } from '@/utils/constants';
-import { uid } from '@/utils/guid';
+import { FirebaseItem, itemType, priorityType, statusType, User, Version } from '@/types';
+import { featureOptions, itemTypeOptions, priorityOptions, statusOptions, userOptions } from '@/utils/constants';
 
-@Component({
+export default Vue.extend({
+  name: 'AddItemDialog',
+
   components: {
     DateInput,
     Dialog,
@@ -49,16 +95,19 @@ import { uid } from '@/utils/guid';
     TextAreaInput,
     TextInput,
   },
+
   props: {
-    toggleDialog: Function,
+    toggleDialog: {
+      type: Function,
+    },
   },
+
   created(this: any) {
-    this.userOptions = getUserOptions();
-    this.featureOptions = getFeatureOptions();
     if (this.$route.query.id) {
       this.featureId = this.$route.query.id;
     }
   },
+
   data: () => ({
     assignee: {
       email: '',
@@ -85,8 +134,8 @@ import { uid } from '@/utils/guid';
     statusOptions,
     title: '',
     type: 'Select Type' as itemType,
-    userOptions: [] as string[],
-    featureOptions: [] as string[],
+    userOptions,
+    featureOptions,
   }),
   methods: {
     ...mapActions('items', [
@@ -117,6 +166,7 @@ import { uid } from '@/utils/guid';
       this.addItem(newItem);
     },
   },
+
   watch: {
     assigneeId(this: any) {
       for (const user of this.userOptions) {
@@ -133,8 +183,7 @@ import { uid } from '@/utils/guid';
       }
     },
   },
-})
-export default class AddItemDialog extends Vue {}
+});
 </script>
 
 <style lang="less" scoped>

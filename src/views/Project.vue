@@ -2,10 +2,10 @@
   <div class="project">
     <sidebar :title="projectTitle" />
     <div class="project_container" v-if="filter === 'activity'">
-      <ProjectBoard />
+      <project-board />
     </div>
     <div class="project_container" v-if="filter === 'board'">
-      <ProjectBoard />
+      <project-board />
     </div>
     <div class="project_container" v-if="filter === 'features'">
       <items :itemList="featureList" />
@@ -14,17 +14,17 @@
       <items :itemList="itemList" />
     </div>
     <div class="project_container" v-if="filter === 'members'">
-      <ProjectBoard />
+      <project-board />
     </div>
     <div class="project_container" v-if="!filter">
-      <ProjectDetails />
+      <project-details />
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-import {mapActions, mapGetters, mapState, mapMutations} from 'vuex';
+import { mapState } from 'vuex';
 import Items from '@/components/Items.vue';
 import ProjectBoard from '@/components/ProjectBoard.vue';
 import ProjectDetails from '@/components/ProjectDetails.vue';

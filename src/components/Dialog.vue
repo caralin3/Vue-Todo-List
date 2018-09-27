@@ -12,19 +12,26 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import { Project } from '@/types';
 
-export default {
+export default Vue.extend({
+  name: 'Dialog',
+
   props: {
-    title: String,
-    toggleDialog: Function,
+    title: {
+      default: '',
+      type: String,
+    },
+    toggleDialog: {
+      type: Function,
+    },
   },
+
   methods: {
     dismissDialog(this: any) {
       this.toggleDialog();
     },
   },
-};
+});
 </script>
 
 <style lang="less" scoped>

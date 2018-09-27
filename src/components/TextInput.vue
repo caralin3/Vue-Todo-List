@@ -15,16 +15,19 @@
 <script lang="ts">
 import Vue from 'vue';
 
-export default {
+export default Vue.extend({
+  name: 'TextInput',
+
   props: {
     label: String,
     placeholder: String,
     text: String,
   },
+
   methods: {
     onChange(this: any, value: string) {
       this.$emit('input', value);
     },
   },
-};
+});
 </script>

@@ -7,8 +7,8 @@
     </transition>
     <h2 class="login_title">Log In</h2>
     <Form class="login_form" buttonText="Log In" :toggleDialog="() => null" :submit="onLogin">
-      <TextInput class="login_input" label="Email" v-model="email" />
-      <PasswordInput class="login_input" label="Password" v-model="password" />
+      <text-input class="login_input" label="Email" v-model="email" />
+      <password-input class="login_input" label="Password" v-model="password" />
     </Form>
     <router-link class="login_forgot" to="/forgotPassword">Forgot Password?</router-link>
     <p class="login_signup">
@@ -32,24 +32,29 @@ import TextInput from '@/components/TextInput.vue';
 import * as fb from '@/firebase';
 import { RootState } from '@/types';
 
-export default {
+export default Vue.extend({
+  name: 'Login',
+
   components: {
     Form,
     PasswordInput,
     TextInput,
   },
+
   data: () => ({
     email: String,
     errorMsg: '',
     password: String,
     performingRequest: false,
   }),
+
   computed: {
     ...mapState({
       currentUser: (state: RootState) => state.currentUser,
       userProfile: (state: RootState) => state.userProfile,
     }),
   },
+
   methods: {
     ...mapActions([
       'setCurrentUser',
@@ -85,7 +90,7 @@ export default {
         });
     },
   },
-};
+});
 </script>
 
 <style lang="less" scoped>

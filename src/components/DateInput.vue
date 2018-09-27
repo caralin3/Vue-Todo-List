@@ -14,15 +14,18 @@
 <script lang="ts">
 import Vue from 'vue';
 
-export default {
+export default Vue.extend({
+  name: 'DateInput',
+
   props: {
     label: String,
     date: Date,
   },
+
   methods: {
     onChange(this: any, value: string) {
       this.$emit('input', new Date(value));
     },
   },
-};
+});
 </script>

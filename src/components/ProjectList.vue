@@ -33,7 +33,9 @@
 import Vue from 'vue';
 import {mapActions, mapGetters, mapState, mapMutations} from 'vuex';
 
-export default {
+export default Vue.extend({
+  name: 'ProjectList',
+
   computed: {
     ...mapState({
       projects: (state: any) => state.projects.projects,
@@ -42,7 +44,7 @@ export default {
       'projectCount',
     ]),
   },
-};
+});
 </script>
 
 <style lang="less" scoped>

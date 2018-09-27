@@ -11,17 +11,21 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import {mapActions, mapGetters, mapState, mapMutations} from 'vuex';
+import { mapActions, mapGetters, mapState} from 'vuex';
 
-export default {
+export default Vue.extend({
+  name: 'ProjectsHeader',
+
   props: {
     toggleDialog: Function,
   },
+
   computed: {
     ...mapGetters('projects', [
       'projectCount',
     ]),
   },
+
   methods: {
     ...mapActions('projects', [
       'addProject',
@@ -31,7 +35,7 @@ export default {
       this.toggleDialog();
     },
   },
-};
+});
 </script>
 
 <style lang="less" scoped>

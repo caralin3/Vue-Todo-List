@@ -7,12 +7,24 @@
             Creator
           </span>
           <span class="addProject_username">{{ currentUser | name }}</span>
-          <TextInput :class="'addProject_textInput'" label="Project Name" placeholder="" v-model="title" />
-          <TextAreaInput :class="'addProject_textAreaInput'" label="Project Description" placeholder="" v-model="description" />
-          <DateInput :class="'addProject_dateInput'" label="Start Date" v-model="startDate" />
-          <DateInput :class="'addProject_dateInput'" label="End Date" v-model="endDate" />
-          <SelectInput :class="'addProject_selectStatus'" label="Status" v-model="status" :options="statusOptions" :onBlur="() => null" :onFocus="() => null" />
-          <TextInput :class="'addProject_textInput'" label="Version" placeholder="" v-model="versionName" />
+          <text-input :class="'addProject_textInput'" label="Project Name" placeholder="" v-model="title" />
+          <text-area-input
+            :class="'addProject_textAreaInput'"
+            label="Project Description"
+            placeholder=""
+            v-model="description"
+          />
+          <!-- <date-input :class="'addProject_dateInput'" label="Start Date" v-model="startDate" />
+          <date-input :class="'addProject_dateInput'" label="End Date" v-model="endDate" /> -->
+          <select-input
+            :class="'addProject_selectStatus'"
+            label="Status"
+            v-model="status"
+            :options="statusOptions"
+            :onBlur="() => null"
+            :onFocus="() => null"
+          />
+          <text-input :class="'addProject_textInput'" label="Version" placeholder="" v-model="versionName" />
         </div>
       </Form>
     </Dialog>
@@ -20,22 +32,23 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import Vue from 'vue';
 import { mapActions, mapState } from 'vuex';
 import DateInput from '@/components/DateInput.vue';
 import Dialog from '@/components/Dialog.vue';
-import SelectInput from '@/components/SelectInput.vue';
 import Form from '@/components/Form.vue';
 import ProjectList from '@/components/ProjectList.vue';
 import ProjectsHeader from '@/components/ProjectsHeader.vue';
+import SelectInput from '@/components/SelectInput.vue';
 import TextAreaInput from '@/components/TextAreaInput.vue';
 import TextInput from '@/components/TextInput.vue';
-import { FirebaseProject, Project, User, RootState, statusType } from '@/types';
+import { FirebaseProject, Project, RootState, statusType, User } from '@/types';
 import { statusOptions } from '@/utils/constants';
-import { uid } from '@/utils/guid';
 
 
-@Component({
+export default Vue.extend({
+  name: 'AddProjectDialog',
+
   components: {
     DateInput,
     Dialog,
@@ -46,9 +59,13 @@ import { uid } from '@/utils/guid';
     TextAreaInput,
     TextInput,
   },
+
   props: {
-    toggleDialog: Function,
+    toggleDialog: {
+      type: Function,
+    },
   },
+
   data: () => ({
     description: '',
     endDate: '',
@@ -58,11 +75,13 @@ import { uid } from '@/utils/guid';
     title: '',
     versionName: String,
   }),
+
   computed: {
     ...mapState({
       currentUser: (state: RootState) => state.currentUser,
     }),
   },
+
   methods: {
     ...mapActions('projects', [
       'addProject',
@@ -86,8 +105,7 @@ import { uid } from '@/utils/guid';
       this.addProject(newProj);
     },
   },
-})
-export default class AddProjectDialog extends Vue {}
+});
 </script>
 
 <style lang="less" scoped>

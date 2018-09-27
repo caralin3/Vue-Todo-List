@@ -13,7 +13,7 @@
             {{ assignee | name }}
           </span>
         </span>
-        <SelectUserInput
+        <select-user-input
           class="detailsData_details-select"
           v-if="edit.assignee"
           v-model="assigneeId"
@@ -43,7 +43,7 @@
             </span>
           </span>
         </span>
-        <SelectUserInput
+        <select-user-input
           class="detailsData_details-select"
           v-if="edit.reporter"
           v-model="reporterId"
@@ -71,7 +71,7 @@
             {{ priority | capitalize }}
           </span>
         </span>
-        <SelectInput
+        <select-input
           :class="'detailsData_details-select'"
           v-if="edit.priority"
           v-model="priority"
@@ -100,7 +100,7 @@
             {{ status | capitalize }}
           </span>
         </span>
-        <SelectInput
+        <select-input
           :class="'details_select'"
           v-if="edit.status"
           v-model="status"
@@ -123,9 +123,9 @@
 import Vue from 'vue';
 import { mapActions, mapState } from 'vuex';
 import PriorityIcon from './PriorityIcon.vue';
-import StatusIcon from './StatusIcon.vue';
 import SelectInput from './SelectInput.vue';
 import SelectUserInput from './SelectUserInput.vue';
+import StatusIcon from './StatusIcon.vue';
 import { Feature, Item, priorityType, statusType, User } from '@/types';
 import { priorityOptions, statusOptions, userOptions } from '@/utils/constants';
 

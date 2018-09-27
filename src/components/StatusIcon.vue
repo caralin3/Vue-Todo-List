@@ -4,7 +4,10 @@
 
 <script lang="ts">
 import Vue from 'vue';
+
 export default Vue.extend({
+  name: 'StatusIcon',
+
   props: {
     status: {
       type: String,
