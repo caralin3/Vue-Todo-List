@@ -95,7 +95,6 @@ export default Vue.extend({
       if (this.items && this.items.length > 0) {
         this.itemList = this.items.filter((item: Item) => item.projectId === id);
       }
-
     },
     getFilter(this: any) {
       this.filter = this.$route.query.filter;

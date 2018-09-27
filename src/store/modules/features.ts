@@ -16,17 +16,22 @@ const actions: ActionTree<FeatureState, any> = {
   addFeature: ({commit}, feature: Feature): any => {
     fb.featuresCollection.add(feature).then(() => {
       let newFeature: Feature;
-      fb.featuresCollection.orderBy('startDate', 'desc').limit(1).get()
+      fb.featuresCollection.orderBy('startDate', 'desc').get()
         .then((querySnapshot: any) => {
           newFeature = querySnapshot.docs[0].data();
+          console.log(newFeature);
           newFeature.startDate = new Date(querySnapshot.docs[0].data().startDate);
           newFeature.updatedDate = new Date(querySnapshot.docs[0].data().updatedDate);
           if (newFeature.endDate) {
             newFeature.endDate = new Date(querySnapshot.docs[0].data().endDate);
           }
           newFeature.id = querySnapshot.docs[0].id;
-          console.log(newFeature);
-          commit(MutationType.ADD_FEATURE, newFeature);
+          fb.featuresCollection.get().then((snap: any) => {
+            const length = snap.size;
+            if (length > 1) {
+              commit(MutationType.ADD_FEATURE, newFeature);
+            }
+          });
           fb.projectsCollection.doc(feature.projectId).update({
             updatedDate: feature.updatedDate,
             features: firebase.firestore.FieldValue.arrayUnion(newFeature.id),

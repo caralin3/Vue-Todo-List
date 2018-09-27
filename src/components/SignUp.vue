@@ -59,8 +59,8 @@ export default {
           this.setCurrentUser(currentUser);
           // create user object
           fb.usersCollection.doc(user.user.uid).set({
-            firstNameName: this.firstName,
-            lastNameName: this.lastName,
+            firstName: this.firstName,
+            lastName: this.lastName,
             email: this.email,
           }).then(() => {
             this.fetchUserProfile(user);

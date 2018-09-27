@@ -15,7 +15,7 @@ const actions: ActionTree<ProjectState, any> = {
   addProject: ({commit}, proj: Project): any => {
     fb.projectsCollection.add(proj).then(() => {
       let newProj: Project;
-      fb.projectsCollection.orderBy('startDate', 'desc').limit(1).get()
+      fb.projectsCollection.orderBy('startDate', 'desc').get()
         .then((querySnapshot: any) => {
           newProj = querySnapshot.docs[0].data();
           newProj.startDate = new Date(querySnapshot.docs[0].data().startDate);
@@ -24,7 +24,12 @@ const actions: ActionTree<ProjectState, any> = {
             newProj.endDate = new Date(querySnapshot.docs[0].data().endDate);
           }
           newProj.id = querySnapshot.docs[0].id;
-          commit(MutationType.ADD_PROJECT, newProj);
+          fb.projectsCollection.get().then((snap: any) => {
+            const length = snap.size;
+            if (length > 1) {
+              commit(MutationType.ADD_PROJECT, newProj);
+            }
+          });
         });
     }).catch((err: any) => {
       console.log(err.message);
