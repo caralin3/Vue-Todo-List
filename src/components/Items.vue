@@ -1,7 +1,12 @@
 <template>
   <div class="items" :class="{'items-open': itemId}">
+    <div class="items_header">
+      <h2 class="items_title">{{ filter | capitalize }}</h2>
+      <feature-icon v-if="filter === 'features'" />
+      <item-icon v-if="filter === 'items'" />
+    </div>
     <div class="items_list" :class="{'items_list-close': itemId}">
-      <item-list :icon="icon" :items="itemList" />
+      <item-list :items="itemList" />
     </div>
     <div class="items_details" :class="{'items_details-open': itemId}" v-if="itemId">
       <item-details :on-close="close" :item="currentItem"  />
@@ -12,7 +17,9 @@
 <script lang="ts">
 import Vue from 'vue';
 import {mapActions, mapGetters, mapState, mapMutations} from 'vuex';
+import FeatureIcon from './FeatureIcon.vue';
 import ItemDetails from '@/components/ItemDetails.vue';
+import ItemIcon from './ItemIcon.vue';
 import ItemList from '@/components/ItemList.vue';
 import { Feature, Item } from '@/types';
 
@@ -20,14 +27,13 @@ export default Vue.extend({
   name: 'Items',
 
   components: {
+    FeatureIcon,
     ItemDetails,
+    ItemIcon,
     ItemList,
   },
 
   props: {
-    icon: {
-      type: String,
-    },
     itemList: {
       type: Array,
     },
@@ -48,16 +54,20 @@ export default Vue.extend({
   computed: {
     ...mapState({
       features: (state: any) => state.features.features,
-      items: (state: any) => state.items.features,
+      items: (state: any) => state.items.items,
     }),
   },
 
   methods: {
     getItem(this: any) {
       if (this.filter === 'features') {
-        this.currentItem = this.features.filter((feature: Feature) => feature.id === this.itemId)[0];
+        if (this.features && this.features.length > 0) {
+          this.currentItem = this.features.filter((feature: Feature) => feature.id === this.itemId)[0];
+        }
       } else {
-        this.currentItem = this.items.filter((item: Item) => item.id === this.itemId)[0];
+        if (this.items && this.items.length > 0) {
+          this.currentItem = this.items.filter((item: Item) => item.id === this.itemId)[0];
+        }
       }
     },
     close(this: any) {
@@ -70,6 +80,9 @@ export default Vue.extend({
       this.itemId = this.$route.query.id;
       this.getItem();
     },
+    '$route.query.filter'(this: any) {
+      this.filter = this.$route.query.filter;
+    },
   },
 
 });
@@ -80,14 +93,27 @@ export default Vue.extend({
 
 .items {
 
+  &_header {
+    align-items: center;
+    display: flex;
+    grid-area: header;
+    padding: 2rem 2rem 0;
+  }
+
+  &_title {
+    margin: 0;
+  }
+
   &-open {
     display: grid;
     grid-template:
+      "header header"
       "list details"
       ~'/' 1fr 2fr;
 
     @media only screen and (max-width: 780px) {
       display: flex;
+      flex-direction: column;
     }
   }
 

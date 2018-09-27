@@ -1,6 +1,7 @@
 <template>
   <div class="itemList">
-    <add-feature-dialog v-if="show" :toggleDialog="toggleDialog" />
+    <add-feature-dialog v-if="show && buttonTitle === 'feature'" :toggleDialog="toggleDialog" />
+    <add-item-dialog v-if="show && buttonTitle !== 'feature'" :toggleDialog="toggleDialog" />
     <div class="itemList_header">
       <button class="itemList_header-button" @click="toggleDialog">
         Add {{ buttonTitle | capitalize }}
@@ -20,7 +21,11 @@
         :class="{'itemList_item-selected': selected && item.id === selected.id}"
         @click="onClick(item)"
       >
-        <list-item class="itemList_item" :icon="icon" :item="item" />
+        <list-item
+          class="itemList_item"
+          :item="item"
+          :icon="buttonTitle === 'feature' ? 'feature' : item.type"
+        />
       </div>
     </ul>
   </div>
@@ -29,6 +34,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import AddFeatureDialog from './AddFeatureDialog.vue';
+import AddItemDialog from './AddItemDialog.vue';
 import ListItem from './ListItem.vue';
 import SelectInput from './SelectInput.vue';
 import { featureFilterOptions } from '@/utils/constants';
@@ -38,14 +44,12 @@ export default Vue.extend({
 
   components: {
     AddFeatureDialog,
+    AddItemDialog,
     ListItem,
     SelectInput,
   },
 
   props: {
-    icon: {
-      type: String,
-    },
     items: {
       type: Array,
     },
@@ -57,12 +61,12 @@ export default Vue.extend({
       type: String,
     },
     filter: 'Select Filter',
+    filterOptions: featureFilterOptions,
     selected: {
       default: {},
       type: Object,
     },
     show: false as boolean,
-    filterOptions: featureFilterOptions,
   }),
 
   created(this: any) {
@@ -71,12 +75,13 @@ export default Vue.extend({
 
   methods: {
     onClick(this: any, item: any) {
+      const filter = this.$route.query.filter;
       if (this.selected && this.selected.id === item.id) {
-        this.$router.push({ path: this.$route.path, query: { filter: 'features'}});
+        this.$router.push({ path: this.$route.path, query: { filter }});
         this.selected = {};
       } else {
         this.selected = item;
-        this.$router.push({ path: this.$route.path, query: { filter: 'features', id: item.id}});
+        this.$router.push({ path: this.$route.path, query: { filter, id: item.id}});
       }
     },
     toggleDialog(this: any) {
@@ -89,6 +94,9 @@ export default Vue.extend({
       if (!this.$route.query.id) {
         this.selected = {};
       }
+    },
+    '$route.query.filter'(this: any) {
+      this.buttonTitle = this.$route.query.filter.toString().slice(0, -1);
     },
   },
 });

@@ -1,7 +1,7 @@
 <template>
   <i :class="`fa-stack fa-2x comp ${extraClasses}`">
     <i class="fas fa-square fa-stack-2x comp-square" />
-    <i class="fas fa-code fa-stack-1x fa-inverse" />
+    <i class="fas fa-code fa-stack-1x fa-inverse comp-code" />
   </i>
 </template>
 
@@ -22,10 +22,15 @@ export default Vue.extend({
 
 .comp {
   font-size: 0.8rem;
-  padding-left: 1rem;
+  padding: 0 0.5rem 0 1rem;
 
   &-square {
     color: @safety-orange;
+    margin-left: 0.2rem;
+  }
+
+  &-code {
+    margin-left: 0.2rem;
   }
 }
 </style>

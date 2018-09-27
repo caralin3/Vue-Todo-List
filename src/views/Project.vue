@@ -8,10 +8,10 @@
       <ProjectBoard />
     </div>
     <div class="project_container" v-if="filter === 'features'">
-      <items icon="feature" :itemList="feats" />
+      <items :itemList="feats" />
     </div>
     <div class="project_container" v-if="filter === 'items'">
-      <ProjectTasks />
+      <items :itemList="itemList" />
     </div>
     <div class="project_container" v-if="filter === 'tasks'">
       <ProjectTasks />
@@ -70,7 +70,7 @@ export default Vue.extend({
   computed: {
     ...mapState({
       features: (state: any) => state.features.features,
-      items: (state: any) => state.items.features,
+      items: (state: any) => state.items.items,
       projects: (state: any) => state.projects.projects,
     }),
   },

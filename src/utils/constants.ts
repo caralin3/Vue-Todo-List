@@ -15,7 +15,9 @@ export const itemTypeOptions: string[] = ['Select Type', 'task', 'component', 'b
 
 export const priorityOptions: string[] = ['Select Priority', 'blocker', 'critical', 'major', 'minor'];
 
-export const featureFilterOptions: string[] = ['Select Filter', 'date', 'title', 'status', 'priority'];
+export const featureFilterOptions: string[] = ['Select Filter', 'date', 'title',
+  'status', 'priority', 'assigned to Me',
+];
 
 export const getUserOptions = () => {
   const users: User[] = [{
