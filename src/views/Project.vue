@@ -2,10 +2,10 @@
   <div class="project">
     <sidebar :title="projectTitle" />
     <div class="project_container" v-if="filter === 'activity'">
-      <project-board />
+      <activity />
     </div>
     <div class="project_container" v-if="filter === 'board'">
-      <project-board />
+      <board />
     </div>
     <div class="project_container" v-if="filter === 'features'">
       <items :itemList="featureList" />
@@ -25,6 +25,8 @@
 <script lang="ts">
 import Vue from 'vue';
 import { mapState } from 'vuex';
+import Activity from '@/components/Activity.vue';
+import Board from '@/components/Board.vue';
 import Items from '@/components/Items.vue';
 import ProjectBoard from '@/components/ProjectBoard.vue';
 import ProjectDetails from '@/components/ProjectDetails.vue';
@@ -35,6 +37,8 @@ export default Vue.extend({
   name: 'Project',
 
   components: {
+    Activity,
+    Board,
     Items,
     ProjectBoard,
     ProjectDetails,

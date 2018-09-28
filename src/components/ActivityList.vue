@@ -1,15 +1,13 @@
 <template>
-  <div class="itemList">
-    <add-feature-dialog v-if="show && buttonTitle === 'feature'" :toggleDialog="toggleDialog" />
-    <add-item-dialog v-if="show && buttonTitle !== 'feature'" :toggleDialog="toggleDialog" />
-    <div class="itemList_header">
-      <button class="itemList_header-button" @click="toggleDialog">
+  <div class="activityList">
+    <div class="activityList_header">
+      <!-- <button class="activityList_header-button" @click="toggleDialog">
         Add {{ buttonTitle | capitalize }}
-      </button>
-      <span class="itemList_header-filter">
+      </button> -->
+      <span class="activityList_header-filter">
         <select-input
-          :class="'itemList_header-select'"
-          rootClass="itemList_header"
+          class="activityList_header-select"
+          rootClass="activityList_header"
           v-model="filter"
           :onBlur="() => null"
           :onFocus="() => null"
@@ -17,15 +15,15 @@
         />
       </span>
     </div>
-    <ul class="itemList_list" v-for="item in items" :key="item.id" >
+    <ul class="activityList_list" v-for="item in items" :key="item.id" >
       <div
-        :class="{'itemList_item-selected': selected && item.id === selected.id}"
+        :class="{'activityList_item-selected': selected && item.id === selected.id}"
         @click="onClick(item)"
       >
         <list-item
-          class="itemList_item"
+          class="activityList_item"
           :item="item"
-          :icon="buttonTitle === 'feature' ? 'feature' : item.type"
+          icon="feature"
         />
       </div>
     </ul>
@@ -34,18 +32,14 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import AddFeatureDialog from './AddFeatureDialog.vue';
-import AddItemDialog from './AddItemDialog.vue';
 import ListItem from './ListItem.vue';
 import SelectInput from './SelectInput.vue';
 import { featureFilterOptions } from '@/utils/constants';
 
 export default Vue.extend({
-  name: 'ItemList',
+  name: 'ActivityList',
 
   components: {
-    AddFeatureDialog,
-    AddItemDialog,
     ListItem,
     SelectInput,
   },
@@ -57,10 +51,6 @@ export default Vue.extend({
   },
 
   data: () => ({
-    buttonTitle: {
-      default: '',
-      type: String,
-    },
     filter: 'Select Filter',
     filterOptions: featureFilterOptions,
     selected: {
@@ -70,9 +60,7 @@ export default Vue.extend({
     show: false as boolean,
   }),
 
-  created(this: any) {
-    this.buttonTitle = this.$route.query.filter.toString().slice(0, -1);
-  },
+  // created(this: any) {},
 
   methods: {
     onClick(this: any, item: any) {
@@ -96,9 +84,6 @@ export default Vue.extend({
         this.selected = {};
       }
     },
-    '$route.query.filter'(this: any) {
-      this.buttonTitle = this.$route.query.filter.toString().slice(0, -1);
-    },
   },
 });
 </script>
@@ -107,7 +92,7 @@ export default Vue.extend({
 @import '../less/variables.less';
 @import '../less/button.less';
 
-.itemList {
+.activityList {
   padding: 2rem;
 
   &_header {
@@ -119,11 +104,11 @@ export default Vue.extend({
     // box-shadow: 2px 2px 5px rgba(114, 113, 113, 0.3);
     padding: 0.5rem 1rem;
 
-    &-button {
-      .button;
-      height: 2rem;
-      padding: 0.5rem 1rem;
-    }
+    // &-button {
+    //   .button;
+    //   height: 2rem;
+    //   padding: 0.5rem 1rem;
+    // }
 
     &-select {
       margin: 0;

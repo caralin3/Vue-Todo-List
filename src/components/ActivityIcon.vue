@@ -1,12 +1,12 @@
 <template>
-  <i :class="`fas fa-table boardIcon ${extraClasses}`" />
+  <i :class="`fas fa-chart-line activityIcon ${extraClasses}`" />
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
 
 export default Vue.extend({
-  name: 'BoardIcon',
+  name: 'ActivityIcon',
 
   props: {
     extraClasses: {
@@ -20,8 +20,8 @@ export default Vue.extend({
 <style lang="less" scoped>
 @import '../less/variables.less';
 
-.boardIcon {
-  color: @pink;
+.activityIcon {
+  color: @red;
   font-size: 1.5rem;
   padding-left: 1rem;
 }
