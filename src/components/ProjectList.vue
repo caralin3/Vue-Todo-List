@@ -12,16 +12,13 @@
           </div>
           <div class="projectItem_created">
             <span class="projectItem_by">Created by: {{ proj.creator | name }}</span>
-            <span class="projectItem_date">Created on: {{ new Date(proj.startDate) | date }}</span>
+            <span class="projectItem_date">Created: {{ new Date(proj.startDate) | date }}</span>
           </div>
           <p class="projectItem_description" v-if="proj.description !== ''">{{ proj.description }}</p>
           <p class="projectItem_description" v-else>No description</p>
-          <div class="projectItem_latest" v-if="proj.features.length > 0">
-            <h5 class="projectItem_latestTitle">Latest Update</h5>
-            <div class="projectItem_featureDetails">
-              <div class="projectItem_featureTitle">{{ proj.features[0].title }}</div>
-              <div class="projectItem_featureDate">Last Updated: {{ new Date(proj.features[0].updatedDate) | date }}</div>
-            </div>
+          <div class="projectItem_update">
+            Last Updated:
+            {{ new Date(proj.updatedDate) | date }} {{ new Date(proj.updatedDate) | time }}
           </div>
         </div>
       </li>
@@ -133,18 +130,10 @@ export default Vue.extend({
     width: 100%;
   }
 
-  &_latest {
-    padding: 0.5rem 0 1rem 0;
-  }
-
-  &_latestTitle {
-    margin: 0;
-  }
-
-  &_featureTitle,
-  &_featureDate {
+  &_update {
     font-size: 0.9rem;
     line-height: 2;
+    padding: 0.5rem 0 1rem 0;
   }
 
   @media only screen and (max-width: 640px) {

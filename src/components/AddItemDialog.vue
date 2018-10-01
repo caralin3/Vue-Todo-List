@@ -3,6 +3,7 @@
     <Dialog title="Add Item" :toggleDialog="dismissDialog">
       <Form buttonText="Add Item" :toggleDialog="dismissDialog" :submit="onSubmitForm">
         <div class="addItem_dialog">
+          <text-input :class="'addItem_textInput'" label="Item Name" placeholder="" v-model="title" />
           <select-user-input
             :class="'addItem_select'"
             label="Assignee"
@@ -19,7 +20,6 @@
             :onBlur="() => null"
             :onFocus="() => null"
           />
-          <text-input :class="'addItem_textInput'" label="Item Name" placeholder="" v-model="title" />
           <select-feature-input
             :class="'addItem_select'" 
             label="Feature"

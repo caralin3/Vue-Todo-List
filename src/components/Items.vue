@@ -9,7 +9,12 @@
       <item-list :items="itemList" />
     </div>
     <div class="items_details" :class="{'items_details-open': itemId}" v-if="itemId">
-      <item-details :on-close="close" :item="currentItem"  />
+      <item-details
+        :on-close="close"
+        :item="currentItem"
+        :feature="feature"
+        :featureItems="featureItems"
+      />
     </div>
   </div>
 </template>
@@ -40,15 +45,18 @@ export default Vue.extend({
   },
 
   data: () => ({
+    feature: {} as Feature,
     filter: '',
     itemId: '',
     currentItem: {} as Feature | Item,
+    featureItems: [] as Item[],
   }),
 
   created(this: any) {
     this.filter = this.$route.query.filter;
     this.itemId = this.$route.query.id;
     this.getItem();
+    this.getFeatureItems();
   },
 
   computed: {
@@ -59,12 +67,21 @@ export default Vue.extend({
   },
 
   methods: {
+    getFeatureItems(this: any) {
+      if (this.itemId) {
+        if (this.filter === 'features') {
+          this.featureItems = this.items.filter((i: Item) => i.featureId === this.currentItem.id);
+        } else if (this.filter === 'items') {
+          this.feature = this.features.filter((f: Feature) => f.id === this.currentItem.featureId)[0];
+        }
+      }
+    },
     getItem(this: any) {
       if (this.filter === 'features') {
         if (this.features && this.features.length > 0) {
           this.currentItem = this.features.filter((feature: Feature) => feature.id === this.itemId)[0];
         }
-      } else {
+      } else if (this.filter === 'items') {
         if (this.items && this.items.length > 0) {
           this.currentItem = this.items.filter((item: Item) => item.id === this.itemId)[0];
         }
@@ -79,6 +96,7 @@ export default Vue.extend({
     '$route.query.id'(this: any) {
       this.itemId = this.$route.query.id;
       this.getItem();
+      this.getFeatureItems();
     },
     '$route.query.filter'(this: any) {
       this.filter = this.$route.query.filter;

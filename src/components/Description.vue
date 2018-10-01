@@ -39,7 +39,7 @@ export default Vue.extend({
 @import '../less/variables.less';
 
 .description {
-  padding: 1rem;
+  padding: 1rem 1rem 0;
 
   &_title {
     border-bottom: 1px solid @madison;

@@ -16,7 +16,8 @@ const actions: ActionTree<ItemState, any> = {
   addItem: ({commit}, item: Item): any => {
     fb.itemsCollection.add(item).then(() => {
       let newItem: Item;
-      fb.itemsCollection.orderBy('startDate', 'desc').get()
+      fb.itemsCollection.where('startDate', '<=', new Date().toString())
+        .orderBy('startDate', 'desc').get()
         .then((querySnapshot: any) => {
           newItem = querySnapshot.docs[0].data();
           newItem.startDate = new Date(querySnapshot.docs[0].data().startDate);

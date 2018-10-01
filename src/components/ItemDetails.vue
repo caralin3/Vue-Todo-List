@@ -10,6 +10,8 @@
       :on-change="handleTextChange"
       :text="item.description"
     />
+    <details-items v-if="filter === 'features'" :items="featureItems" />
+    <details-feature v-if="filter === 'items'" :feature="feature" />
     <links :links="links" />
     <comments :comments="comments" />
   </details-panel>
@@ -21,7 +23,9 @@ import { mapActions, mapState } from 'vuex';
 import Comments from '@/components/Comments.vue';
 import Description from '@/components/Description.vue';
 import DetailsData from '@/components/DetailsData.vue';
+import DetailsFeature from './DetailsFeature.vue';
 import DetailsHeader from '@/components/DetailsHeader.vue';
+import DetailsItems from './DetailsItems.vue';
 import DetailsPanel from '@/components/DetailsPanel.vue';
 import Links from '@/components/Links.vue';
 import { Comment, Link, Feature, Item } from '@/types';
@@ -34,12 +38,18 @@ export default Vue.extend({
     Comments,
     Description,
     DetailsData,
+    DetailsFeature,
     DetailsHeader,
+    DetailsItems,
     DetailsPanel,
     Links,
   },
 
   props: {
+    featureItems: {
+      type: Array,
+    },
+    feature: {},
     item: {},
     onClose: {
       type: Function,
