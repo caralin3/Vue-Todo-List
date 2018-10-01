@@ -12,7 +12,7 @@ export const Comment1: Comment = {
   startDate: new Date(),
   text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, \
     sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-  user: User1,
+  userId: '0',
 };
 
 export const Comment2: Comment = {
@@ -20,21 +20,21 @@ export const Comment2: Comment = {
   startDate: new Date(),
   text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, \
     sed do eiusmod tempor incididunt.',
-  user: User1,
+  userId: '0',
 };
 
 export const Link1: Link = {
   id: '0',
   startDate: new Date(),
   to: 'https://www.google.com',
-  user: User1,
+  userId: '0',
 };
 
 export const Link2: Link = {
   id: '1',
   startDate: new Date(),
   to: 'https://www.gmail.com',
-  user: User1,
+  userId: '0',
 };
 
 export const WorkHistory1: WorkHistory = {

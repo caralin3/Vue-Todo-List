@@ -15,33 +15,41 @@ export interface User {
 }
 
 export interface FirebaseComment {
+  featureId?: string;
+  itemId?: string;
   startDate: Date;
   text: string;
   updatedDate?: Date;
-  user: User;
+  userId: string;
 }
 
 export interface Comment {
+  featureId?: string;
   id: string;
+  itemId?: string;
   startDate: Date;
   text: string;
   updatedDate?: Date;
-  user: User;
+  userId: string;
 }
 
 export interface FirebaseLink {
+  featureId?: string;
+  itemId?: string;
   startDate: Date;
   to: string;
   updatedDate?: Date;
-  user: User;
+  userId: string;
 }
 
 export interface Link {
+  featureId?: string;
   id: string;
+  itemId?: string;
   startDate: Date;
   to: string;
   updatedDate?: Date;
-  user: User;
+  userId: string;
 }
 
 export interface WorkHistory {

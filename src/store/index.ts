@@ -99,6 +99,26 @@ fb.auth.onAuthStateChanged((user: any) => {
       }
     });
 
+    // realtime updates for links collection
+    fb.linksCollection.orderBy('startDate', 'asc').onSnapshot((querySnapshot: any) => {
+      if (querySnapshot.docChanges().length === querySnapshot.docs.length) {
+        const linkList: Item[] = [];
+
+        querySnapshot.forEach((doc: any) => {
+          const link = doc.data();
+          link.startDate = new Date(doc.data().startDate);
+          link.updatedDate = new Date(doc.data().updatedDate);
+          if (link.endDate) {
+            link.endDate = new Date(doc.data().endDate.toString());
+          }
+          link.id = doc.id;
+          linkList.push(link);
+        });
+
+        store.commit('links/' + MutationType.SET_LINKS, linkList);
+      }
+    });
+
     // realtime updates for comments collection
     // fb.commentsCollection.orderBy('startDate', 'asc').onSnapshot((querySnapshot: any) => {
     //   if (querySnapshot.docChanges().length === querySnapshot.docs.length) {

@@ -86,7 +86,7 @@ const actions: ActionTree<ItemState, any> = {
     commit(MutationType.REMOVE_ALL_ITEMS);
   },
   setItems: ({commit}, item: Item): any => {
-    commit(MutationType.SET_FEATURES, item);
+    commit(MutationType.SET_ITEMS, item);
   },
 };
 

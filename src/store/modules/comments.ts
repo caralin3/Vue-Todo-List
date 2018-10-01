@@ -1,4 +1,6 @@
 import { GetterTree, MutationTree, ActionTree } from 'vuex';
+import * as firebase from 'firebase';
+import * as fb from '@/firebase';
 import { Comment } from '@/types';
 import { MutationType } from '@/store/mutation-types';
 import { Comment1, Comment2 } from '@/store/state';

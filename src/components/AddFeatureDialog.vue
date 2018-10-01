@@ -56,8 +56,6 @@ import { mapActions, mapState } from 'vuex';
 import DateInput from '@/components/DateInput.vue';
 import Dialog from '@/components/Dialog.vue';
 import Form from '@/components/Form.vue';
-import ProjectList from '@/components/ProjectList.vue';
-import ProjectsHeader from '@/components/ProjectsHeader.vue';
 import SelectInput from '@/components/SelectInput.vue';
 import SelectUserInput from '@/components/SelectUserInput.vue';
 import TextAreaInput from '@/components/TextAreaInput.vue';
@@ -72,8 +70,6 @@ export default Vue.extend({
     DateInput,
     Dialog,
     Form,
-    ProjectsHeader,
-    ProjectList,
     SelectInput,
     SelectUserInput,
     TextAreaInput,

@@ -19,7 +19,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import { mapActions, mapState } from 'vuex';
+import { mapActions } from 'vuex';
 import Comments from '@/components/Comments.vue';
 import Description from '@/components/Description.vue';
 import DetailsData from '@/components/DetailsData.vue';
@@ -29,7 +29,7 @@ import DetailsItems from './DetailsItems.vue';
 import DetailsPanel from '@/components/DetailsPanel.vue';
 import Links from '@/components/Links.vue';
 import { Comment, Link, Feature, Item } from '@/types';
-import { Link1, Link2, Comment1, Comment2 } from '@/store/state';
+import { Comment1, Comment2 } from '@/store/state';
 
 export default Vue.extend({
   name: 'ItemDetails',
@@ -51,6 +51,9 @@ export default Vue.extend({
     },
     feature: {},
     item: {},
+    links: {
+      type: Array,
+    },
     onClose: {
       type: Function,
     },
@@ -58,7 +61,6 @@ export default Vue.extend({
 
   data: () => ({
     filter: '',
-    links: [Link1, Link2] as Link[],
     comments: [Comment1, Comment2] as Comment[],
     update: {} as Feature | Item,
   }),

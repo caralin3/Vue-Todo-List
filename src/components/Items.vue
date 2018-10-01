@@ -10,10 +10,11 @@
     </div>
     <div class="items_details" :class="{'items_details-open': itemId}" v-if="itemId">
       <item-details
-        :on-close="close"
-        :item="currentItem"
         :feature="feature"
         :featureItems="featureItems"
+        :item="currentItem"
+        :links="featureLinks"
+        :on-close="close"
       />
     </div>
   </div>
@@ -21,12 +22,12 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import {mapActions, mapGetters, mapState, mapMutations} from 'vuex';
+import { mapActions, mapState } from 'vuex';
 import FeatureIcon from './FeatureIcon.vue';
 import ItemDetails from '@/components/ItemDetails.vue';
 import ItemIcon from './ItemIcon.vue';
 import ItemList from '@/components/ItemList.vue';
-import { Feature, Item } from '@/types';
+import { Feature, Item, Link } from '@/types';
 
 export default Vue.extend({
   name: 'Items',
@@ -45,10 +46,10 @@ export default Vue.extend({
   },
 
   data: () => ({
+    currentItem: {} as Feature | Item,
     feature: {} as Feature,
     filter: '',
     itemId: '',
-    currentItem: {} as Feature | Item,
     featureItems: [] as Item[],
   }),
 
@@ -63,7 +64,17 @@ export default Vue.extend({
     ...mapState({
       features: (state: any) => state.features.features,
       items: (state: any) => state.items.items,
+      links: (state: any) => state.links.links,
     }),
+    featureLinks(this: any) {
+      if (this.itemId) {
+        if (this.filter === 'features') {
+          return this.links.filter((l: Link) => l.featureId === this.currentItem.id);
+        } else if (this.filter === 'items') {
+          return this.links.filter((l: Link) => l.itemId === this.currentItem.id);
+        }
+      }
+    },
   },
 
   methods: {

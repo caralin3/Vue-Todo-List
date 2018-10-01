@@ -25,11 +25,12 @@ const settings = {
 db.settings(settings);
 
 // firebase collections
-const usersCollection = db.collection('users');
-const projectsCollection = db.collection('projects');
+const commentsCollection = db.collection('comments');
 const featuresCollection = db.collection('features');
 const itemsCollection = db.collection('items');
-const commentsCollection = db.collection('comments');
+const linksCollection = db.collection('links');
+const projectsCollection = db.collection('projects');
+const usersCollection = db.collection('users');
 
 export {
   db,
@@ -38,6 +39,7 @@ export {
   currentUser,
   featuresCollection,
   itemsCollection,
-  usersCollection,
+  linksCollection,
   projectsCollection,
+  usersCollection,
 };

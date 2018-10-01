@@ -1,8 +1,9 @@
 <template>
   <div class="links">
+    <add-link-dialog v-if="show" :toggle-dialog="toggleDialog" />
     <div class="links_header">
       <h3 class="links_title">Links</h3>
-      <add-button :onClick="() => null" />
+      <add-button :onClick="toggleDialog" />
     </div>    
     <div class="links_container" v-if="links && links.length > 0">
       <div class="links_linkList" v-for="link in links" :key="link.id">
@@ -26,7 +27,9 @@
 
 <script lang="ts">
 import Vue from 'vue';
+import { mapActions, mapState } from 'vuex';
 import AddButton from './AddButton.vue';
+import AddLinkDialog from './AddLinkDialog.vue';
 import EditButton from './EditButton.vue';
 import { Link } from '@/types';
 
@@ -35,6 +38,7 @@ export default Vue.extend({
 
   components: {
     AddButton,
+    AddLinkDialog,
     EditButton,
   },
 
@@ -49,27 +53,35 @@ export default Vue.extend({
       editing: false,
       id: '',
     },
+    show: false,
     updatedLink: {} as Link,
   }),
 
   methods: {
+    ...mapActions({
+      editLink: 'links/editLink',
+    }),
     handleLinkChange(this: any, value: string, link: Link) {
-      console.log(value);
-      // this.updatedLink = {
-      //   id: link.id,
-      //   startDate: link.startDate.toString(),
-      //   to: value,
-      //   updatedDate: new Date().toString(),
-      //   user: link.user,
-      // };
+      this.updatedLink = {
+        featureId: link.featureId || '',
+        itemId: link.itemId || '',
+        id: link.id,
+        startDate: new Date(link.startDate).toString(),
+        to: value,
+        updatedDate: new Date().toString(),
+        user: link.userId,
+      };
       this.editedLink.editing = false;
-      // this.editLink(this.updatedLink);
+      this.editLink(this.updatedLink);
     },
     toggleEditLink(this: any, id: string) {
       this.editedLink = {
         id,
         editing: true,
       };
+    },
+    toggleDialog(this: any) {
+      this.show = !this.show;
     },
   },
 });
@@ -94,6 +106,10 @@ export default Vue.extend({
 
   &_container {
     padding: 1rem 0 0 1rem;
+  }
+
+  &_noLinks {
+    padding-left: 1rem;
   }
 
   &_linkRow {

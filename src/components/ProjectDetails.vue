@@ -296,27 +296,27 @@ export default Vue.extend({
     toggleAddDialog(this: any) {
       this.showAddDialog = !this.showAddDialog;
     },
-    handleCommentChange(this: any, value: string, comm: Comment) {
-      this.updatedComment = {
-        id: comm.id,
-        startDate: new Date(comm.startDate).toString(),
-        text: value,
-        updatedDate: new Date().toString(),
-        user: comm.user,
-      };
-      this.editComment(this.updatedComment);
-    },
-    handleLinkChange(this: any, value: string, link: Link) {
-      this.updatedLink = {
-        id: link.id,
-        startDate: new Date(link.startDate).toString(),
-        to: value,
-        updatedDate: new Date().toString(),
-        user: link.user,
-      };
-      this.edit.link.editing = false;
-      this.editLink(this.updatedLink);
-    },
+    // handleCommentChange(this: any, value: string, comm: Comment) {
+    //   this.updatedComment = {
+    //     id: comm.id,
+    //     startDate: new Date(comm.startDate).toString(),
+    //     text: value,
+    //     updatedDate: new Date().toString(),
+    //     user: comm.user,
+    //   };
+    //   this.editComment(this.updatedComment);
+    // },
+    // handleLinkChange(this: any, value: string, link: Link) {
+    //   this.updatedLink = {
+    //     id: link.id,
+    //     startDate: new Date(link.startDate).toString(),
+    //     to: value,
+    //     updatedDate: new Date().toString(),
+    //     user: link.user,
+    //   };
+    //   this.edit.link.editing = false;
+    //   this.editLink(this.updatedLink);
+    // },
     handleTextChange(this: any, type: string, value: string) {
       if (type === 'description') {
         this.updatedProject = {
