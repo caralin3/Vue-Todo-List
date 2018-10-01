@@ -52,18 +52,30 @@ export default Vue.extend({
 @import '../less/button.less';
 
 .projectList {
+  align-items: center;
   display: grid;
   gap: 3.5rem;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(auto-fill, 1fr);
   justify-items: center;
-  padding: 1rem 2rem 3rem;
+  padding: 1rem 2rem 3rem 0;
+
+  @media only screen and (max-width: 1200px) {
+    padding: 1rem 5rem 3rem 2rem;
+  }
+
+  @media only screen and (max-width: 800px) {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(auto-fill, 1fr);
+    padding: 1rem 5rem 3rem 2rem;
+  }
 
   @media only screen and (max-width: 640px) {
     align-items: center;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    padding: 0 0.5rem 0 0;
   }
 }
 
@@ -72,7 +84,12 @@ export default Vue.extend({
   color: @madison;
   padding: 1.5rem;
   height: 12rem;
-  width: 20rem;
+  max-width: 20rem;
+  width: 100%;
+
+  @media only screen and (max-width: 760px) {
+    max-width: 15rem;
+  }
 
   &_overlay {
     left: 50%;

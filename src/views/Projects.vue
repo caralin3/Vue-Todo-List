@@ -1,7 +1,7 @@
 <template>
   <div class="projects">
     <projects-header :toggleDialog="toggleDialog" />
-    <project-list v-if="projects.length > 0" />
+    <project-list class="projects_list" v-if="projects.length > 0" />
     <h3 v-else class="projects_none">You don't have any projects yet.</h3>
     <add-project-dialog v-if="show" :toggleDialog="toggleDialog" />
   </div>
@@ -49,6 +49,10 @@ export default Vue.extend({
 .projects {
   display: flex;
   flex-direction: column;
+
+  // &_list {
+  //   align-self: center;
+  // }
 
   &_none {
     align-self: center;
