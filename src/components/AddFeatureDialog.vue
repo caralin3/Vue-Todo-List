@@ -171,12 +171,12 @@ export default Vue.extend({
 
   &_textInput {
     display: grid;
+    font-weight: bold;
     gap: 2.5rem;
     grid-template: "label input";
     width: 20rem;
   
     label {
-      font-weight: bold;
       grid-area: label;
       width: 10rem;
     }
@@ -195,12 +195,12 @@ export default Vue.extend({
 
   &_textAreaInput {
     display: grid;
+    font-weight: bold;
     gap: 2.5rem;
     grid-template: "label input";
     width: 20rem;
   
     label {
-      font-weight: bold;
       grid-area: label;
       width: 10rem;
     }
@@ -218,35 +218,35 @@ export default Vue.extend({
     }
   }  
 
-  &_dateInput {
-    display: grid;
-    gap: 1rem;
-    grid-template: "label input";
+  // &_dateInput {
+  //   display: grid;
+  //   font-weight: bold;
+  //   gap: 1rem;
+  //   grid-template: "label input";
   
-    label {
-      font-weight: bold;
-      grid-area: label;
-      width: 10rem;
-    }
+  //   label {
+  //     grid-area: label;
+  //     width: 10rem;
+  //   }
   
-    input {
-      grid-area: input;
-    }
+  //   input {
+  //     grid-area: input;
+  //   }
 
-    @media only screen and (max-width: 640px) {
-      gap: 1rem;
-      grid-template: "label" "input";
-      width: 80%;
-    }
-  }  
+  //   @media only screen and (max-width: 640px) {
+  //     gap: 1rem;
+  //     grid-template: "label" "input";
+  //     width: 80%;
+  //   }
+  // }
 
   &_select {
     display: grid;
+    font-weight: bold;
     gap: 2.5rem;
     grid-template: "label input";
   
     label {
-      font-weight: bold;
       grid-area: label;
       width: 10rem;
     }

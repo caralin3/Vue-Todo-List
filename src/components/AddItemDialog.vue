@@ -20,7 +20,14 @@
             :onBlur="() => null"
             :onFocus="() => null"
           />
+          <span class="addItem_feature" v-if="this.$route.query.filter === 'features'">
+            Feature
+          </span>
+          <span class="addItem_featureTitle" v-if="this.$route.query.filter === 'features'">
+            {{ feature.title }}
+          </span>
           <select-feature-input
+            v-if="this.$route.query.filter === 'items'"
             :class="'addItem_select'" 
             label="Feature"
             v-model="featureId"
@@ -66,7 +73,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import { mapActions } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 import DateInput from '@/components/DateInput.vue';
 import Dialog from '@/components/Dialog.vue';
 import Form from '@/components/Form.vue';
@@ -77,7 +84,7 @@ import SelectInput from '@/components/SelectInput.vue';
 import SelectUserInput from '@/components/SelectUserInput.vue';
 import TextAreaInput from '@/components/TextAreaInput.vue';
 import TextInput from '@/components/TextInput.vue';
-import { FirebaseItem, itemType, priorityType, statusType, User, Version } from '@/types';
+import { FirebaseItem, itemType, priorityType, statusType, User, Version, Feature } from '@/types';
 import { featureOptions, itemTypeOptions, priorityOptions, statusOptions, userOptions } from '@/utils/constants';
 
 export default Vue.extend({
@@ -104,7 +111,7 @@ export default Vue.extend({
 
   created(this: any) {
     if (this.$route.query.id) {
-      this.featureId = this.$route.query.id;
+      this.feature = this.features.filter((f: Feature) => f.id === this.$route.query.id)[0];
     }
   },
 
@@ -118,7 +125,9 @@ export default Vue.extend({
     assigneeId: '',
     description: '',
     endDate: '',
+    feature: {} as Feature,
     featureId: '',
+    featureOptions,
     itemTypeOptions,
     priority: 'Select Priority' as priorityType,
     priorityOptions,
@@ -135,8 +144,14 @@ export default Vue.extend({
     title: '',
     type: 'Select Type' as itemType,
     userOptions,
-    featureOptions,
   }),
+
+  computed: {
+    ...mapState({
+      features: (state: any) => state.features.features,
+    }),
+  },
+
   methods: {
     ...mapActions('items', [
       'addItem',
@@ -145,6 +160,10 @@ export default Vue.extend({
       this.toggleDialog();
     },
     onSubmitForm(this: any) {
+      if (this.$route.query.id) {
+        this.featureId = this.$route.query.id;
+      }
+
       const newItem: FirebaseItem = {
         assignee: this.assignee,
         description: this.description,
@@ -194,19 +213,19 @@ export default Vue.extend({
     align-self: center;
   }
 
-  &_creatorLabel {
+  &_feature {
     font-weight: bold;
-    padding-right: 8.7rem;
+    padding-right: 6rem;
   }
 
   &_textInput {
     display: grid;
+    font-weight: bold;
     gap: 2.5rem;
     grid-template: "label input";
     width: 20rem;
   
     label {
-      font-weight: bold;
       grid-area: label;
       width: 10rem;
     }
@@ -225,12 +244,12 @@ export default Vue.extend({
 
   &_textAreaInput {
     display: grid;
+    font-weight: bold;
     gap: 2.5rem;
     grid-template: "label input";
     width: 20rem;
   
     label {
-      font-weight: bold;
       grid-area: label;
       width: 10rem;
     }
@@ -248,35 +267,36 @@ export default Vue.extend({
     }
   }  
 
-  &_dateInput {
-    display: grid;
-    gap: 1rem;
-    grid-template: "label input";
+  // &_dateInput {
+  //   display: grid;
+  //   font-weight: bold;
+  //   gap: 1rem;
+  //   grid-template: "label input";
   
-    label {
-      font-weight: bold;
-      grid-area: label;
-      width: 10rem;
-    }
+  //   label {
+  //     font-weight: bold;
+  //     grid-area: label;
+  //     width: 10rem;
+  //   }
   
-    input {
-      grid-area: input;
-    }
+  //   input {
+  //     grid-area: input;
+  //   }
 
-    @media only screen and (max-width: 640px) {
-      gap: 1rem;
-      grid-template: "label" "input";
-      width: 80%;
-    }
-  }  
+  //   @media only screen and (max-width: 640px) {
+  //     gap: 1rem;
+  //     grid-template: "label" "input";
+  //     width: 80%;
+  //   }
+  // }  
 
   &_select {
     display: grid;
+    font-weight: bold;
     gap: 2.5rem;
     grid-template: "label input";
   
     label {
-      font-weight: bold;
       grid-area: label;
       width: 10rem;
     }
