@@ -4,9 +4,12 @@
       <h3 class="detailsFeature_title">Feature Link</h3>
     </div>    
     <div class="detailsFeature_container">
-      <router-link class="detailsFeature_link" :to="{path, query: { filter: 'features', id: feature.id}}">
+      <!-- <router-link class="detailsFeature_link" :to="{path, query: { filter: 'features', id: feature.id}}">
         {{ feature.title }}
-      </router-link>
+      </router-link> -->
+      <a class="detailsFeature_link" :href="`${path}?filter=features&id=${feature.id}`">
+        {{ feature.title }}
+      </a>
     </div>
   </div>
 </template>
