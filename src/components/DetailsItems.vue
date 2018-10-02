@@ -8,9 +8,6 @@
     <div class="detailsItems_container" v-if="items && items.length > 0">
       <div class="detailsItems_list" v-for="item in items" :key="item.id">
         <div class="detailsItems_row">
-          <!-- <router-link class="detailsItems_link" :to="{path, query: { filter: 'items', id: item.id}}">
-            {{ item.title }}
-          </router-link> -->
           <a class="detailsItems_link" :href="`${path}?filter=items&id=${item.id}`">
             {{ item.title }}
           </a>

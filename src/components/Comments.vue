@@ -83,13 +83,8 @@ export default Vue.extend({
 
   data: () => ({
     show: false,
-    showStart: false,
     updatedComment: {} as Comment,
   }),
-
-  created(this: any) {
-    this.showStart = this.comments[1].startDate.toString() === this.comments[1].updatedDate.toString();
-  },
 
   methods: {
     ...mapActions({

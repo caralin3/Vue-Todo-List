@@ -8,7 +8,8 @@
       Filters
     </div>
     <div class="board_board">
-      Board
+      <board-status-header :statuses="statuses" />
+      <board-grid :item-list="itemList" />
     </div>
   </div>
 </template>
@@ -16,14 +17,18 @@
 <script lang="ts">
 import Vue from 'vue';
 import {mapActions, mapGetters, mapState, mapMutations} from 'vuex';
+import BoardGrid from './BoardGrid.vue';
 import BoardIcon from './BoardIcon.vue';
+import BoardStatusHeader from './BoardStatusHeader.vue';
 import { Feature, Item } from '@/types';
 
 export default Vue.extend({
   name: 'Board',
 
   components: {
+    BoardGrid,
     BoardIcon,
+    BoardStatusHeader,
   },
 
   props: {
@@ -49,6 +54,37 @@ export default Vue.extend({
       features: (state: any) => state.features.features,
       items: (state: any) => state.items.items,
     }),
+    todoCount(this: any) {
+      return this.itemList.filter((item: any) => item.status === 'todo').length;
+    },
+    progressCount(this: any) {
+      return this.itemList.filter((item: any) => item.status === 'inProgress').length;
+    },
+    completedCount(this: any) {
+      return this.itemList.filter((item: any) => item.status === 'completed').length;
+    },
+    closedCount(this: any) {
+      return this.itemList.filter((item: any) => item.status === 'closed').length;
+    },
+    statuses(this: any) {
+      return [{
+        title: 'Todo',
+        count: this.todoCount,
+        color: '#208ce1',
+      }, {
+        title: 'In Progress',
+        count: this.progressCount,
+        color: '#fcdc04',
+      }, {
+        title: 'Completed',
+        count: this.completedCount,
+        color: '#42b983',
+      }, {
+        title: 'Closed',
+        count: this.closedCount,
+        color: '#844CD3',
+      }];
+    },
   },
 
   methods: {
@@ -100,7 +136,7 @@ export default Vue.extend({
   }
 
   &_board {
-    padding: 2rem;
+    padding: 1rem 2rem 2rem;
   }
 }
 </style>

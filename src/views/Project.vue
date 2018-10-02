@@ -8,16 +8,16 @@
       <activity />
     </div>
     <div class="project_container" v-if="filter === 'board'">
-      <board />
+      <board :item-list="boardList" />
     </div>
     <div class="project_container" v-if="filter === 'features'">
-      <items :itemList="featureList" />
+      <items :item-list="featureList" />
     </div>
     <div class="project_container" v-if="filter === 'items'">
-      <items :itemList="itemList" />
+      <items :item-list="itemList" />
     </div>
     <div class="project_container" v-if="filter === 'members'">
-      <project-board />
+      <board />
     </div>
   </div>
 </template>
@@ -28,7 +28,6 @@ import { mapState } from 'vuex';
 import Activity from '@/components/Activity.vue';
 import Board from '@/components/Board.vue';
 import Items from '@/components/Items.vue';
-import ProjectBoard from '@/components/ProjectBoard.vue';
 import ProjectDetails from '@/components/ProjectDetails.vue';
 import Sidebar from '@/components/Sidebar.vue';
 import { Feature, Item, Project } from '@/types';
@@ -40,7 +39,6 @@ export default Vue.extend({
     Activity,
     Board,
     Items,
-    ProjectBoard,
     ProjectDetails,
     Sidebar,
   },
@@ -73,6 +71,12 @@ export default Vue.extend({
     },
     itemList(this: any) {
       return this.items.filter((item: Item) => item.projectId === this.id);
+    },
+    boardList(this: any) {
+      const list: any[] = [];
+      const features = this.features.filter((feature: Feature) => feature.projectId === this.id);
+      const items = this.items.filter((item: Item) => item.projectId === this.id);
+      return list.concat(features, items);
     },
   },
 
