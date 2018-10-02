@@ -40,6 +40,10 @@ export default Vue.extend({
   &_title {
     color: @madison;
 
+    @media only screen and (max-width: 840px) {
+      font-size: 0.9rem;
+    }
+
     @media only screen and (max-width: 640px) {
       display: none;
     }
@@ -48,6 +52,10 @@ export default Vue.extend({
   &_count {
     color: @madison;
     padding: 0 0.5rem;
+
+    @media only screen and (max-width: 840px) {
+      font-size: 0.9rem;
+    }
 
     @media only screen and (max-width: 640px) {
       display: none;

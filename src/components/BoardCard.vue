@@ -70,10 +70,18 @@ export default Vue.extend({
   color: @madison;
   display: flex;
   flex-direction: column;
-  height: 5rem;
+  height: 8rem;
   justify-content: center;
   margin-top: -1px; // border collapse
   padding: 1rem 0 1rem 0;
+
+  @media only screen and (max-width: 930px) {
+    height: 12rem;
+  }
+
+  @media only screen and (max-width: 640px) {
+    height: 5rem;
+  }
 
   &_title,
   &_user {
@@ -127,7 +135,6 @@ export default Vue.extend({
 
   &_user-name {
     margin: 0;
-    line-height: 2rem;
   }
 }
 </style>

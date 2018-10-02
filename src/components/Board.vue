@@ -5,11 +5,11 @@
       <board-icon />
     </div>
     <div class="board_filters">
-      Filters
+      <board-filters :filters="filters" :on-click="sort" />
     </div>
     <div class="board_board">
       <board-status-header :statuses="statuses" />
-      <board-grid :item-list="itemList" />
+      <board-grid :item-list="sorted" />
     </div>
   </div>
 </template>
@@ -17,15 +17,17 @@
 <script lang="ts">
 import Vue from 'vue';
 import {mapActions, mapGetters, mapState, mapMutations} from 'vuex';
+import BoardFilters from './BoardFilters.vue';
 import BoardGrid from './BoardGrid.vue';
 import BoardIcon from './BoardIcon.vue';
 import BoardStatusHeader from './BoardStatusHeader.vue';
-import { Feature, Item } from '@/types';
+import { Feature, Item, RootState } from '@/types';
 
 export default Vue.extend({
   name: 'Board',
 
   components: {
+    BoardFilters,
     BoardGrid,
     BoardIcon,
     BoardStatusHeader,
@@ -39,18 +41,31 @@ export default Vue.extend({
 
   data: () => ({
     filter: '',
+    filters: [],
     itemId: '',
     currentItem: {} as Feature | Item,
+    sorted: [],
   }),
 
   created(this: any) {
     this.filter = this.$route.query.filter;
     this.itemId = this.$route.query.id;
+    this.sorted = this.itemList;
     this.getItem();
+
+    this.filters = [
+      'Blocker',
+      'Critical',
+      'Major',
+      'Minor',
+      'Only My Items',
+      'Recently Updated',
+    ];
   },
 
   computed: {
     ...mapState({
+      currentUser: (state: RootState) => state.currentUser,
       features: (state: any) => state.features.features,
       items: (state: any) => state.items.items,
     }),
@@ -102,6 +117,31 @@ export default Vue.extend({
     close(this: any) {
       this.$router.push({ path: this.$route.path, query: { filter: this.filter }});
     },
+    sort(this: any, filter: string) {
+      switch (filter) {
+        case 'Blocker':
+          this.sorted = this.itemList.filter((item: any) => item.priority === 'blocker');
+          break;
+        case 'Critical':
+          this.sorted = this.itemList.filter((item: any) => item.priority === 'critical');
+          break;
+        case 'Major':
+          this.sorted = this.itemList.filter((item: any) => item.priority === 'major');
+          break;
+        case 'Minor':
+          this.sorted = this.itemList.filter((item: any) => item.priority === 'minor');
+          break;
+        case 'Only My Items':
+          this.sorted = this.itemList.filter((item: any) => item.assignee.id === this.currentUser.id);
+          break;
+        case 'Recently Updated':
+          this.sorted = this.itemList.sort((item1: any, item2: any) => item2.updatedDate - item1.updatedDate);
+          break;
+        default:
+          this.sorted = this.itemList;
+          break;
+      }
+    },
   },
 
   watch: {
@@ -132,11 +172,11 @@ export default Vue.extend({
   }
 
   &_filters {
-    padding: 2rem;
+    padding: 1rem 2rem 0;
   }
 
   &_board {
-    padding: 1rem 2rem 2rem;
+    padding: 0 2rem 2rem;
   }
 }
 </style>
