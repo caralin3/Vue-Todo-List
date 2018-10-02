@@ -19,8 +19,8 @@ export interface FirebaseComment {
   itemId?: string;
   startDate: Date;
   text: string;
-  updatedDate?: Date;
-  userId: string;
+  updatedDate: Date;
+  user: User;
 }
 
 export interface Comment {
@@ -29,8 +29,8 @@ export interface Comment {
   itemId?: string;
   startDate: Date;
   text: string;
-  updatedDate?: Date;
-  userId: string;
+  updatedDate: Date;
+  user: User;
 }
 
 export interface FirebaseLink {

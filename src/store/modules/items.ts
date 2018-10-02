@@ -1,8 +1,8 @@
 import { GetterTree, MutationTree, ActionTree } from 'vuex';
 import * as firebase from 'firebase';
 import * as fb from '@/firebase';
-import { Item } from '@/types';
 import { MutationType } from '@/store/mutation-types';
+import { Item } from '@/types';
 
 export interface ItemState {
   items: Item[];

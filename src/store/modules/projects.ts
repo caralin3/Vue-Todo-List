@@ -1,7 +1,7 @@
 import { GetterTree, MutationTree, ActionTree } from 'vuex';
 import * as fb from '@/firebase';
-import { Project } from '@/types';
 import { MutationType } from '@/store/mutation-types';
+import { Project } from '@/types';
 
 export interface ProjectState {
   projects: Project[];

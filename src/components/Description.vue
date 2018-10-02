@@ -39,6 +39,7 @@ export default Vue.extend({
 @import '../less/variables.less';
 
 .description {
+  color: @madison;
   padding: 1rem 1rem 0;
 
   &_title {

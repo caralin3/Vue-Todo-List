@@ -121,7 +121,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import { mapActions, mapState } from 'vuex';
+import { mapActions } from 'vuex';
 import PriorityIcon from './PriorityIcon.vue';
 import SelectInput from './SelectInput.vue';
 import SelectUserInput from './SelectUserInput.vue';
@@ -178,13 +178,6 @@ export default Vue.extend({
   created(this: any) {
     this.filter = this.$route.query.filter;
     this.update = this.item;
-  },
-
-  computed: {
-    ...mapState({
-      features: (state: any) => state.features.features,
-      items: (state: any) => state.items.items,
-    }),
   },
 
   methods: {
@@ -247,7 +240,15 @@ export default Vue.extend({
     },
     status(this: any) {
       this.edit.status = !this.edit.status;
-      this.update = {
+      this.update = this.status === 'completed' ?
+      {
+        ...this.update,
+        endDate: new Date().toString(),
+        startDate: new Date(this.update.startDate).toString(),
+        status: this.status,
+        updatedDate: new Date().toString(),
+      }
+      : {
         ...this.update,
         startDate: new Date(this.update.startDate).toString(),
         status: this.status,
@@ -263,6 +264,7 @@ export default Vue.extend({
 @import '../less/variables.less';
 
 .detailsData {
+  color: @madison;
   padding: 1rem;
 
   &_title {

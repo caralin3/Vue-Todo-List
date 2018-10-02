@@ -1,8 +1,8 @@
 import { GetterTree, MutationTree, ActionTree } from 'vuex';
 import * as firebase from 'firebase';
 import * as fb from '@/firebase';
-import { Link } from '@/types';
 import { MutationType } from '@/store/mutation-types';
+import { Link } from '@/types';
 
 export interface LinkState {
   links: Link[];
@@ -112,7 +112,7 @@ const actions: ActionTree<LinkState, any> = {
     commit(MutationType.REMOVE_ALL_LINKS);
   },
   setLinks: ({commit}, link: Link): any => {
-    commit(MutationType.SET_FEATURES, link);
+    commit(MutationType.SET_LINKS, link);
   },
 };
 

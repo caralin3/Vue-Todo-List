@@ -12,7 +12,8 @@ export const Comment1: Comment = {
   startDate: new Date(),
   text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, \
     sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-  userId: '0',
+  updatedDate: new Date(),
+  user: User1,
 };
 
 export const Comment2: Comment = {
@@ -20,7 +21,8 @@ export const Comment2: Comment = {
   startDate: new Date(),
   text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, \
     sed do eiusmod tempor incididunt.',
-  userId: '0',
+  updatedDate: new Date(),
+  user: User1,
 };
 
 export const Link1: Link = {

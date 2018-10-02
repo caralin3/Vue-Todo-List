@@ -27,7 +27,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import { mapActions, mapState } from 'vuex';
+import { mapActions } from 'vuex';
 import AddButton from './AddButton.vue';
 import AddLinkDialog from './AddLinkDialog.vue';
 import EditButton from './EditButton.vue';
@@ -64,8 +64,8 @@ export default Vue.extend({
     handleLinkChange(this: any, value: string, link: Link) {
       this.updatedLink = {
         featureId: link.featureId || '',
-        itemId: link.itemId || '',
         id: link.id,
+        itemId: link.itemId || '',
         startDate: new Date(link.startDate).toString(),
         to: value,
         updatedDate: new Date().toString(),

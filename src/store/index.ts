@@ -120,24 +120,24 @@ fb.auth.onAuthStateChanged((user: any) => {
     });
 
     // realtime updates for comments collection
-    // fb.commentsCollection.orderBy('startDate', 'asc').onSnapshot((querySnapshot: any) => {
-    //   if (querySnapshot.docChanges().length === querySnapshot.docs.length) {
-    //     const commentList: Item[] = [];
+    fb.commentsCollection.orderBy('startDate', 'asc').onSnapshot((querySnapshot: any) => {
+      if (querySnapshot.docChanges().length === querySnapshot.docs.length) {
+        const commentList: Item[] = [];
 
-    //     querySnapshot.forEach((doc: any) => {
-    //       const comment = doc.data();
-    //       comment.startDate = new Date(doc.data().startDate);
-    //       comment.updatedDate = new Date(doc.data().updatedDate);
-    //       if (comment.endDate) {
-    //         comment.endDate = new Date(doc.data().endDate.toString());
-    //       }
-    //       comment.id = doc.id;
-    //       commentList.push(comment);
-    //     });
+        querySnapshot.forEach((doc: any) => {
+          const comment = doc.data();
+          comment.startDate = new Date(doc.data().startDate);
+          comment.updatedDate = new Date(doc.data().updatedDate);
+          if (comment.endDate) {
+            comment.endDate = new Date(doc.data().endDate.toString());
+          }
+          comment.id = doc.id;
+          commentList.push(comment);
+        });
 
-    //     store.commit('comments/' + MutationType.SET_COMMENTS, commentList);
-    //   }
-    // });
+        store.commit('comments/' + MutationType.SET_COMMENTS, commentList);
+      }
+    });
   }
 });
 

@@ -10,6 +10,7 @@
     </div>
     <div class="items_details" :class="{'items_details-open': itemId}" v-if="itemId">
       <item-details
+        :comments="featureComments"
         :feature="feature"
         :featureItems="featureItems"
         :item="currentItem"
@@ -27,7 +28,7 @@ import FeatureIcon from './FeatureIcon.vue';
 import ItemDetails from '@/components/ItemDetails.vue';
 import ItemIcon from './ItemIcon.vue';
 import ItemList from '@/components/ItemList.vue';
-import { Feature, Item, Link } from '@/types';
+import { Comment, Feature, Item, Link } from '@/types';
 
 export default Vue.extend({
   name: 'Items',
@@ -62,6 +63,7 @@ export default Vue.extend({
 
   computed: {
     ...mapState({
+      comments: (state: any) => state.comments.comments,
       features: (state: any) => state.features.features,
       items: (state: any) => state.items.items,
       links: (state: any) => state.links.links,
@@ -72,6 +74,15 @@ export default Vue.extend({
           return this.links.filter((l: Link) => l.featureId === this.currentItem.id);
         } else if (this.filter === 'items') {
           return this.links.filter((l: Link) => l.itemId === this.currentItem.id);
+        }
+      }
+    },
+    featureComments(this: any) {
+      if (this.itemId) {
+        if (this.filter === 'features') {
+          return this.comments.filter((c: Comment) => c.featureId === this.currentItem.id);
+        } else if (this.filter === 'items') {
+          return this.comments.filter((c: Comment) => c.itemId === this.currentItem.id);
         }
       }
     },

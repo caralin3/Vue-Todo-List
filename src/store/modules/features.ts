@@ -1,8 +1,8 @@
 import { GetterTree, MutationTree, ActionTree } from 'vuex';
 import * as firebase from 'firebase';
 import * as fb from '@/firebase';
-import { Feature } from '@/types';
 import { MutationType } from '@/store/mutation-types';
+import { Feature } from '@/types';
 
 export interface FeatureState {
   features: Feature[];

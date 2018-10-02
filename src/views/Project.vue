@@ -1,6 +1,9 @@
 <template>
   <div class="project">
     <sidebar :title="projectTitle" />
+    <div class="project_container" v-if="filter === 'overview'">
+      <project-details :proj="project" />
+    </div>
     <div class="project_container" v-if="filter === 'activity'">
       <activity />
     </div>
@@ -16,9 +19,6 @@
     <div class="project_container" v-if="filter === 'members'">
       <project-board />
     </div>
-    <div class="project_container" v-if="!filter">
-      <project-details />
-    </div>
   </div>
 </template>
 
@@ -31,7 +31,7 @@ import Items from '@/components/Items.vue';
 import ProjectBoard from '@/components/ProjectBoard.vue';
 import ProjectDetails from '@/components/ProjectDetails.vue';
 import Sidebar from '@/components/Sidebar.vue';
-import { Feature, Item } from '@/types';
+import { Feature, Item, Project } from '@/types';
 
 export default Vue.extend({
   name: 'Project',
@@ -61,8 +61,11 @@ export default Vue.extend({
       items: (state: any) => state.items.items,
       projects: (state: any) => state.projects.projects,
     }),
+    project(this: any) {
+      return this.projects.filter((proj: Project) => proj.id === this.id)[0];
+    },
     projectTitle(this: any) {
-      const project = this.projects.filter((proj: any) => proj.id === this.id)[0];
+      const project = this.projects.filter((proj: Project) => proj.id === this.id)[0];
       return this.title = project.title;
     },
     featureList(this: any) {

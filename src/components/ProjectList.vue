@@ -3,7 +3,7 @@
     <ul class="projectList_list" v-for="(proj, index) in projects" v-bind:key="index">
       <li class="projectItem">
         <div class="projectItem_overlay">
-          <router-link class="projectItem_link" :to="{path: '/projects/' + proj.id, query: { filter: 'activity'}}">View Project</router-link>
+          <router-link class="projectItem_link" :to="{path: '/projects/' + proj.id, query: { filter: 'overview'}}">View Project</router-link>
         </div>
         <div class="projectItem_details">
           <div class="projectItem_header">

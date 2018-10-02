@@ -11,7 +11,7 @@
       <h5 class="listItem_date">{{ new Date(item.updatedDate) | shortDate }}</h5>
     </div>
     <div class="listItem_body">
-      <p class="listItem_description">{{ item.description | shortDescription }}</p>
+      <p class="listItem_description" v-if="!$route.query.id">{{ item.description | shortDescription }}</p>
       <p class="listItem_description-mobile">{{ item.description | shortestDescription }}</p>
       <span class="listItem_row">
         <span class="listItem_row">
@@ -67,7 +67,6 @@ export default Vue.extend({
 .listItem {
   align-items: flex-start;
   border-bottom: 1px solid @very-light-gray;
-  // box-shadow: 1px 2px 2px rgba(114, 113, 113, 0.3);
   display: flex;
   flex-direction: column;
   justify-content: center;

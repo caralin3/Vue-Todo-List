@@ -8,6 +8,14 @@
     </div>
     <div class="sidebar_nav" :class="{'sidebar_active': active}">
       <router-link
+        :class="{'sidebar_nav-active': filter === 'overview'}"
+        :to="{ path: this.$route.path, query: { filter: 'overview'}}"
+      >
+        <span :class="{'sidebar_nav-active-text': filter === 'overview'}">
+          Overview
+        </span>
+      </router-link>
+      <router-link
         :class="{'sidebar_nav-active': filter === 'activity'}"
         :to="{ path: this.$route.path, query: { filter: 'activity'}}"
       >

@@ -46,6 +46,9 @@ export default Vue.extend({
   },
 
   props: {
+    comments: {
+      type: Array,
+    },
     featureItems: {
       type: Array,
     },
@@ -61,7 +64,6 @@ export default Vue.extend({
 
   data: () => ({
     filter: '',
-    comments: [Comment1, Comment2] as Comment[],
     update: {} as Feature | Item,
   }),
 

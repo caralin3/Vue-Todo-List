@@ -1,8 +1,9 @@
 <template>
   <div class="comments">
+    <add-comment-dialog v-if="show" :toggle-dialog="toggleDialog" />
     <div class="comments_header">
       <h3 class="comments_title">Comments</h3>
-      <add-button :onClick="() => null" />
+      <add-button :onClick="toggleDialog" />
     </div>
     <div class="comments_container" v-if="comments && comments.length > 0">
       <div class="comments_details" v-for="comment in comments" :key="comment.id">
@@ -11,20 +12,36 @@
           <span class="comments_username">
             {{ comment.user | name }}
           </span>
-          commented on
+          <span 
+            v-if="new Date(comment.startDate).toString() === new Date(comment.updatedDate).toString()"
+          >
+            commented on
+          </span>
         </span>
-        <span class="comments_date">
+        <span 
+          class="comments_date" 
+          v-if="new Date(comment.startDate).toString() === new Date(comment.updatedDate).toString()"
+        >
           {{ new Date(comment.startDate) | date }}
           {{ new Date(comment.startDate) | time }}
         </span>
-        <span v-if="updatedComment.updatedDate || comment.updatedDate">
-            updated on
+        <span v-if="new Date(comment.startDate).toString() !== new Date(comment.updatedDate).toString()
+          && (updatedComment.updatedDate || comment.updatedDate)">
+            edited on
         </span>
-        <span class="comments_date" v-if="updatedComment.updatedDate && !comment.updatedDate">
+        <span
+          class="comments_date" 
+          v-if="new Date(comment.startDate).toString() !== new Date(comment.updatedDate).toString() &&
+          (updatedComment.updatedDate && !comment.updatedDate)"
+        >
           {{ new Date(updatedComment.updatedDate) | date }}
           {{ new Date(updatedComment.updatedDate) | time }}
         </span>
-        <span class="comments_date" v-if="updatedComment.updatedDate || comment.updatedDate">
+        <span
+          class="comments_date"
+          v-if="new Date(comment.startDate).toString() !== new Date(comment.updatedDate).toString() &&
+          (updatedComment.updatedDate || comment.updatedDate)"
+        >
           {{ new Date(comment.updatedDate) | date }}
           {{ new Date(comment.updatedDate) | time }}
         </span>
@@ -45,7 +62,9 @@
 
 <script lang="ts">
 import Vue from 'vue';
+import { mapActions } from 'vuex';
 import AddButton from './AddButton.vue';
+import AddCommentDialog from './AddCommentDialog.vue';
 import { Comment } from '@/types';
 
 export default Vue.extend({
@@ -53,6 +72,7 @@ export default Vue.extend({
 
   components: {
     AddButton,
+    AddCommentDialog,
   },
 
   props: {
@@ -62,20 +82,33 @@ export default Vue.extend({
   },
 
   data: () => ({
+    show: false,
+    showStart: false,
     updatedComment: {} as Comment,
   }),
 
+  created(this: any) {
+    this.showStart = this.comments[1].startDate.toString() === this.comments[1].updatedDate.toString();
+  },
+
   methods: {
+    ...mapActions({
+      editComment: 'comments/editComment',
+    }),
     handleCommentChange(this: any, value: string, comm: Comment) {
-      console.log(value);
-      // this.updatedComment = {
-      //   id: comm.id,
-      //   startDate: comm.startDate.toString(),
-      //   text: value,
-      //   updatedDate: new Date().toString(),
-      //   user: comm.user,
-      // };
-      // this.editComment(this.updatedComment);
+      this.updatedComment = {
+        featureId: comm.featureId || '',
+        id: comm.id,
+        itemId: comm.itemId || '',
+        startDate: comm.startDate.toString(),
+        text: value,
+        updatedDate: new Date().toString(),
+        user: comm.user,
+      };
+      this.editComment(this.updatedComment);
+    },
+    toggleDialog(this: any) {
+      this.show = !this.show;
     },
   },
 });
