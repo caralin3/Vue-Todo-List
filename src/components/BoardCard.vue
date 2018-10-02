@@ -5,10 +5,10 @@
     @dragstart="dragStart($event, item.id)"
   >
     <div class="boardCard_title">
-      <bug-icon v-if="itemType === 'items' && item.type === 'bug'" />
-      <component-icon v-if="itemType === 'items' && item.type === 'component'" />
-      <feature-icon v-if="itemType === 'features'" />
-      <task-icon v-if="itemType === 'items' && item.type === 'task'" />
+      <bug-icon class="boardCard_icon" v-if="itemType === 'items' && item.type === 'bug'" />
+      <component-icon class="boardCard_icon" v-if="itemType === 'items' && item.type === 'component'" />
+      <feature-icon class="boardCard_icon" v-if="itemType === 'features'" />
+      <task-icon class="boardCard_icon" v-if="itemType === 'items' && item.type === 'task'" />
       <a class="boardCard_link" :href="`${$route.path}?filter=${itemType}&id=${item.id}`">
         {{ item.title }}
       </a>
@@ -70,19 +70,28 @@ export default Vue.extend({
   color: @madison;
   display: flex;
   flex-direction: column;
+  height: 5rem;
   justify-content: center;
   margin-top: -1px; // border collapse
-  max-width: 15rem;
   padding: 1rem 0 1rem 0;
 
   &_title,
   &_user {
     align-items: center;
     display: flex;
+
+    @media only screen and (max-width: 640px) {
+      flex-direction: column;
+    }
   }
 
   &_link {
     color: @madison;
+
+    @media only screen and (max-width: 640px) {
+      font-size: 100%;
+      padding: 0.5rem;
+    }
 
     &:hover {
       color: darken(@medium-sea-green, 10%);
@@ -93,6 +102,11 @@ export default Vue.extend({
   &_description {
     align-items: flex-start;
     display: flex;
+    padding-right: 1rem;
+
+    @media only screen and (max-width: 640px) {
+      display: none;
+    }
   }
 
   &_priorityIcon {
@@ -101,6 +115,10 @@ export default Vue.extend({
 
   &_user {
     padding-left: 1rem;
+
+    @media only screen and (max-width: 640px) {
+      display: none;
+    }
 
     &-icon {
       padding-right: 1rem;

@@ -29,16 +29,30 @@ export default Vue.extend({
 @import '../less/variables.less';
 
 .boardStatusTitle {
+  align-items: center;
   border-bottom: 3px solid;
   display: flex;
 
+  @media only screen and (max-width: 640px) {
+    border-bottom: 2rem solid;
+  }
+
   &_title {
     color: @madison;
+
+    @media only screen and (max-width: 640px) {
+      display: none;
+    }
   }
   
   &_count {
     color: @madison;
     padding: 0 0.5rem;
+
+    @media only screen and (max-width: 640px) {
+      display: none;
+      // font-size: 0.8rem;
+    }
   }
 }
 </style>

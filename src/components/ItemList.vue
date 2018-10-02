@@ -114,9 +114,7 @@ export default Vue.extend({
     align-items: center;
     display: flex;
     justify-content: space-between;
-    // background-color: @medium-sea-green;
     border: 1px solid @very-light-gray;
-    // box-shadow: 2px 2px 5px rgba(114, 113, 113, 0.3);
     padding: 0.5rem 1rem;
 
     &-button {

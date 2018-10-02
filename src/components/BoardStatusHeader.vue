@@ -32,8 +32,10 @@ export default Vue.extend({
   display: grid;
   gap: 2rem;
   grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(auto-fill, 1fr);
-  padding: 1rem 0;
+
+  @media only screen and (max-width: 640px) {
+    gap: 0.5rem;
+  }
 }
 </style>
 
