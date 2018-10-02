@@ -9,7 +9,7 @@
     </div>
     <div class="board_board">
       <board-status-header :statuses="statuses" />
-      <board-grid :item-list="sorted" />
+      <board-grid :item-list="itemList" />
     </div>
   </div>
 </template>
@@ -80,6 +80,12 @@ export default Vue.extend({
     },
     closedCount(this: any) {
       return this.itemList.filter((item: any) => item.status === 'closed').length;
+    },
+    blockers(this: any) {
+      this.itemList.filter((item: any) => item.priority === 'blocker');
+    },
+    critical(this: any) {
+      this.itemList.filter((item: any) => item.priority === 'critical');
     },
     statuses(this: any) {
       return [{
