@@ -4,7 +4,6 @@
       <h1 class="projectsHeader_title">Projects</h1>
       <h2 class="projectsHeader_count">({{ projectCount }})</h2>
     </div>
-    <!-- <button type="button" v-on:click="removeProject()">+</button> -->
     <button class="projectsHeader_button" type="button" v-on:click="showDialog">New Project</button>
   </div>
 </template>

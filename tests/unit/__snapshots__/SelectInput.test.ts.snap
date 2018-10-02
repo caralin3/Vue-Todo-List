@@ -24,7 +24,7 @@ exports[`SelectInput renders the correct markup 1`] = `
   </label>
    
   <select
-    class="selectInput_input"
+    class="undefined_input"
     defaultvalue="Selected Value"
     id="Label"
   >
