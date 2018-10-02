@@ -47,14 +47,6 @@
           Items
         </span>
       </router-link>
-      <router-link
-        :class="{'sidebar_nav-active': filter === 'members'}"
-        :to="{ path: this.$route.path, query: { filter: 'members'}}"
-      >
-        <span :class="{'sidebar_nav-active-text': filter === 'members'}">
-          Team Members
-        </span>
-      </router-link>
     </div>
   </div>
 </template>
