@@ -9,7 +9,15 @@
     </div>
     <div class="board_board">
       <board-status-header :statuses="statuses" />
-      <board-grid :item-list="itemList" />
+      <board-grid
+        :item-list="sortBy === 'Blocker' ? blockers :
+        sortBy === 'Critical' ? critical :
+        sortBy === 'Major' ? major :
+        sortBy === 'Minor' ? minor :
+        sortBy === 'Only My Items' ? myItems :
+        sortBy === 'Recently Updared' ? recentItems :
+        itemList"
+      />
     </div>
   </div>
 </template>
@@ -45,6 +53,7 @@ export default Vue.extend({
     itemId: '',
     currentItem: {} as Feature | Item,
     sorted: [],
+    sortBy: '',
   }),
 
   created(this: any) {
@@ -82,10 +91,22 @@ export default Vue.extend({
       return this.itemList.filter((item: any) => item.status === 'closed').length;
     },
     blockers(this: any) {
-      this.itemList.filter((item: any) => item.priority === 'blocker');
+      return this.itemList.filter((item: any) => item.priority === 'blocker');
     },
     critical(this: any) {
-      this.itemList.filter((item: any) => item.priority === 'critical');
+      return this.itemList.filter((item: any) => item.priority === 'critical');
+    },
+    major(this: any) {
+      return this.itemList.filter((item: any) => item.priority === 'major');
+    },
+    minor(this: any) {
+      return this.itemList.filter((item: any) => item.priority === 'minor');
+    },
+    myItems(this: any) {
+      return this.itemList.filter((item: any) => item.assignee.id === this.currentUser.id);
+    },
+    recentItems(this: any) {
+      return this.itemList.sort((item1: any, item2: any) => item2.updatedDate - item1.updatedDate);
     },
     statuses(this: any) {
       return [{
@@ -124,29 +145,7 @@ export default Vue.extend({
       this.$router.push({ path: this.$route.path, query: { filter: this.filter }});
     },
     sort(this: any, filter: string) {
-      switch (filter) {
-        case 'Blocker':
-          this.sorted = this.itemList.filter((item: any) => item.priority === 'blocker');
-          break;
-        case 'Critical':
-          this.sorted = this.itemList.filter((item: any) => item.priority === 'critical');
-          break;
-        case 'Major':
-          this.sorted = this.itemList.filter((item: any) => item.priority === 'major');
-          break;
-        case 'Minor':
-          this.sorted = this.itemList.filter((item: any) => item.priority === 'minor');
-          break;
-        case 'Only My Items':
-          this.sorted = this.itemList.filter((item: any) => item.assignee.id === this.currentUser.id);
-          break;
-        case 'Recently Updated':
-          this.sorted = this.itemList.sort((item1: any, item2: any) => item2.updatedDate - item1.updatedDate);
-          break;
-        default:
-          this.sorted = this.itemList;
-          break;
-      }
+      this.sortBy = filter;
     },
   },
 
