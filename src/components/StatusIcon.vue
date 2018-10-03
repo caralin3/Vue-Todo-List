@@ -31,6 +31,12 @@ export default Vue.extend({
   padding-right: 0.3rem;
 }
 
+.testing {
+  color: orange;
+  font-size: 0.7rem;
+  padding-right: 0.3rem;
+}
+
 .completed {
   color: @medium-sea-green;
   font-size: 0.7rem;
