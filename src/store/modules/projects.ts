@@ -18,10 +18,7 @@ const actions: ActionTree<ProjectState, any> = {
       fb.projectsCollection.where('startDate', '<=', new Date().toString())
         .orderBy('startDate', 'desc').get()
         .then((querySnapshot: any) => {
-          console.log(querySnapshot.docs.length);
-          console.log(querySnapshot.docs);
           newProj = querySnapshot.docs[0].data();
-          console.log(newProj);
           newProj.startDate = new Date(querySnapshot.docs[0].data().startDate);
           newProj.updatedDate = new Date(querySnapshot.docs[0].data().updatedDate);
           if (newProj.endDate) {
@@ -31,7 +28,6 @@ const actions: ActionTree<ProjectState, any> = {
           fb.projectsCollection.get().then((snap: any) => {
             const length = snap.size;
             if (length > 1) {
-              console.log(newProj);
               commit(MutationType.ADD_PROJECT, newProj);
             }
           });

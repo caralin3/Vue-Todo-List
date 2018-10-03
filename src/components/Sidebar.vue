@@ -15,14 +15,14 @@
           Overview
         </span>
       </router-link>
-      <router-link
+      <!-- <router-link
         :class="{'sidebar_nav-active': filter === 'activity'}"
         :to="{ path: this.$route.path, query: { filter: 'activity'}}"
       >
         <span :class="{'sidebar_nav-active-text': filter === 'activity'}">
           Activity
         </span>
-      </router-link>
+      </router-link> -->
       <router-link
         :class="{'sidebar_nav-active': filter === 'board'}"
         :to="{ path: this.$route.path, query: { filter: 'board'}}"

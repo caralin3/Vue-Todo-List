@@ -8,16 +8,16 @@
         <div class="projectItem_details">
           <div class="projectItem_header">
             <h3 class="projectItem_title">{{ proj.title }}</h3>
-            <span class="projectItem_status">Status: {{ proj.status | capitalize }}</span>
+            <span class="projectItem_status"><strong>Status:</strong> {{ proj.status | capitalize }}</span>
           </div>
           <div class="projectItem_created">
-            <span class="projectItem_by">Created by: {{ proj.creator | name }}</span>
-            <span class="projectItem_date">Created: {{ new Date(proj.startDate) | date }}</span>
+            <span class="projectItem_by"><strong>Created by:</strong> {{ proj.creator | name }}</span>
+            <span class="projectItem_date"><strong>Created:</strong> {{ new Date(proj.startDate) | date }}</span>
           </div>
           <p class="projectItem_description" v-if="proj.description !== ''">{{ proj.description }}</p>
           <p class="projectItem_description" v-else>No description</p>
           <div class="projectItem_update">
-            Last Updated:
+            <strong>Last Updated:</strong>
             {{ new Date(proj.updatedDate) | date }} {{ new Date(proj.updatedDate) | time }}
           </div>
         </div>
@@ -29,6 +29,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import {mapActions, mapGetters, mapState, mapMutations} from 'vuex';
+import { Project } from '@/types';
 
 export default Vue.extend({
   name: 'ProjectList',
@@ -55,24 +56,23 @@ export default Vue.extend({
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(auto-fill, 1fr);
   justify-items: center;
-  padding: 1rem 2rem 3rem 0;
+  padding: 1rem 2rem 3rem 1rem;
 
   @media only screen and (max-width: 1200px) {
     padding: 1rem 5rem 3rem 2rem;
   }
 
-  @media only screen and (max-width: 800px) {
+  @media only screen and (max-width: 900px) {
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(auto-fill, 1fr);
-    padding: 1rem 5rem 3rem 2rem;
+    padding: 1rem 3rem 3rem 2rem;
   }
 
-  @media only screen and (max-width: 640px) {
+  @media only screen and (max-width: 660px) {
     align-items: center;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 0 0.5rem 0 0;
   }
 }
 
@@ -84,8 +84,18 @@ export default Vue.extend({
   max-width: 20rem;
   width: 100%;
 
-  @media only screen and (max-width: 760px) {
-    max-width: 15rem;
+  @media only screen and (max-width: 1064px) {
+    height: 15rem;
+  }
+
+  @media only screen and (max-width: 800px) {
+    max-width: 17rem;
+  }
+
+  @media only screen and (max-width: 660px) {
+    margin: 1.5rem auto;
+    height: 15rem;
+    width: 20rem;
   }
 
   &_overlay {
@@ -107,40 +117,52 @@ export default Vue.extend({
   }
 
   &_header,
-  &_created,
-  &_featureDetails {
+  &_created {
     align-items: center;
     display: flex;
     justify-content: space-between;
+
+    @media only screen and (max-width: 640px) {
+      align-items: flex-start;
+      flex-direction: column;
+    }
   }
 
   &_title {
     margin: 0;
+    
+    @media only screen and (max-width: 640px) {
+      align-self: center;
+    }
+  }
+
+  &_status {
+    line-height: 2;
+
+    @media only screen and (max-width: 640px) {
+      padding-top: 0.5rem;
+    }
   }
 
   &_by,
-  &_date {
-    font-size: 0.8rem;
+  &_date, {
+    font-size: 0.9rem;
     line-height: 2;
   }
 
   &_description {
     margin: 0;
-    padding: 0.5rem 0;
-    width: 100%;
+    padding: 1rem 0;
+    
+    @media only screen and (max-width: 640px) {
+      padding: 0.5rem 0;
+    }
   }
 
   &_update {
     font-size: 0.9rem;
     line-height: 2;
     padding: 0.5rem 0 1rem 0;
-  }
-
-  @media only screen and (max-width: 640px) {
-    margin: 1.5rem auto;
-    padding: 1rem;
-    height: 12rem;
-    width: 90%;
   }
 }
 

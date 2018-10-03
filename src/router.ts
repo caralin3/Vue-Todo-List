@@ -11,6 +11,9 @@ const router: any = new Router({
   mode: 'history',
   routes: [
     {
+      path: '*',
+      redirect: '/login',
+    }, {
       path: '/',
       name: 'home',
       component: Home,
@@ -18,9 +21,6 @@ const router: any = new Router({
       path: '/login',
       name: 'login',
       component: Login,
-    }, {
-        path: '*',
-        redirect: '/login',
     }, {
         path: '/forgotPassword',
         name: 'forgotPassword',
@@ -52,8 +52,8 @@ router.beforeEach((to: any, from: any, next: any) => {
 
   if (requiresAuth && !currentUser) {
     next('login');
-  } else if (requiresAuth && currentUser) {
-    next();
+  } else if (!requiresAuth && currentUser) {
+    next('projects');
   } else {
     next();
   }

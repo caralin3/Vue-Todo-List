@@ -26,7 +26,7 @@ import Vue from 'vue';
 import * as fb from '@/firebase';
 import { mapActions } from 'vuex';
 import Description from './Description.vue';
-import DetailsPanel from '@/components/DetailsPanel.vue';
+import DetailsPanel from './DetailsPanel.vue';
 import ProjectDetailsData from './ProjectDetailsData.vue';
 
 export default Vue.extend({

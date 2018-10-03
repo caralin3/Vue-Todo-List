@@ -6,7 +6,7 @@
     <div class="header_nav">
       <router-link v-if="currentUser === null" to="/" :exact="true">Home</router-link>
       <router-link v-if="currentUser !== null" to="/projects">Projects</router-link>
-      <router-link v-if="currentUser !== null" to="/board">Boards</router-link>
+      <!-- <router-link v-if="currentUser !== null" to="/board">Boards</router-link> -->
       <router-link v-if="currentUser === null" class="header_nav-login" to="/login">Log In</router-link>
       <button v-if="currentUser !== null" class="header_nav-logout" @click="onLogOut">Log Out</button>
     </div>

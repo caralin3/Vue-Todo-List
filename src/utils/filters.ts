@@ -69,6 +69,9 @@ Vue.filter('name', (value: User) => {
 
 Vue.filter('capitalize', (value: string) => {
     if (value) {
+      if (value === 'inProgress') {
+        return value.charAt(0).toUpperCase() + value.slice(1, 2) + ' ' + value.slice(2);
+      }
       return value.charAt(0).toUpperCase() + value.slice(1);
     }
 });
