@@ -1,6 +1,6 @@
 <template>
   <div class="projectList">
-    <ul class="projectList_list" v-for="(proj, index) in projects" v-bind:key="index">
+    <ul class="projectList_list" v-for="(proj, index) in myProjects" v-bind:key="index">
       <li class="projectItem">
         <div class="projectItem_overlay">
           <router-link class="projectItem_link" :to="{path: '/projects/' + proj.id, query: { filter: 'overview'}}">View Project</router-link>
@@ -29,18 +29,24 @@
 <script lang="ts">
 import Vue from 'vue';
 import {mapActions, mapGetters, mapState, mapMutations} from 'vuex';
-import { Project } from '@/types';
+import { Project, RootState } from '@/types';
 
 export default Vue.extend({
   name: 'ProjectList',
 
   computed: {
     ...mapState({
+      currentUser: (state: RootState) => state.currentUser,
       projects: (state: any) => state.projects.projects,
     }),
     ...mapGetters('projects', [
       'projectCount',
     ]),
+    myProjects(this: any) {
+      return this.projects.filter((proj: Project) => proj.users
+        .filter((userId: string) => userId === this.currentUser.id)[0])
+        .sort((p1: any, p2: any) => p2.updatedDate - p1.updatedDate);
+    },
   },
 });
 </script>
