@@ -3,9 +3,12 @@
     <span class="home_left">
       <h2 class="home_title">Welcome</h2>
       <p class="home_text">
-        Create Projects, keep track of progress, assign tasks.
+        Create Projects
         <br />
-        Create different features for each project.
+        Keep track of progress
+        <br />
+        Assign tasks
+        <br />
       </p>
     </span>
     <sign-up class="home_signup" />
@@ -52,6 +55,9 @@ export default Vue.extend({
 
   &_text {
     color: @madison;
+    font-size: 1.8rem;
+    line-height: 5rem;
+    padding-left: 5rem;
   }
 
   &_signup {

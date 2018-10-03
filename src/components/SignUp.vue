@@ -35,12 +35,12 @@ export default Vue.extend({
   },
 
   data: () => ({
-    email: String,
+    email: '',
     errorMsg: String,
-    firstName: String,
-    lastName: String,
-    password: String,
-    passwordConfirm: String,
+    firstName: '',
+    lastName: '',
+    password: '',
+    passwordConfirm: '',
     performingRequest: false,
   }),
 
@@ -49,37 +49,49 @@ export default Vue.extend({
       'setCurrentUser',
       'fetchUserProfile',
     ]),
+    isValid(this: any) {
+      return this.firstName &&
+        this.lastName &&
+        this.email &&
+        this.password &&
+        this.passwordConfirm &&
+        this.password === this.passwordConfirm;
+    },
     onSignUp(this: any) {
       this.performingRequest = true;
-      fb.auth.createUserWithEmailAndPassword(this.email, this.password)
-        .then((user: any) => {
-          const currentUser: User = {
-            email: this.email,
-            firstName: this.firstName,
-            id: user.user.uid,
-            lastName: this.lastName,
-          };
-          this.setCurrentUser(currentUser);
-          // create user object
-          fb.usersCollection.doc(user.user.uid).set({
-            firstName: this.firstName,
-            lastName: this.lastName,
-            email: this.email,
-          }).then(() => {
-            this.fetchUserProfile(user);
+      if (this.isValid()) {
+        fb.auth.createUserWithEmailAndPassword(this.email, this.password)
+          .then((user: any) => {
+            const currentUser: User = {
+              email: this.email,
+              firstName: this.firstName,
+              id: user.user.uid,
+              lastName: this.lastName,
+            };
+            this.setCurrentUser(currentUser);
+            // create user object
+            fb.usersCollection.doc(user.user.uid).set({
+              firstName: this.firstName,
+              lastName: this.lastName,
+              email: this.email,
+            }).then(() => {
+              this.fetchUserProfile(user);
+              this.performingRequest = false;
+              this.$router.replace('/projects');
+            }).catch((err: any) => {
+              console.log(err);
+              this.errorMsg = err.message;
+            });
+          },
+          (err: any) => {
+            console.log('Error', err.message);
             this.performingRequest = false;
-            this.$router.replace('/projects');
-          }).catch((err: any) => {
-            console.log(err);
             this.errorMsg = err.message;
-          });
-        },
-        (err: any) => {
-          console.log('Error', err.message);
-          this.performingRequest = false;
-          this.errorMsg = err.message;
-        },
-      );
+          },
+        );
+      } else {
+        console.log('Missing');
+      }
     },
   },
 });
