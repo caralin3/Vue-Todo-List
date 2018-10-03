@@ -1,7 +1,7 @@
 <template>
   <div class="addProject">
     <Dialog title="Create Project" :toggleDialog="dismissDialog">
-      <Form buttonText="Add Project" :toggleDialog="dismissDialog" :submit="onSubmitForm">
+      <Form buttonText="Add Project" :toggleDialog="submitDialog" :submit="onSubmitForm">
         <div class="addProject_dialog">
           <span class="addProject_creatorLabel" :currentUser="currentUser">
             Creator
@@ -14,8 +14,6 @@
             placeholder=""
             v-model="description"
           />
-          <!-- <date-input :class="'addProject_dateInput'" label="Start Date" v-model="startDate" />
-          <date-input :class="'addProject_dateInput'" label="End Date" v-model="endDate" /> -->
           <select-input
             :class="'addProject_selectStatus'"
             label="Status"
@@ -24,7 +22,7 @@
             :onBlur="() => null"
             :onFocus="() => null"
           />
-          <text-input :class="'addProject_textInput'" label="Version" placeholder="" v-model="versionName" />
+          <text-input :class="'addProject_textInput'" label="Version" placeholder="" v-model="version" />
         </div>
       </Form>
     </Dialog>
@@ -69,7 +67,7 @@ export default Vue.extend({
     status: 'todo' as statusType,
     statusOptions,
     title: '',
-    versionName: String,
+    version: '',
   }),
 
   computed: {
@@ -85,20 +83,35 @@ export default Vue.extend({
     dismissDialog(this: any) {
       this.toggleDialog();
     },
+    submitDialog(this: any) {
+      if (this.isValid()) {
+        this.toggleDialog();
+      }
+    },
+    isValid(this: any) {
+      return this.description &&
+        this.status &&
+        this.title &&
+        this.version;
+    },
     onSubmitForm(this: any) {
-      const newProj: FirebaseProject = {
-        creator: this.currentUser,
-        description: this.description,
-        endDate: this.endDate.toString(),
-        features: [],
-        startDate: this.startDate.toString(),
-        status: this.status,
-        title: this.title,
-        updatedDate: this.startDate.toString(),
-        // FIXME: Version adding
-        versions: [this.versionName],
-      };
-      this.addProject(newProj);
+      if (this.isValid()) {
+        const newProj: FirebaseProject = {
+          creator: this.currentUser,
+          description: this.description,
+          endDate: this.endDate.toString(),
+          features: [],
+          startDate: this.startDate.toString(),
+          status: this.status,
+          title: this.title,
+          updatedDate: this.startDate.toString(),
+          users: [this.currentUser.id],
+          version: this.version,
+        };
+        this.addProject(newProj);
+      } else {
+        console.log('Missing');
+      }
     },
   },
 });
@@ -165,29 +178,7 @@ export default Vue.extend({
       grid-template: "label" "input";
       width: 80%;
     }
-  }  
-
-  // &_dateInput {
-  //   display: grid;
-  //   font-weight: bold;
-  //   gap: 1rem;
-  //   grid-template: "label input";
-  
-  //   label {
-  //     grid-area: label;
-  //     width: 10rem;
-  //   }
-  
-  //   input {
-  //     grid-area: input;
-  //   }
-
-  //   @media only screen and (max-width: 640px) {
-  //     gap: 1rem;
-  //     grid-template: "label" "input";
-  //     width: 80%;
-  //   }
-  // }  
+  }
 
   &_selectStatus {
     display: grid;

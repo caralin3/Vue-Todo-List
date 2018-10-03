@@ -29,7 +29,6 @@ import DetailsItems from './DetailsItems.vue';
 import DetailsPanel from '@/components/DetailsPanel.vue';
 import Links from '@/components/Links.vue';
 import { Comment, Link, Feature, Item } from '@/types';
-import { Comment1, Comment2 } from '@/store/state';
 
 export default Vue.extend({
   name: 'ItemDetails',
@@ -82,6 +81,7 @@ export default Vue.extend({
       this.update = {
         ...this.update,
         [type]: value,
+        endDate: '',
         startDate: new Date(this.update.startDate).toString(),
         updatedDate: new Date().toString(),
       };
@@ -90,6 +90,12 @@ export default Vue.extend({
       } else {
         this.editItem(this.update);
       }
+    },
+  },
+
+  watch: {
+    '$route.query.id'(this: any) {
+      this.update = this.item;
     },
   },
 });

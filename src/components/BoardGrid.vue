@@ -14,11 +14,17 @@
     </div>
     <div class="boardGrid_column"
       @dragover="dragOver($event)"
+      @drop="onDrop($event, 'testing')"
+    >
+      <board-column :item-list="testing" />
+    </div>
+    <div class="boardGrid_column"
+      @dragover="dragOver($event)"
       @drop="onDrop($event, 'completed')"
     >
       <board-column :item-list="completed" />
     </div>
-    <div class="boardGrid_column"
+    <div class="boardGrid_column boardGrid_column-closed"
       @dragover="dragOver($event)"
       @drop="onDrop($event, 'closed')"
     >
@@ -58,6 +64,9 @@ export default Vue.extend({
     },
     progress(this: any) {
       return this.itemList.filter((item: any) => item.status === 'inProgress');
+    },
+    testing(this: any) {
+      return this.itemList.filter((item: any) => item.status === 'testing');
     },
     completed(this: any) {
       return this.itemList.filter((item: any) => item.status === 'completed');
@@ -115,15 +124,22 @@ export default Vue.extend({
 .boardGrid {
   display: grid;
   gap: 2rem;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   padding: 1rem 0;
 
   @media only screen and (max-width: 640px) {
+    grid-template-columns: repeat(4, 1fr);
     gap: 0.5rem;
   }
 
   &_column {
     background-color: fade(@medium-sea-green, 20%);
+
+    @media only screen and (max-width: 640px) {
+      &-closed {
+        display: none;
+      }
+    }
   }
 }
 </style>

@@ -47,18 +47,13 @@ export default Vue.extend({
   },
 
   data: () => ({
-    currentItem: {} as Feature | Item,
-    feature: {} as Feature,
     filter: '',
     itemId: '',
-    featureItems: [] as Item[],
   }),
 
   created(this: any) {
     this.filter = this.$route.query.filter;
     this.itemId = this.$route.query.id;
-    this.getItem();
-    this.getFeatureItems();
   },
 
   computed: {
@@ -68,6 +63,27 @@ export default Vue.extend({
       items: (state: any) => state.items.items,
       links: (state: any) => state.links.links,
     }),
+    currentItem(this: any) {
+      if (this.filter === 'features') {
+        if (this.features && this.features.length > 0) {
+          return this.features.filter((feature: Feature) => feature.id === this.itemId)[0];
+        }
+      } else if (this.filter === 'items') {
+        if (this.items && this.items.length > 0) {
+          return this.items.filter((item: Item) => item.id === this.itemId)[0];
+        }
+      }
+    },
+    feature(this: any) {
+      if (this.itemId) {
+        return this.features.filter((f: Feature) => f.id === this.currentItem.featureId)[0];
+      }
+    },
+    featureItems(this: any) {
+      if (this.itemId) {
+        return this.items.filter((i: Item) => i.featureId === this.currentItem.id);
+      }
+    },
     featureLinks(this: any) {
       if (this.itemId) {
         if (this.filter === 'features') {
@@ -89,26 +105,6 @@ export default Vue.extend({
   },
 
   methods: {
-    getFeatureItems(this: any) {
-      if (this.itemId) {
-        if (this.filter === 'features') {
-          this.featureItems = this.items.filter((i: Item) => i.featureId === this.currentItem.id);
-        } else if (this.filter === 'items') {
-          this.feature = this.features.filter((f: Feature) => f.id === this.currentItem.featureId)[0];
-        }
-      }
-    },
-    getItem(this: any) {
-      if (this.filter === 'features') {
-        if (this.features && this.features.length > 0) {
-          this.currentItem = this.features.filter((feature: Feature) => feature.id === this.itemId)[0];
-        }
-      } else if (this.filter === 'items') {
-        if (this.items && this.items.length > 0) {
-          this.currentItem = this.items.filter((item: Item) => item.id === this.itemId)[0];
-        }
-      }
-    },
     close(this: any) {
       this.$router.push({ path: this.$route.path, query: { filter: this.filter }});
     },
@@ -117,8 +113,6 @@ export default Vue.extend({
   watch: {
     '$route.query.id'(this: any) {
       this.itemId = this.$route.query.id;
-      this.getItem();
-      this.getFeatureItems();
     },
     '$route.query.filter'(this: any) {
       this.filter = this.$route.query.filter;

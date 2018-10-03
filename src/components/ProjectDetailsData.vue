@@ -48,11 +48,8 @@
       </div>
       <div class="projectDetailsData_details">
         <span class="projectDetailsData_details-label">Version:</span>
-        <span v-if="proj.version">
-          {{ proj.version.title }}
-        </span>
-        <span v-else>
-          TBD
+        <span>
+          {{ proj.version }}
         </span>
       </div>
       <div class="projectDetailsData_details">
@@ -124,6 +121,7 @@ export default Vue.extend({
       }
       : {
         ...this.update,
+        endDate: '',
         startDate: new Date(this.update.startDate).toString(),
         status: this.status,
         updatedDate: new Date().toString(),

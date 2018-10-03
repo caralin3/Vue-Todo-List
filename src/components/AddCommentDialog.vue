@@ -1,7 +1,7 @@
 <template>
   <div class="addComment">
     <Dialog title="Add Comment" :toggleDialog="dismissDialog">
-      <Form buttonText="Add Comment" :toggleDialog="dismissDialog" :submit="onSubmitForm">
+      <Form buttonText="Add Comment" :toggleDialog="submitDialog" :submit="onSubmitForm">
         <div class="addComment_dialog">
           <text-area-input :class="'addComment_textAreaInput'" label="Comment" placeholder="" v-model="text" />
         </div>
@@ -50,18 +50,29 @@ export default Vue.extend({
     dismissDialog(this: any) {
       this.toggleDialog();
     },
+    submitDialog(this: any) {
+      if (this.isValid()) {
+        this.toggleDialog();
+      }
+    },
+    isValid(this: any) {
+      return this.text;
+    },
     onSubmitForm(this: any) {
       const filter = this.$route.query.filter;
-      const newComment = {
-        featureId: filter === 'features' ? this.$route.query.id : '',
-        itemId: filter === 'items' ? this.$route.query.id : '',
-        startDate: new Date().toString(),
-        text: this.text,
-        user: this.currentUser,
-        updatedDate: new Date().toString(),
-      };
-      console.log(newComment);
-      this.addComment(newComment);
+      if (this.isValid()) {
+        const newComment = {
+          featureId: filter === 'features' ? this.$route.query.id : '',
+          itemId: filter === 'items' ? this.$route.query.id : '',
+          startDate: new Date().toString(),
+          text: this.text,
+          user: this.currentUser,
+          updatedDate: new Date().toString(),
+        };
+        this.addComment(newComment);
+      } else {
+        console.log('Missing');
+      }
     },
   },
 });

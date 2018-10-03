@@ -1,7 +1,7 @@
 <template>
   <div class="addFeature">
     <Dialog title="Add Feature" :toggleDialog="dismissDialog">
-      <Form buttonText="Add Feature" :toggleDialog="dismissDialog" :submit="onSubmitForm">
+      <Form buttonText="Add Feature" :toggleDialog="submitDialog" :submit="onSubmitForm">
         <div class="addFeature_dialog">
           <text-input :class="'addFeature_textInput'" label="Feature Name" placeholder="" v-model="title" />
           <select-user-input
@@ -26,8 +26,6 @@
             placeholder=""
             v-model="description"
           />
-          <!-- <date-input :class="'addFeature_dateInput'" label="Start Date" v-model="startDate" />
-          <date-input :class="'addFeature_dateInput'" label="End Date" v-model="endDate" /> -->
           <select-input
             :class="'addFeature_select'"
             label="Priority"
@@ -60,7 +58,7 @@ import SelectInput from '@/components/SelectInput.vue';
 import SelectUserInput from '@/components/SelectUserInput.vue';
 import TextAreaInput from '@/components/TextAreaInput.vue';
 import TextInput from '@/components/TextInput.vue';
-import { FirebaseFeature, User, statusType, priorityType, Version } from '@/types';
+import { FirebaseFeature, User, statusType, priorityType } from '@/types';
 import { priorityOptions, statusOptions, userOptions } from '@/utils/constants';
 
 export default Vue.extend({
@@ -102,7 +100,7 @@ export default Vue.extend({
     } as User,
     reporterId: '',
     startDate: new Date().toString(),
-    status: 'todo' as statusType,
+    status: 'Select Status' as statusType,
     statusOptions,
     title: '',
     userOptions,
@@ -115,25 +113,37 @@ export default Vue.extend({
     dismissDialog(this: any) {
       this.toggleDialog();
     },
+    submitDialog(this: any) {
+      if (this.isValid()) {
+        this.toggleDialog();
+      }
+    },
+    isValid(this: any) {
+      return this.assigneeId &&
+        this.description &&
+        this.priority !== 'Select Priority' &&
+        this.status !== 'Select Status' &&
+        this.title;
+    },
     onSubmitForm(this: any) {
-      const newFeature: FirebaseFeature = {
-        assignee: this.assignee,
-        description: this.description,
-        endDate: this.endDate,
-        items: [],
-        priority: this.priority,
-        projectId: this.$route.params.id,
-        reporter: this.reporter,
-        startDate: this.startDate.toString(),
-        status: this.status,
-        title: this.title,
-        updatedDate: this.startDate.toString(),
-        // FIXME: Version adding
-        version: {} as Version,
-        // FIXME: Workflow adding
-        workFlow: [],
-      };
-      this.addFeature(newFeature);
+      if (this.isValid()) {
+        const newFeature: FirebaseFeature = {
+          assignee: this.assignee,
+          description: this.description,
+          endDate: this.endDate,
+          items: [],
+          priority: this.priority,
+          projectId: this.$route.params.id,
+          reporter: this.reporter,
+          startDate: this.startDate.toString(),
+          status: this.status,
+          title: this.title,
+          updatedDate: this.startDate.toString(),
+        };
+        this.addFeature(newFeature);
+      } else {
+        console.log('Missing');
+      }
     },
   },
 
@@ -212,30 +222,8 @@ export default Vue.extend({
       grid-template: "label" "input";
       width: 80%;
     }
-  }  
-
-  // &_dateInput {
-  //   display: grid;
-  //   font-weight: bold;
-  //   gap: 1rem;
-  //   grid-template: "label input";
+  }
   
-  //   label {
-  //     grid-area: label;
-  //     width: 10rem;
-  //   }
-  
-  //   input {
-  //     grid-area: input;
-  //   }
-
-  //   @media only screen and (max-width: 640px) {
-  //     gap: 1rem;
-  //     grid-template: "label" "input";
-  //     width: 80%;
-  //   }
-  // }
-
   &_select {
     display: grid;
     font-weight: bold;

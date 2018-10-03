@@ -4,7 +4,7 @@ export interface RootState {
 }
 
 export type itemType = 'bug' | 'task' | 'component';
-export type statusType = 'todo' | 'inProgress' | 'completed' | 'closed';
+export type statusType = 'todo' | 'inProgress' | 'testing' | 'completed' | 'closed';
 export type priorityType = 'minor' | 'major' | 'critical' | 'blocker';
 
 export interface User {
@@ -52,19 +52,6 @@ export interface Link {
   userId: string;
 }
 
-export interface WorkHistory {
-  id: string;
-  startDate: Date;
-  status: statusType;
-}
-
-export interface Version {
-  endDate: Date;
-  id: string;
-  startDate: Date;
-  title: string;
-}
-
 export interface FirebaseItem {
   assignee: User;
   comments?: string[];
@@ -80,8 +67,6 @@ export interface FirebaseItem {
   title: string;
   type: itemType;
   updatedDate: Date;
-  version: Version;
-  workFlow: string[];
 }
 
 export interface Item {
@@ -100,8 +85,6 @@ export interface Item {
   title: string;
   type: itemType;
   updatedDate: Date;
-  version: Version;
-  workFlow: string[];
 }
 
 export interface FirebaseFeature {
@@ -118,8 +101,6 @@ export interface FirebaseFeature {
   status: statusType;
   title: string;
   updatedDate: Date;
-  version: Version;
-  workFlow: string[];
 }
 
 export interface Feature {
@@ -137,8 +118,6 @@ export interface Feature {
   status: statusType;
   title: string;
   updatedDate: Date;
-  version: Version;
-  workFlow: string[];
 }
 
 export interface FirebaseProject {
@@ -152,7 +131,8 @@ export interface FirebaseProject {
   status: statusType;
   title: string;
   updatedDate: Date;
-  versions: string[];
+  users: string[];
+  version: string;
 }
 
 export interface Project {
@@ -167,5 +147,6 @@ export interface Project {
   status: statusType;
   title: string;
   updatedDate: Date;
-  versions: string[];
+  users: string[];
+  version: string;
 }

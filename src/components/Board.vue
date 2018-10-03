@@ -84,6 +84,9 @@ export default Vue.extend({
     progressCount(this: any) {
       return this.itemList.filter((item: any) => item.status === 'inProgress').length;
     },
+    testingCount(this: any) {
+      return this.itemList.filter((item: any) => item.status === 'testing').length;
+    },
     completedCount(this: any) {
       return this.itemList.filter((item: any) => item.status === 'completed').length;
     },
@@ -117,6 +120,10 @@ export default Vue.extend({
         title: 'In Progress',
         count: this.progressCount,
         color: '#fcdc04',
+      }, {
+        title: 'Testing',
+        count: this.testingCount,
+        color: 'orange',
       }, {
         title: 'Completed',
         count: this.completedCount,

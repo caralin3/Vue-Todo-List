@@ -1,5 +1,5 @@
 import * as fb from '@/firebase';
-import { User, Feature, Version } from '@/types';
+import { User, Feature } from '@/types';
 
 export const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
   'July', 'August', 'September', 'October', 'November', 'December',
@@ -50,8 +50,6 @@ export const getFeatureOptions = () => {
     status: 'todo',
     title: 'Select Feature',
     updatedDate: new Date(),
-    version: {} as Version,
-    workFlow: [],
   }];
   fb.featuresCollection.get().then((docs: any) => {
     docs.forEach((doc: any) => {

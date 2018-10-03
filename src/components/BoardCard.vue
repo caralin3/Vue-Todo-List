@@ -75,12 +75,17 @@ export default Vue.extend({
   margin-top: -1px; // border collapse
   padding: 1rem 0 1rem 0;
 
+  &:hover {
+    cursor: grab;
+  }
+
   @media only screen and (max-width: 930px) {
     height: 12rem;
   }
 
   @media only screen and (max-width: 640px) {
-    height: 5rem;
+    height: 12rem;
+    padding: 0;
   }
 
   &_title,
@@ -99,6 +104,8 @@ export default Vue.extend({
     @media only screen and (max-width: 640px) {
       font-size: 100%;
       padding: 0.5rem;
+      width: 3rem;
+      word-wrap: break-word;
     }
 
     &:hover {

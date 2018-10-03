@@ -1,10 +1,5 @@
 <template>
-  <div class="login">
-    <transition name="fade">
-      <div v-if="performingRequest" class="loading">
-          <p>Loading...</p>
-      </div>
-    </transition>
+  <div class="login" :class="{'login_loading': performingRequest}">
     <h2 class="login_title">Log In</h2>
     <Form class="login_form" buttonText="Log In" :toggleDialog="() => null" :submit="onLogin">
       <text-input class="login_input" label="Email" v-model="email" />
@@ -104,6 +99,10 @@ export default Vue.extend({
   flex-direction: column;
   margin: 3rem auto;
   width: 75%;
+
+  &_loading {
+    cursor: wait;
+  }
 
   &_title {
     color: @madison;

@@ -109,12 +109,12 @@
           :options="statusOptions"
         />
       </div>
-      <div class="detailsData_details">
+      <!-- <div class="detailsData_details">
         <span class="detailsData_details-label">Version:</span>
         <span>
-          {{ item.version.title }}
+          {{ item.version }}
         </span>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
@@ -206,39 +206,45 @@ export default Vue.extend({
   },
 
   watch: {
-    assigneeId(this: any) {
+    '$route.query.id'(this: any) {
+      this.update = this.item;
+    },
+    'assigneeId'(this: any) {
       this.edit.assignee = !this.edit.assignee;
       this.assignee = this.userOptions.filter((user: User) => user.id === this.assigneeId)[0];
       this.update = {
         ...this.update,
         assignee: this.assignee,
+        endDate: '',
         startDate: new Date(this.update.startDate).toString(),
         updatedDate: new Date().toString(),
       };
       this.doEdit(this.update);
     },
-    priority(this: any) {
+    'priority'(this: any) {
       this.edit.priority = !this.edit.priority;
       this.update = {
         ...this.update,
+        endDate: '',
         priority: this.priority,
         startDate: new Date(this.update.startDate).toString(),
         updatedDate: new Date().toString(),
       };
       this.doEdit(this.update);
     },
-    reporterId(this: any) {
+    'reporterId'(this: any) {
       this.edit.reporter = !this.edit.reporter;
       this.reporter = this.userOptions.filter((user: User) => user.id === this.reporterId)[0];
       this.update = {
         ...this.update,
+        endDate: '',
         reporter: this.reporter,
         startDate: new Date(this.update.startDate).toString(),
         updatedDate: new Date().toString(),
       };
       this.doEdit(this.update);
     },
-    status(this: any) {
+    'status'(this: any) {
       this.edit.status = !this.edit.status;
       this.update = this.status === 'completed' ?
       {
@@ -250,6 +256,7 @@ export default Vue.extend({
       }
       : {
         ...this.update,
+        endDate: '',
         startDate: new Date(this.update.startDate).toString(),
         status: this.status,
         updatedDate: new Date().toString(),

@@ -1,7 +1,7 @@
 <template>
   <div class="addLink">
     <Dialog title="Add Link" :toggleDialog="dismissDialog">
-      <Form buttonText="Add Link" :toggleDialog="dismissDialog" :submit="onSubmitForm">
+      <Form buttonText="Add Link" :toggleDialog="submitDialog" :submit="onSubmitForm">
         <div class="addLink_dialog">
           <text-input :class="'addLink_textInput'" label="Link" placeholder="" v-model="link" />
         </div>
@@ -50,18 +50,29 @@ export default Vue.extend({
     dismissDialog(this: any) {
       this.toggleDialog();
     },
+    submitDialog(this: any) {
+      if (this.isValid()) {
+        this.toggleDialog();
+      }
+    },
+    isValid(this: any) {
+      return this.link;
+    },
     onSubmitForm(this: any) {
       const filter = this.$route.query.filter;
-      const newLink = {
-        featureId: filter === 'features' ? this.$route.query.id : '',
-        itemId: filter === 'items' ? this.$route.query.id : '',
-        startDate: new Date().toString(),
-        to: this.link,
-        userId: this.currentUser.id,
-        updatedDate: new Date().toString(),
-      };
-      console.log(newLink);
-      this.addLink(newLink);
+      if (this.isValid()) {
+        const newLink = {
+          featureId: filter === 'features' ? this.$route.query.id : '',
+          itemId: filter === 'items' ? this.$route.query.id : '',
+          startDate: new Date().toString(),
+          to: this.link,
+          userId: this.currentUser.id,
+          updatedDate: new Date().toString(),
+        };
+        this.addLink(newLink);
+      } else {
+        console.log('Missing');
+      }
     },
   },
 });

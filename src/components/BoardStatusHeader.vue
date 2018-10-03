@@ -31,10 +31,17 @@ export default Vue.extend({
 .boardStatusHeader {
   display: grid;
   gap: 2rem;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
 
   @media only screen and (max-width: 640px) {
+    grid-template-columns: repeat(4, 1fr);
     gap: 0.5rem;
+  }
+
+  &_list:last-child {
+    @media only screen and (max-width: 640px) {
+      display: none;
+    }
   }
 }
 </style>

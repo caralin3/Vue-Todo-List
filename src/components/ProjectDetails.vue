@@ -60,6 +60,7 @@ export default Vue.extend({
       this.updatedProject = {
         ...this.updatedProject,
         [type]: value,
+        endDate: '',
         startDate: new Date(this.updatedProject.startDate).toString(),
         updatedDate: new Date().toString(),
       };
