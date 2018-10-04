@@ -17,6 +17,7 @@
         :on-change="handleTextChange"
         :text="proj.description"
       />
+      <links :links="links" />
     </details-panel>
   </div>
 </template>
@@ -27,6 +28,7 @@ import * as fb from '@/firebase';
 import { mapActions } from 'vuex';
 import Description from './Description.vue';
 import DetailsPanel from './DetailsPanel.vue';
+import Links from './Links.vue';
 import ProjectDetailsData from './ProjectDetailsData.vue';
 
 export default Vue.extend({
@@ -35,10 +37,14 @@ export default Vue.extend({
   components: {
     Description,
     DetailsPanel,
+    Links,
     ProjectDetailsData,
   },
 
   props: {
+    links: {
+      type: Array,
+    },
     proj: {
       type: Object,
     },
@@ -60,7 +66,7 @@ export default Vue.extend({
       this.updatedProject = {
         ...this.updatedProject,
         [type]: value,
-        endDate: '',
+        endDate: this.updatedProject.endDate,
         startDate: new Date(this.updatedProject.startDate).toString(),
         updatedDate: new Date().toString(),
       };

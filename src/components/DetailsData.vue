@@ -245,7 +245,7 @@ export default Vue.extend({
       this.update = {
         ...this.update,
         assignee: this.assignee,
-        endDate: '',
+        endDate: this.update.endDate,
         startDate: new Date(this.update.startDate).toString(),
         updatedDate: new Date().toString(),
       };
@@ -255,7 +255,7 @@ export default Vue.extend({
       this.edit.itemType = !this.edit.itemType;
       this.update = {
         ...this.update,
-        endDate: '',
+        endDate: this.update.endDate,
         type: this.itemType,
         startDate: new Date(this.update.startDate).toString(),
         updatedDate: new Date().toString(),
@@ -266,7 +266,7 @@ export default Vue.extend({
       this.edit.priority = !this.edit.priority;
       this.update = {
         ...this.update,
-        endDate: '',
+        endDate: this.update.endDate,
         priority: this.priority,
         startDate: new Date(this.update.startDate).toString(),
         updatedDate: new Date().toString(),
@@ -278,7 +278,7 @@ export default Vue.extend({
       this.reporter = this.userOptions.filter((user: User) => user.id === this.reporterId)[0];
       this.update = {
         ...this.update,
-        endDate: '',
+        endDate: this.update.endDate,
         reporter: this.reporter,
         startDate: new Date(this.update.startDate).toString(),
         updatedDate: new Date().toString(),

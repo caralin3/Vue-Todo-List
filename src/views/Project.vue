@@ -2,7 +2,7 @@
   <div class="project">
     <sidebar :title="projectTitle" />
     <div class="project_container" v-if="filter === 'overview'">
-      <project-details :proj="project" />
+      <project-details :proj="project" :links="projectLinks" />
     </div>
     <div class="project_container" v-if="filter === 'activity'">
       <activity />
@@ -30,7 +30,7 @@ import Board from '@/components/Board.vue';
 import Items from '@/components/Items.vue';
 import ProjectDetails from '@/components/ProjectDetails.vue';
 import Sidebar from '@/components/Sidebar.vue';
-import { Feature, Item, Project } from '@/types';
+import { Feature, Item, Link, Project } from '@/types';
 
 export default Vue.extend({
   name: 'Project',
@@ -57,6 +57,7 @@ export default Vue.extend({
     ...mapState({
       features: (state: any) => state.features.features,
       items: (state: any) => state.items.items,
+      links: (state: any) => state.links.links,
       projects: (state: any) => state.projects.projects,
     }),
     project(this: any) {
@@ -65,6 +66,9 @@ export default Vue.extend({
     projectTitle(this: any) {
       const project = this.projects.filter((proj: Project) => proj.id === this.id)[0];
       return this.title = project.title;
+    },
+    projectLinks(this: any) {
+      return this.links.filter((link: Link) => link.projectId === this.id);
     },
     featureList(this: any) {
       return this.features.filter((feature: Feature) => feature.projectId === this.id);

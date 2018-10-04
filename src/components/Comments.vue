@@ -95,6 +95,7 @@ export default Vue.extend({
         featureId: comm.featureId || '',
         id: comm.id,
         itemId: comm.itemId || '',
+        projectId: comm.projectId,
         startDate: comm.startDate.toString(),
         text: value,
         updatedDate: new Date().toString(),

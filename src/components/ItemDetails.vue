@@ -81,7 +81,7 @@ export default Vue.extend({
       this.update = {
         ...this.update,
         [type]: value,
-        endDate: '',
+        endDate: this.update.endDate,
         startDate: new Date(this.update.startDate).toString(),
         updatedDate: new Date().toString(),
       };

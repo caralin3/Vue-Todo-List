@@ -66,6 +66,7 @@ export default Vue.extend({
         featureId: link.featureId || '',
         id: link.id,
         itemId: link.itemId || '',
+        projectId: link.projectId,
         startDate: new Date(link.startDate).toString(),
         to: value,
         updatedDate: new Date().toString(),
