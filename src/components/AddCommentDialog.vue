@@ -64,6 +64,7 @@ export default Vue.extend({
         const newComment = {
           featureId: filter === 'features' ? this.$route.query.id : '',
           itemId: filter === 'items' ? this.$route.query.id : '',
+          projectId: this.$route.params.id,
           startDate: new Date().toString(),
           text: this.text,
           user: this.currentUser,

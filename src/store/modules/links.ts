@@ -42,6 +42,10 @@ const actions: ActionTree<LinkState, any> = {
               links: firebase.firestore.FieldValue.arrayUnion(newLink.id),
             });
           }
+          fb.projectsCollection.doc(link.projectId).update({
+            updatedDate: link.updatedDate,
+            links: firebase.firestore.FieldValue.arrayUnion(newLink.id),
+          });
         });
     }).catch((err: any) => {
       console.log(err.message);
@@ -66,6 +70,10 @@ const actions: ActionTree<LinkState, any> = {
           updatedDate: link.updatedDate,
         });
       }
+      fb.projectsCollection.doc(link.projectId).update({
+        updatedDate: link.updatedDate,
+        links: firebase.firestore.FieldValue.arrayUnion(newLink.id),
+      });
     }).catch((err: any) => {
       console.log(err.message);
     });
@@ -100,6 +108,10 @@ const actions: ActionTree<LinkState, any> = {
         console.log(err.message);
       });
     }
+    // Update project update time
+    fb.projectsCollection.doc(link.projectId).update({
+      updatedDate: new Date().toString(),
+    });
     // Delete link
     fb.linksCollection.doc(link.id).delete().then(() => {
       console.log(`Link ${link.id} successfully deleted!`);

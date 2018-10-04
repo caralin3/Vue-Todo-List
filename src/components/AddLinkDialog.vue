@@ -64,6 +64,7 @@ export default Vue.extend({
         const newLink = {
           featureId: filter === 'features' ? this.$route.query.id : '',
           itemId: filter === 'items' ? this.$route.query.id : '',
+          projectId: this.$route.params.id,
           startDate: new Date().toString(),
           to: this.link,
           userId: this.currentUser.id,

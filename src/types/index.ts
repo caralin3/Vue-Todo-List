@@ -17,6 +17,7 @@ export interface User {
 export interface FirebaseComment {
   featureId?: string;
   itemId?: string;
+  projectId: string;
   startDate: Date;
   text: string;
   updatedDate: Date;
@@ -27,6 +28,7 @@ export interface Comment {
   featureId?: string;
   id: string;
   itemId?: string;
+  projectId: string;
   startDate: Date;
   text: string;
   updatedDate: Date;
@@ -36,6 +38,7 @@ export interface Comment {
 export interface FirebaseLink {
   featureId?: string;
   itemId?: string;
+  projectId: string;
   startDate: Date;
   to: string;
   updatedDate?: Date;
@@ -46,6 +49,7 @@ export interface Link {
   featureId?: string;
   id: string;
   itemId?: string;
+  projectId: string;
   startDate: Date;
   to: string;
   updatedDate?: Date;

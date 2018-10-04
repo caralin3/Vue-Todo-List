@@ -9,7 +9,7 @@ export const shortMonthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
   'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
 ];
 
-export const statusOptions: string[] = ['Select Status', 'todo', 'inProgress', 'completed', 'closed'];
+export const statusOptions: string[] = ['Select Status', 'todo', 'inProgress', 'testing', 'completed', 'closed'];
 
 export const itemTypeOptions: string[] = ['Select Type', 'task', 'component', 'bug'];
 
@@ -37,28 +37,3 @@ export const getUserOptions = () => {
 };
 
 export const userOptions = getUserOptions();
-
-export const getFeatureOptions = () => {
-  const features: Feature[] = [{
-    assignee: {} as User,
-    description: '',
-    id: '',
-    items: [],
-    priority: 'minor',
-    projectId: '',
-    startDate: new Date(),
-    status: 'todo',
-    title: 'Select Feature',
-    updatedDate: new Date(),
-  }];
-  fb.featuresCollection.get().then((docs: any) => {
-    docs.forEach((doc: any) => {
-      const feature = doc.data();
-      feature.id = doc.id;
-      features.push(feature);
-    });
-  });
-  return features;
-};
-
-export const featureOptions = getFeatureOptions();

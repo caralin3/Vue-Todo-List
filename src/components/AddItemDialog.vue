@@ -81,7 +81,7 @@ import SelectUserInput from '@/components/SelectUserInput.vue';
 import TextAreaInput from '@/components/TextAreaInput.vue';
 import TextInput from '@/components/TextInput.vue';
 import { Feature, FirebaseItem, itemType, priorityType, statusType, User } from '@/types';
-import { featureOptions, itemTypeOptions, priorityOptions, statusOptions, userOptions } from '@/utils/constants';
+import { itemTypeOptions, priorityOptions, statusOptions, userOptions } from '@/utils/constants';
 
 export default Vue.extend({
   name: 'AddItemDialog',
@@ -115,7 +115,6 @@ export default Vue.extend({
     endDate: '',
     feature: {} as Feature,
     featureId: '',
-    featureOptions,
     itemTypeOptions,
     priority: 'Select Priority' as priorityType,
     priorityOptions,
@@ -144,6 +143,23 @@ export default Vue.extend({
     ...mapState({
       features: (state: any) => state.features.features,
     }),
+    featureOptions(this: any) {
+      const options: Feature[] = [];
+      const initial: Feature[] = [{
+        assignee: {} as User,
+        description: '',
+        id: '',
+        items: [],
+        priority: 'minor',
+        projectId: '',
+        startDate: new Date(),
+        status: 'todo',
+        title: 'Select Feature',
+        updatedDate: new Date(),
+      }];
+      const rest: Feature[] = this.features.filter((f: Feature) => f.projectId === this.$route.params.id);
+      return options.concat(initial, rest);
+    },
   },
 
   methods: {
@@ -167,7 +183,7 @@ export default Vue.extend({
         this.type !== 'Select Type';
     },
     onSubmitForm(this: any) {
-      if (this.$route.query.id) {
+      if (this.$route.query.filter === 'features' && this.$route.query.id) {
         this.featureId = this.$route.query.id;
       }
       if (this.isValid()) {

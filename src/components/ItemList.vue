@@ -17,7 +17,7 @@
         />
       </span>
     </div>
-    <ul class="itemList_list" v-for="item in items" :key="item.id" >
+    <ul class="itemList_list" v-for="item in itemList" :key="item.id" >
       <div
         :class="{'itemList_item-selected': selected && item.id === selected.id}"
         @click="onClick(item)"
@@ -34,11 +34,13 @@
 
 <script lang="ts">
 import Vue from 'vue';
+import { mapState } from 'vuex';
 import AddFeatureDialog from './AddFeatureDialog.vue';
 import AddItemDialog from './AddItemDialog.vue';
 import ListItem from './ListItem.vue';
 import SelectInput from './SelectInput.vue';
 import { featureFilterOptions } from '@/utils/constants';
+import { Feature, Item } from '@/types';
 
 export default Vue.extend({
   name: 'ItemList',
@@ -51,7 +53,7 @@ export default Vue.extend({
   },
 
   props: {
-    items: {
+    itemList: {
       type: Array,
     },
   },
@@ -72,6 +74,18 @@ export default Vue.extend({
 
   created(this: any) {
     this.buttonTitle = this.$route.query.filter.toString().slice(0, -1);
+    if (this.buttonTitle === 'feature' && this.$route.query.id) {
+      this.selected = this.features.filter((f: Feature) => f.id === this.$route.query.id)[0];
+    } else if (this.$route.query.id) {
+      this.selected = this.items.filter((i: Item) => i.id === this.$route.query.id)[0];
+    }
+  },
+
+  computed: {
+    ...mapState({
+      features: (state: any) => state.features.features,
+      items: (state: any) => state.items.items,
+    }),
   },
 
   methods: {

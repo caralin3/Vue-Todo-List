@@ -41,7 +41,7 @@ exports[`SelectInput renders the correct markup 1`] = `
     <option
       value="inProgress"
     >
-      InProgress
+      In Progress
     </option>
     <option
       value="completed"

@@ -36,6 +36,10 @@ const actions: ActionTree<ItemState, any> = {
             updatedDate: item.updatedDate,
             items: firebase.firestore.FieldValue.arrayUnion(newItem.id),
           });
+          fb.projectsCollection.doc(item.projectId).update({
+            updatedDate: item.updatedDate,
+            items: firebase.firestore.FieldValue.arrayUnion(newItem.id),
+          });
         });
     }).catch((err: any) => {
       console.log(err.message);
@@ -54,6 +58,10 @@ const actions: ActionTree<ItemState, any> = {
       commit(MutationType.EDIT_ITEM, item);
       fb.featuresCollection.doc(item.featureId).update({
         updatedDate: item.updatedDate,
+      });
+      fb.projectsCollection.doc(item.projectId).update({
+        updatedDate: item.updatedDate,
+        items: firebase.firestore.FieldValue.arrayUnion(newItem.id),
       });
     }).catch((err: any) => {
       console.log(err.message);

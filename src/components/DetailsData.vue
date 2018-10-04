@@ -63,11 +63,11 @@
         <span class="detailsData_details-label">Priority:</span>
         <span class="detailsData_details-edit" v-if="!edit.priority" @click="toggleEdit('priority')">
            <span v-if="priority === 'Select Priority'">
-            <priority-icon class="listItem_priorityIcon" :priority="item.priority"/>
+            <priority-icon :priority="item.priority"/>
             {{ item.priority | capitalize }}
           </span>
           <span v-else>
-            <priority-icon class="listItem_priorityIcon" :priority="priority"/>
+            <priority-icon :priority="priority"/>
             {{ priority | capitalize }}
           </span>
         </span>
@@ -92,11 +92,11 @@
         <span class="detailsData_details-label">Status:</span>
         <span class="detailsData_details-edit" v-if="!edit.status" @click="toggleEdit('status')">
           <span v-if="status === 'Select Status'">
-            <status-icon class="listItem_statusIcon" :status="item.status" />
+            <status-icon :status="item.status" />
             {{ item.status | capitalize }}
           </span>
           <span v-else>
-            <status-icon class="listItem_statusIcon" :status="status" />
+            <status-icon :status="status" />
             {{ status | capitalize }}
           </span>
         </span>
@@ -109,12 +109,31 @@
           :options="statusOptions"
         />
       </div>
-      <!-- <div class="detailsData_details">
-        <span class="detailsData_details-label">Version:</span>
-        <span>
-          {{ item.version }}
+      <div class="detailsData_details" v-if="$route.query.filter === 'items'">
+        <span class="detailsData_details-label">Type:</span>
+        <span class="detailsData_details-edit" v-if="!edit.itemType" @click="toggleEdit('itemType')">
+          <span v-if="itemType === 'Select Type'">
+            <bug-icon extra-classes="detailsData_details-icon" v-if="item.type === 'bug'" />
+            <component-icon extra-classes="detailsData_details-icon" v-if="item.type === 'component'" />
+            <task-icon extra-classes="detailsData_details-taskIcon" v-if="item.type === 'task'" />
+            <span :class="`detailsData_details-${item.type}`">{{ item.type | capitalize }}</span>
+          </span>
+          <span v-else>
+            <bug-icon extra-classes="detailsData_details-icon" v-if="itemType === 'bug'" />
+            <component-icon extra-classes="detailsData_details-icon" v-if="itemType === 'component'" />
+            <task-icon extra-classes="detailsData_details-taskIcon" v-if="itemType === 'task'" />
+            <span :class="`detailsData_details-${itemType}`">{{ itemType | capitalize }}</span>
+          </span>
         </span>
-      </div> -->
+        <select-input
+          :class="'details_select'"
+          v-if="edit.itemType"
+          v-model="itemType"
+          :onBlur="() => this.edit.itemType = false"
+          :onFocus="() => this.edit.itemType = true"
+          :options="itemTypeOptions"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -122,21 +141,27 @@
 <script lang="ts">
 import Vue from 'vue';
 import { mapActions } from 'vuex';
+import BugIcon from './BugIcon.vue';
+import ComponentIcon from './ComponentIcon.vue';
 import PriorityIcon from './PriorityIcon.vue';
 import SelectInput from './SelectInput.vue';
 import SelectUserInput from './SelectUserInput.vue';
 import StatusIcon from './StatusIcon.vue';
-import { Feature, Item, priorityType, statusType, User } from '@/types';
-import { priorityOptions, statusOptions, userOptions } from '@/utils/constants';
+import TaskIcon from './TaskIcon.vue';
+import { Feature, Item, itemType, priorityType, statusType, User } from '@/types';
+import { itemTypeOptions, priorityOptions, statusOptions, userOptions } from '@/utils/constants';
 
 export default Vue.extend({
   name: 'DetailsData',
 
   components: {
+    BugIcon,
+    ComponentIcon,
     PriorityIcon,
     SelectInput,
     SelectUserInput,
     StatusIcon,
+    TaskIcon,
   },
 
   props: {
@@ -158,8 +183,11 @@ export default Vue.extend({
       priority: false,
       reporter: false,
       status: false,
+      itemType: false,
     },
     filter: '',
+    itemType: 'Select Type' as itemType,
+    itemTypeOptions,
     reporter: {
       email: '',
       firstName: 'Select',
@@ -194,6 +222,8 @@ export default Vue.extend({
         this.edit.reporter = !this.edit.reporter;
       } else if (type === 'status') {
         this.edit.status = !this.edit.status;
+      } else if (type === 'itemType') {
+        this.edit.itemType = !this.edit.itemType;
       }
     },
     doEdit(this: any, item: Feature | Item) {
@@ -216,6 +246,17 @@ export default Vue.extend({
         ...this.update,
         assignee: this.assignee,
         endDate: '',
+        startDate: new Date(this.update.startDate).toString(),
+        updatedDate: new Date().toString(),
+      };
+      this.doEdit(this.update);
+    },
+    'itemType'(this: any) {
+      this.edit.itemType = !this.edit.itemType;
+      this.update = {
+        ...this.update,
+        endDate: '',
+        type: this.itemType,
         startDate: new Date(this.update.startDate).toString(),
         updatedDate: new Date().toString(),
       };
@@ -246,7 +287,8 @@ export default Vue.extend({
     },
     'status'(this: any) {
       this.edit.status = !this.edit.status;
-      this.update = this.status === 'completed' ?
+      this.update = (this.status === 'completed' ||
+      this.status === 'closed') ?
       {
         ...this.update,
         endDate: new Date().toString(),
@@ -313,6 +355,29 @@ export default Vue.extend({
 
     &-text {
       padding: 0.3rem 0.5rem;
+    }
+
+    &-bug {
+      padding-left: 0.5rem;
+    }
+
+    &-component {
+      font-size: 0.9rem;
+      padding-left: 0.5rem;
+    }
+
+    &-task {
+      padding-left: 0.5rem;
+    }
+
+    &-taskIcon {
+      font-size: 1.2rem;
+      padding: 0;
+    }
+
+    &-icon {
+      font-size: 0.6rem;
+      padding: 0;
     }
   }
 }

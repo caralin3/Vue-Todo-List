@@ -70,22 +70,13 @@ export default Vue.extend({
   color: @madison;
   display: flex;
   flex-direction: column;
-  height: 8rem;
+  height: auto;
   justify-content: center;
   margin-top: -1px; // border collapse
   padding: 1rem 0 1rem 0;
 
   &:hover {
     cursor: grab;
-  }
-
-  @media only screen and (max-width: 930px) {
-    height: 12rem;
-  }
-
-  @media only screen and (max-width: 640px) {
-    height: 12rem;
-    padding: 0;
   }
 
   &_title,
@@ -100,6 +91,7 @@ export default Vue.extend({
 
   &_link {
     color: @madison;
+    padding-right: 0.5rem;
 
     @media only screen and (max-width: 640px) {
       font-size: 100%;

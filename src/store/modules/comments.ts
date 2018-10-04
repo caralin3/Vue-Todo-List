@@ -42,6 +42,10 @@ const actions: ActionTree<CommentState, any> = {
               comments: firebase.firestore.FieldValue.arrayUnion(newComment.id),
             });
           }
+          fb.projectsCollection.doc(comment.projectId).update({
+            updatedDate: comment.updatedDate,
+            comments: firebase.firestore.FieldValue.arrayUnion(newComment.id),
+          });
         });
     }).catch((err: any) => {
       console.log(err.message);
@@ -66,6 +70,10 @@ const actions: ActionTree<CommentState, any> = {
           updatedDate: comment.updatedDate,
         });
       }
+      fb.projectsCollection.doc(comment.projectId).update({
+        updatedDate: comment.updatedDate,
+        comments: firebase.firestore.FieldValue.arrayUnion(newComment.id),
+      });
     }).catch((err: any) => {
       console.log(err.message);
     });
@@ -100,6 +108,10 @@ const actions: ActionTree<CommentState, any> = {
         console.log(err.message);
       });
     }
+    // Update project update time
+    fb.projectsCollection.doc(comment.projectId).update({
+      updatedDate: new Date().toString(),
+    });
     // Delete comment
     fb.commentsCollection.doc(comment.id).delete().then(() => {
       console.log(`Link ${comment.id} successfully deleted!`);

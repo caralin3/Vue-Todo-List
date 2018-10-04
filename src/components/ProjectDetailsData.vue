@@ -48,7 +48,11 @@
       </div>
       <div class="projectDetailsData_details">
         <span class="projectDetailsData_details-label">Version:</span>
-        <span>
+        <span
+          class="projectDetailsData_details-edit"
+          contenteditable="true"
+          @blur="handleChange($event.target.innerText)"
+        >
           {{ proj.version }}
         </span>
       </div>
@@ -81,6 +85,9 @@ export default Vue.extend({
   },
 
   props: {
+    onChange: {
+      type: Function,
+    },
     proj: {
       type: Object,
     },
@@ -106,12 +113,16 @@ export default Vue.extend({
     toggleEdit(this: any, type: string) {
       this.edit.status = !this.edit.status;
     },
+    handleChange(this: any, value: string) {
+      this.onChange('version', value);
+    },
   },
 
   watch: {
     status(this: any) {
       this.edit.status = !this.edit.status;
-      this.update = this.status === 'completed' ?
+      this.update = (this.status === 'completed' ||
+      this.status === 'closed') ?
       {
         ...this.update,
         endDate: new Date().toString(),

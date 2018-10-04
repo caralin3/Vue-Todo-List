@@ -6,7 +6,7 @@
       <item-icon v-if="filter === 'items'" />
     </div>
     <div class="items_list" :class="{'items_list-close': itemId}">
-      <item-list :items="itemList" />
+      <item-list :item-list="itemList" />
     </div>
     <div class="items_details" :class="{'items_details-open': itemId}" v-if="itemId">
       <item-details

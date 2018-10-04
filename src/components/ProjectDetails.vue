@@ -12,7 +12,7 @@
       </h2>
     </div>
     <details-panel class="projectDetails_body">
-      <project-details-data :proj="proj" />
+      <project-details-data :on-change="handleTextChange" :proj="proj" />
       <description 
         :on-change="handleTextChange"
         :text="proj.description"

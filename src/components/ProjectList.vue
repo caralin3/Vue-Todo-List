@@ -14,7 +14,7 @@
             <span class="projectItem_by"><strong>Created by:</strong> {{ proj.creator | name }}</span>
             <span class="projectItem_date"><strong>Created:</strong> {{ new Date(proj.startDate) | date }}</span>
           </div>
-          <p class="projectItem_description" v-if="proj.description !== ''">{{ proj.description }}</p>
+          <p class="projectItem_description" v-if="proj.description !== ''">{{ proj.description | shortDescription }}</p>
           <p class="projectItem_description" v-else>No description</p>
           <div class="projectItem_update">
             <strong>Last Updated:</strong>
@@ -87,7 +87,6 @@ export default Vue.extend({
   color: @madison;
   padding: 1.5rem;
   height: 12rem;
-  max-width: 20rem;
   width: 100%;
 
   @media only screen and (max-width: 1064px) {
@@ -99,8 +98,8 @@ export default Vue.extend({
   }
 
   @media only screen and (max-width: 660px) {
+    height: auto;
     margin: 1.5rem auto;
-    height: 15rem;
     width: 20rem;
   }
 
