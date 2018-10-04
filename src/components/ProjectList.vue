@@ -87,6 +87,7 @@ export default Vue.extend({
   color: @madison;
   padding: 1.5rem;
   height: 12rem;
+  max-width: 20rem;
   width: 100%;
 
   @media only screen and (max-width: 1064px) {

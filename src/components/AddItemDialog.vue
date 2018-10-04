@@ -3,6 +3,7 @@
     <Dialog title="Add Item" :toggleDialog="dismissDialog">
       <Form buttonText="Add Item" :toggleDialog="submitDialog" :submit="onSubmitForm">
         <div class="addItem_dialog">
+          <alert v-if="showAlert" :text="`Missing required field: ${empty}`" />
           <text-input :class="'addItem_textInput'" label="Item Name" placeholder="" v-model="title" />
           <select-user-input
             :class="'addItem_select'"
@@ -44,7 +45,7 @@
           <select-input
             :class="'addItem_select'"
             label="Type"
-            v-model="type"
+            v-model="itemType"
             :options="itemTypeOptions" 
             :onBlur="() => null"
             :onFocus="() => null"
@@ -72,6 +73,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import { mapActions, mapState } from 'vuex';
+import Alert from '@/components/Alert.vue';
 import DateInput from '@/components/DateInput.vue';
 import Dialog from '@/components/Dialog.vue';
 import Form from '@/components/Form.vue';
@@ -87,6 +89,7 @@ export default Vue.extend({
   name: 'AddItemDialog',
 
   components: {
+    Alert,
     DateInput,
     Dialog,
     SelectFeatureInput,
@@ -112,9 +115,11 @@ export default Vue.extend({
     } as User,
     assigneeId: '',
     description: '',
+    empty: '',
     endDate: '',
     feature: {} as Feature,
     featureId: '',
+    itemType: 'Select Type' as itemType,
     itemTypeOptions,
     priority: 'Select Priority' as priorityType,
     priorityOptions,
@@ -125,11 +130,11 @@ export default Vue.extend({
       lastName: 'User',
     } as User,
     reporterId: '',
+    showAlert: false,
     startDate: new Date().toString(),
     status: 'Select Status' as statusType,
     statusOptions,
     title: '',
-    type: 'Select Type' as itemType,
     userOptions,
   }),
 
@@ -187,6 +192,7 @@ export default Vue.extend({
         this.featureId = this.$route.query.id;
       }
       if (this.isValid()) {
+        this.showAlert = false;
         const newItem: FirebaseItem = {
           assignee: this.assignee,
           description: this.description,
@@ -198,30 +204,55 @@ export default Vue.extend({
           startDate: this.startDate.toString(),
           status: this.status,
           title: this.title,
-          type: this.type,
+          type: this.itemType,
           updatedDate: this.startDate.toString(),
         };
         this.addItem(newItem);
       } else {
-        console.log('Missing');
+        this.showAlert = true;
+        if (!this.assigneeId) {
+          this.empty = 'Assignee';
+        } else if (!this.featureId) {
+          this.empty = 'Feature';
+        } else if (this.itemType === 'Select Type') {
+          this.empty = 'Type';
+        } else if (this.priority === 'Select Priority') {
+          this.empty = 'Priority';
+        } else if (this.status === 'Select Status') {
+          this.empty = 'Status';
+        }
       }
     },
   },
 
   watch: {
     assigneeId(this: any) {
+      this.showAlert = false;
       for (const user of this.userOptions) {
         if (user.id === this.assigneeId) {
           this.assignee = user;
         }
       }
     },
+    featureId(this: any) {
+      this.showAlert = false;
+    },
+    itemType(this: any) {
+      this.showAlert = false;
+    },
+    priority(this: any) {
+      this.showAlert = false;
+    },
     reporterId(this: any) {
+      this.showAlert = false;
       for (const user of this.userOptions) {
         if (user.id === this.reporterId) {
           this.reporter = user;
         }
       }
+    },
+    status(this: any) {
+      this.showAlert = false;
     },
   },
 });

@@ -3,6 +3,7 @@
     <Dialog title="Add Feature" :toggleDialog="dismissDialog">
       <Form buttonText="Add Feature" :toggleDialog="submitDialog" :submit="onSubmitForm">
         <div class="addFeature_dialog">
+          <alert v-if="showAlert" :text="`Missing required field: ${empty}`" />
           <text-input :class="'addFeature_textInput'" label="Feature Name" placeholder="" v-model="title" />
           <select-user-input
             :class="'addFeature_select'"
@@ -51,6 +52,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import { mapActions, mapState } from 'vuex';
+import Alert from '@/components/Alert.vue';
 import DateInput from '@/components/DateInput.vue';
 import Dialog from '@/components/Dialog.vue';
 import Form from '@/components/Form.vue';
@@ -65,6 +67,7 @@ export default Vue.extend({
   name: 'AddFeatureDialog',
 
   components: {
+    Alert,
     DateInput,
     Dialog,
     Form,
@@ -89,6 +92,7 @@ export default Vue.extend({
     } as User,
     assigneeId: '',
     description: '',
+    empty: '',
     endDate: '',
     priority: 'Select Priority' as priorityType,
     priorityOptions,
@@ -99,6 +103,7 @@ export default Vue.extend({
       lastName: 'User',
     } as User,
     reporterId: '',
+    showAlert: false,
     startDate: new Date().toString(),
     status: 'Select Status' as statusType,
     statusOptions,
@@ -127,6 +132,7 @@ export default Vue.extend({
     },
     onSubmitForm(this: any) {
       if (this.isValid()) {
+        this.showAlert = false;
         const newFeature: FirebaseFeature = {
           assignee: this.assignee,
           description: this.description,
@@ -142,7 +148,14 @@ export default Vue.extend({
         };
         this.addFeature(newFeature);
       } else {
-        console.log('Missing');
+        this.showAlert = true;
+        if (!this.assigneeId) {
+          this.empty = 'Assignee';
+        } else if (this.priority === 'Select Priority') {
+          this.empty = 'Priority';
+        } else if (this.status === 'Select Status') {
+          this.empty = 'Status';
+        }
       }
     },
   },
@@ -154,13 +167,22 @@ export default Vue.extend({
           this.assignee = user;
         }
       }
+      this.showAlert = false;
+    },
+    priority(this: any) {
+      this.showAlert = false;
     },
     reporterId(this: any) {
+      this.showAlert = false;
       for (const user of this.userOptions) {
         if (user.id === this.reporterId) {
           this.reporter = user;
         }
       }
+      this.showAlert = false;
+    },
+    status(this: any) {
+      this.showAlert = false;
     },
   },
 });

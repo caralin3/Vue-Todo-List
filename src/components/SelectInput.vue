@@ -2,7 +2,8 @@
   <p class="selectInput">
     <label class="selectInput_label" :for="label">{{ label }}</label>
     <select
-      :class="`${rootClass}_input`"
+      class="selectInput_input"
+      
       :id="label"
       :defaultValue="value"
       @blur="onBlur"
@@ -36,3 +37,6 @@ export default Vue.extend({
   },
 });
 </script>
+
+<style lang="less" scoped>
+</style>

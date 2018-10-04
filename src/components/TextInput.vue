@@ -7,6 +7,7 @@
       :value="text"
       :placeholder="placeholder"
       @input="onChange($event.target.value)"
+      required="true"
       type="text"
     />
   </p>

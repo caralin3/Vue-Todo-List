@@ -71,8 +71,6 @@ export default Vue.extend({
           updatedDate: new Date().toString(),
         };
         this.addComment(newComment);
-      } else {
-        console.log('Missing');
       }
     },
   },

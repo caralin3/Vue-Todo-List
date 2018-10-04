@@ -21,6 +21,7 @@ exports[`Form renders the correct markup 1`] = `
    
   <input
     class="textInput_input"
+    required="required"
     type="text"
   />
 </p>

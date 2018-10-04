@@ -5,8 +5,9 @@ Object {
   "0": "Select Status",
   "1": "todo",
   "2": "inProgress",
-  "3": "completed",
-  "4": "closed",
+  "3": "testing",
+  "4": "completed",
+  "5": "closed",
 }
 `;
 
@@ -24,7 +25,7 @@ exports[`SelectInput renders the correct markup 1`] = `
   </label>
    
   <select
-    class="undefined_input"
+    class="selectInput_input"
     defaultvalue="Selected Value"
     id="Label"
   >
@@ -42,6 +43,11 @@ exports[`SelectInput renders the correct markup 1`] = `
       value="inProgress"
     >
       In Progress
+    </option>
+    <option
+      value="testing"
+    >
+      Testing
     </option>
     <option
       value="completed"

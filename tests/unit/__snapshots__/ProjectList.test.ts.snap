@@ -17,6 +17,7 @@ exports[`TextInput renders the correct markup 1`] = `
     class="textInput_input"
     id="Label"
     placeholder=""
+    required="required"
     type="text"
   />
 </p>

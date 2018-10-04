@@ -17,6 +17,7 @@ exports[`TextAreaInput renders the correct markup 1`] = `
     class="textAreaInput_input"
     id="textAreaInput"
     placeholder=""
+    required="required"
   />
 </p>
 `;

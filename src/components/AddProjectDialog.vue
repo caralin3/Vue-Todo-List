@@ -3,6 +3,7 @@
     <Dialog title="Create Project" :toggleDialog="dismissDialog">
       <Form buttonText="Add Project" :toggleDialog="submitDialog" :submit="onSubmitForm">
         <div class="addProject_dialog">
+          <alert v-if="showAlert" text="Missing required field: Status" />
           <span class="addProject_creatorLabel" :currentUser="currentUser">
             Creator
           </span>
@@ -32,6 +33,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import { mapActions, mapState } from 'vuex';
+import Alert from '@/components/Alert.vue';
 import DateInput from '@/components/DateInput.vue';
 import Dialog from '@/components/Dialog.vue';
 import Form from '@/components/Form.vue';
@@ -46,6 +48,7 @@ export default Vue.extend({
   name: 'AddProjectDialog',
 
   components: {
+    Alert,
     DateInput,
     Dialog,
     SelectInput,
@@ -63,8 +66,9 @@ export default Vue.extend({
   data: () => ({
     description: '',
     endDate: '',
+    showAlert: false,
     startDate: new Date().toString(),
-    status: 'todo' as statusType,
+    status: 'Select Status' as statusType,
     statusOptions,
     title: '',
     version: '',
@@ -90,12 +94,13 @@ export default Vue.extend({
     },
     isValid(this: any) {
       return this.description &&
-        this.status &&
+        this.status !== 'Select Status' &&
         this.title &&
         this.version;
     },
     onSubmitForm(this: any) {
       if (this.isValid()) {
+        this.showAlert = false;
         const newProj: FirebaseProject = {
           creator: this.currentUser,
           description: this.description,
@@ -110,8 +115,14 @@ export default Vue.extend({
         };
         this.addProject(newProj);
       } else {
-        console.log('Missing');
+        this.showAlert = true;
       }
+    },
+  },
+
+  watch: {
+    status(this: any) {
+      this.showAlert = false;
     },
   },
 });
