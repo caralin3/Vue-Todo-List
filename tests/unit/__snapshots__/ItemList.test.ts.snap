@@ -1,0 +1,80 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ItemList renders a button title from query filter: features 1`] = `"feature"`;
+
+exports[`ItemList renders the correct markup 1`] = `
+<div
+  class="itemList"
+>
+  <!---->
+   
+  <!---->
+   
+  <div
+    class="itemList_header"
+  >
+    <button
+      class="itemList_header-button"
+    >
+      
+      Add {
+  "default": ""
+}
+    
+    </button>
+     
+    <span
+      class="itemList_header-filter"
+    >
+      <p
+        class="selectInput itemList_header-select"
+      >
+        <label
+          class="selectInput_label"
+        >
+          
+        </label>
+         
+        <select
+          class="selectInput_input"
+          defaultvalue="Select Filter"
+        >
+          <option
+            value="Select Filter"
+          >
+            Select Filter
+          </option>
+          <option
+            value="date"
+          >
+            date
+          </option>
+          <option
+            value="title"
+          >
+            title
+          </option>
+          <option
+            value="status"
+          >
+            status
+          </option>
+          <option
+            value="priority"
+          >
+            priority
+          </option>
+          <option
+            value="assigned to Me"
+          >
+            assigned to Me
+          </option>
+        </select>
+      </p>
+    </span>
+  </div>
+   
+</div>
+`;
+
+exports[`ItemList triggers button to toggle dialog: true 1`] = `true`;

@@ -1,0 +1,47 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Header renders the correct markup 1`] = `
+<div
+  class="header"
+>
+  <h1>
+    <router-link-stub
+      class="header_title"
+      event="click"
+      exact="true"
+      tag="a"
+      to="/"
+    >
+      Todo
+    </router-link-stub>
+  </h1>
+   
+  <div
+    class="header_nav"
+  >
+    <router-link-stub
+      event="click"
+      exact="true"
+      tag="a"
+      to="/"
+    >
+      Home
+    </router-link-stub>
+     
+    <!---->
+     
+    <!---->
+     
+    <router-link-stub
+      class="header_nav-login"
+      event="click"
+      tag="a"
+      to="/login"
+    >
+      Log In
+    </router-link-stub>
+     
+    <!---->
+  </div>
+</div>
+`;

@@ -1,24 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`TextInput receives the correct props: Text Input Test 1`] = `"Text Input Test"`;
-
-exports[`TextInput renders the correct markup 1`] = `
-<p
-  class="textInput"
->
-  <label
-    class="textInput_label"
-    for="Label"
-  >
-    Label
-  </label>
-   
-  <input
-    class="textInput_input"
-    id="Label"
-    placeholder=""
-    required="required"
-    type="text"
-  />
-</p>
+exports[`ProjectList renders the correct markup 1`] = `
+<div
+  class="projectList"
+/>
 `;

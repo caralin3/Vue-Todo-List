@@ -1,11 +1,11 @@
-// import { Project, Feature, WorkHistory, User, Comment, Version, Item, Link } from '@/types';
+import { Project, Feature, User, Comment, Item, Link } from '@/types';
 
-// export const User1: User = {
-//   email: 'email',
-//   firstName: 'Select',
-//   id: '0',
-//   lastName: 'User',
-// };
+export const User1: User = {
+  email: 'email',
+  firstName: 'Select',
+  id: '0',
+  lastName: 'User',
+};
 
 // export const Comment1: Comment = {
 //   id: '0',
@@ -58,26 +58,24 @@
 //   title: '1.0.0-dev',
 // };
 
-// export const Item1: Item = {
-//   assignee: User1,
-//   comments: ['0'],
-//   description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, \
-//     sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-//   // endDate: new Date(),
-//   featureId: '0',
-//   id: '0',
-//   links: ['0', '1'],
-//   priority: 'minor',
-//   projectId: '0',
-//   // reporter: User,
-//   startDate: new Date(),
-//   status: 'todo',
-//   title: 'Item1',
-//   type: 'bug',
-//   updatedDate: new Date(),
-//   version: Version1,
-//   workFlow: ['0', '1'],
-// };
+export const Item1: Item = {
+  assignee: User1,
+  comments: ['0'],
+  description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, \
+    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+  // endDate: new Date(),
+  featureId: '0',
+  id: '0',
+  links: ['0', '1'],
+  priority: 'minor',
+  projectId: '0',
+  // reporter: User,
+  startDate: new Date(),
+  status: 'todo',
+  title: 'Item1',
+  type: 'bug',
+  updatedDate: new Date(),
+};
 
 // export const Item2: Item = {
 //   assignee: User1,

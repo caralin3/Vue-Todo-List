@@ -25,7 +25,6 @@ export default Vue.extend({
   computed: {
     ...mapState({
       currentUser: (state: RootState) => state.currentUser,
-      userProfile: (state: RootState) => state.userProfile,
     }),
   },
 

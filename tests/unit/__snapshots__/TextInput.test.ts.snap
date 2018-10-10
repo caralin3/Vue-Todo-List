@@ -1,5 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`TextInput emits a change event: Text Input Test 1`] = `"Text Input Test"`;
+
+exports[`TextInput receives the correct props 1`] = `""`;
+
+exports[`TextInput receives the correct props: Label 1`] = `"Label"`;
+
 exports[`TextInput receives the correct props: Text Input Test 1`] = `"Text Input Test"`;
 
 exports[`TextInput renders the correct markup 1`] = `

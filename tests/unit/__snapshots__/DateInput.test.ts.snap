@@ -1,5 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`DateInput emits a change event: Mon Sep 10 2018 02:02:20 GMT-0400 (Eastern Daylight Time) 1`] = `2018-09-10T06:02:20.000Z`;
+
+exports[`DateInput receives the correct props 1`] = `undefined`;
+
+exports[`DateInput receives the correct props: Label 1`] = `"Label"`;
+
 exports[`DateInput receives the correct props: Mon Sep 10 2018 1`] = `2018-09-10T06:02:20.000Z`;
 
 exports[`DateInput renders the correct markup 1`] = `

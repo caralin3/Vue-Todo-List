@@ -5,11 +5,12 @@ import { User } from '@/types';
 import '@/utils/filters';
 
 describe('SelectUserInput', () => {
-  const value = 'Selected Value';
+  const label: string = 'Label';
+  const value: string = 'Selected Value';
   const options: User[] = getUserOptions();
   const wrapper: any = mount(SelectUserInput, {
     propsData: {
-      label: 'Label',
+      label,
       options,
       value,
       onBlur: () => null,
@@ -19,6 +20,7 @@ describe('SelectUserInput', () => {
   const vm: any = wrapper.vm;
 
   it('receives the correct props', () => {
+    expect(vm.label).toMatchSnapshot(label);
     expect(vm.value).toMatchSnapshot(value);
     expect(vm.options).toMatchSnapshot(expect.arrayContaining(options));
   });
