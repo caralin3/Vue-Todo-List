@@ -40,7 +40,7 @@ exports[`ListItem renders the correct markup 1`] = `
     <h5
       class="listItem_date"
     >
-      Oct 10
+      Oct 11
     </h5>
   </div>
    
