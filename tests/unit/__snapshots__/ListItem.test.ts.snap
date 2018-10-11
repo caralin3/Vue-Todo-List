@@ -1,0 +1,117 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ListItem receives the correct props: bug 1`] = `"bug"`;
+
+exports[`ListItem renders the correct markup 1`] = `
+<li
+  class="listItem"
+>
+  <div
+    class="listItem_header"
+  >
+    <span
+      class="listItem_header-name"
+    >
+      <i
+        class="fa-stack fa-2x bug "
+      >
+        <i
+          class="fas fa-square fa-stack-2x bug-square"
+        />
+         
+        <i
+          class="fas fa-circle fa-stack-1x fa-inverse bug-circle"
+        />
+      </i>
+       
+      <!---->
+       
+      <!---->
+       
+      <!---->
+       
+      <h4
+        class="listItem_title"
+      >
+        Item1
+      </h4>
+    </span>
+     
+    <h5
+      class="listItem_date"
+    >
+      Oct 11
+    </h5>
+  </div>
+   
+  <div
+    class="listItem_body"
+  >
+    <p
+      class="listItem_description"
+    >
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit,     sed do eiusmod temp...
+    </p>
+     
+    <p
+      class="listItem_description-mobile"
+    >
+      Lorem ipsum dolor si...
+    </p>
+     
+    <span
+      class="listItem_row"
+    >
+      <span
+        class="listItem_row"
+      >
+        <h4
+          class="listItem_label"
+        >
+          Status:
+        </h4>
+         
+        <i
+          class="listItem_statusIcon fas fa-circle todo"
+        />
+         
+        <p
+          class="listItem_text"
+        >
+          Todo
+        </p>
+      </span>
+       
+      <span
+        class="listItem_row"
+      >
+        <h4
+          class="listItem_label"
+        >
+          Priority:
+        </h4>
+         
+        <span
+          class="listItem_priorityIcon"
+        >
+          <!---->
+           
+          <!---->
+           
+          <!---->
+           
+          <i
+            class="fas fa-arrow-down minor"
+          />
+        </span>
+         
+        <p
+          class="listItem_text"
+        >
+          Minor
+        </p>
+      </span>
+    </span>
+  </div>
+</li>
+`;

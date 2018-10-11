@@ -2,7 +2,7 @@ import { mount } from '@vue/test-utils';
 import TextInput from '@/components/TextInput.vue';
 
 describe('Form', () => {
-  const buttonText = 'Test Button';
+  const buttonText: string = 'Test Button';
   const submit = jest.fn();
   const toggleDialog = jest.fn();
   const wrapper: any = mount(TextInput, {

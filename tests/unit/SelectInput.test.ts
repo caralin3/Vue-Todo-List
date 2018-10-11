@@ -4,11 +4,12 @@ import { statusOptions } from '@/utils/constants';
 import '@/utils/filters';
 
 describe('SelectInput', () => {
-  const value = 'Selected Value';
+  const label: string = 'Label';
+  const value: string = 'Selected Value';
   const options = statusOptions;
   const wrapper: any = mount(SelectInput, {
     propsData: {
-      label: 'Label',
+      label,
       options,
       value,
       onBlur: () => null,
@@ -18,6 +19,7 @@ describe('SelectInput', () => {
   const vm: any = wrapper.vm;
 
   it('receives the correct props', () => {
+    expect(vm.label).toMatchSnapshot(label);
     expect(vm.value).toMatchSnapshot(value);
     expect(vm.options).toMatchSnapshot(expect.arrayContaining(options));
   });

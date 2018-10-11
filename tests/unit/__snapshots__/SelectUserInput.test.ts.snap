@@ -11,6 +11,8 @@ Object {
 }
 `;
 
+exports[`SelectUserInput receives the correct props: Label 1`] = `"Label"`;
+
 exports[`SelectUserInput receives the correct props: Selected Value 1`] = `"Selected Value"`;
 
 exports[`SelectUserInput renders the correct markup 1`] = `

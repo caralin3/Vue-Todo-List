@@ -2,7 +2,7 @@ import { mount } from '@vue/test-utils';
 import Dialog from '@/components/Dialog.vue';
 
 describe('Dialog', () => {
-  const title = 'Test Title';
+  const title: string = 'Test Title';
   const toggleDialog = jest.fn();
   const wrapper: any = mount(Dialog, {
     propsData: {

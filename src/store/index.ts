@@ -141,43 +141,48 @@ fb.auth.onAuthStateChanged((user: any) => {
   }
 });
 
+export const actions = {
+  resetData({commit}: any, state: RootState) {
+    commit(MutationType.RESET_DATA, state);
+  },
+  setCurrentUser({commit}: any, state: RootState) {
+    commit(MutationType.SET_CURRENT_USER, state);
+  },
+  setUserProfile({commit}: any, state: RootState) {
+    commit(MutationType.SET_USER_PROFILE, state);
+  },
+  fetchUserProfile({commit}: any, currentUser: any) {
+    fb.usersCollection.doc(currentUser.user.uid).get()
+      .then((user: any) => {
+        commit(MutationType.SET_USER_PROFILE, user.data());
+      }).catch((err: any) => {
+        console.log(err.message);
+      });
+  },
+};
+
+export const mutations = {
+  [MutationType.RESET_DATA]: (state: RootState) => {
+    state.currentUser = null;
+    state.userProfile = {};
+  },
+  [MutationType.SET_CURRENT_USER]: (state: RootState, user: any) => {
+    state.currentUser = user;
+  },
+  [MutationType.SET_USER_PROFILE]: (state: RootState, profile: any) => {
+    state.userProfile = profile;
+  },
+  [MutationType.RESTORE_MUTATION]: vuexPersist.RESTORE_MUTATION,
+};
+
+
 const store = new Vuex.Store<RootState>({
   state: {
     currentUser: null,
     userProfile: {},
   },
-  actions: {
-    resetData({commit}, state: RootState) {
-      commit(MutationType.RESET_DATA, state);
-    },
-    setCurrentUser({commit}, state: RootState) {
-      commit(MutationType.SET_CURRENT_USER, state);
-    },
-    setUserProfile({commit}, state: RootState) {
-      commit(MutationType.SET_USER_PROFILE, state);
-    },
-    fetchUserProfile({commit}, currentUser: any) {
-      fb.usersCollection.doc(currentUser.user.uid).get()
-        .then((user: any) => {
-          commit(MutationType.SET_USER_PROFILE, user.data());
-        }).catch((err: any) => {
-          console.log(err.message);
-        });
-    },
-  },
-  mutations: {
-    [MutationType.RESET_DATA]: (state: RootState) => {
-      state.currentUser = null;
-      state.userProfile = {};
-    },
-    [MutationType.SET_CURRENT_USER]: (state: RootState, user: any) => {
-      state.currentUser = user;
-    },
-    [MutationType.SET_USER_PROFILE]: (state: RootState, profile: any) => {
-      state.userProfile = profile;
-    },
-    [MutationType.RESTORE_MUTATION]: vuexPersist.RESTORE_MUTATION,
-  },
+  actions,
+  mutations,
   modules: {
     comments,
     features,

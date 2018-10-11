@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Items renders the correct markup 1`] = `
+<div
+  class="items items-open"
+>
+  <div
+    class="items_header"
+  >
+    <h2
+      class="items_title"
+    >
+      features
+    </h2>
+     
+    <featureicon-stub
+      extraclasses=""
+    />
+     
+    <!---->
+  </div>
+   
+  <div
+    class="items_list items_list-close"
+  >
+    <itemlist-stub />
+  </div>
+   
+  <div
+    class="items_details items_details-open"
+  >
+    <itemdetails-stub
+      featureitems=""
+      onclose="function () { [native code] }"
+    />
+  </div>
+</div>
+`;

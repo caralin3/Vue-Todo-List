@@ -1,5 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`TextAreaInput emits a change event: TextArea Test 1`] = `"TextArea Test"`;
+
+exports[`TextAreaInput receives the correct props 1`] = `""`;
+
+exports[`TextAreaInput receives the correct props: Label 1`] = `"Label"`;
+
 exports[`TextAreaInput receives the correct props: TextArea Test 1`] = `"TextArea Test"`;
 
 exports[`TextAreaInput renders the correct markup 1`] = `

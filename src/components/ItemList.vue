@@ -73,7 +73,9 @@ export default Vue.extend({
   }),
 
   created(this: any) {
-    this.buttonTitle = this.$route.query.filter.toString().slice(0, -1);
+    if (this.$route.query.filter) {
+      this.buttonTitle = this.$route.query.filter.toString().slice(0, -1);
+    }
     if (this.buttonTitle === 'feature' && this.$route.query.id) {
       this.selected = this.features.filter((f: Feature) => f.id === this.$route.query.id)[0];
     } else if (this.$route.query.id) {
@@ -111,7 +113,9 @@ export default Vue.extend({
       }
     },
     '$route.query.filter'(this: any) {
-      this.buttonTitle = this.$route.query.filter.toString().slice(0, -1);
+      if (this.$route.query.filter) {
+        this.buttonTitle = this.$route.query.filter.toString().slice(0, -1);
+      }
     },
   },
 });

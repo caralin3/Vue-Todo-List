@@ -7,7 +7,7 @@ import Login from './components/Login.vue';
 
 Vue.use(Router);
 
-const router: any = new Router({
+export const router: any = new Router({
   mode: 'history',
   routes: [
     {
