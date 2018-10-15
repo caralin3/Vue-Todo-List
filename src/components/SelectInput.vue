@@ -3,7 +3,6 @@
     <label class="selectInput_label" :for="label">{{ label }}</label>
     <select
       class="selectInput_input"
-      
       :id="label"
       :defaultValue="value"
       @blur="onBlur"
@@ -39,4 +38,9 @@ export default Vue.extend({
 </script>
 
 <style lang="less" scoped>
+.selectInput {
+  &_input {
+    padding: 0.5rem;
+  }
+}
 </style>

@@ -27,7 +27,7 @@ export default Vue.extend({
   &_container {
     background-color: @error;
     color: @white;
-    padding-left: 1rem;
+    padding: 0 1rem;
   }
 
   &_text {

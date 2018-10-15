@@ -11,6 +11,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import { mapActions, mapGetters, mapState} from 'vuex';
+import { Project, RootState } from '@/types';
 
 export default Vue.extend({
   name: 'ProjectsHeader',
@@ -20,9 +21,16 @@ export default Vue.extend({
   },
 
   computed: {
-    ...mapGetters('projects', [
-      'projectCount',
-    ]),
+    ...mapState({
+      currentUser: (state: RootState) => state.currentUser,
+      projects: (state: any) => state.projects.projects,
+    }),
+    projectCount(this: any) {
+      return this.projects.filter((proj: Project) => proj.users
+        .filter((userId: string) => userId === this.currentUser.id)[0])
+        .sort((p1: any, p2: any) => p2.updatedDate - p1.updatedDate)
+        .length;
+    },
   },
 
   methods: {

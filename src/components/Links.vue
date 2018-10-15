@@ -12,11 +12,18 @@
           :contenteditable="editedLink.editing && editedLink.id === link.id"
           @blur="handleLinkChange($event.target.innerText, link)"
         >
-          <a class="links_link" :href="updatedLink.to ? updatedLink.to : link.to" target="_blank">
+          <a
+            :class="{'links_link': !editedLink.editing}"
+            :href="updatedLink.to ? updatedLink.to : link.to"
+            target="_blank"
+          >
             {{ link.to }}
           </a>
-          <edit-button class="links_edit" :onClick="() => toggleEditLink(link.id)" />
         </div>
+        <span v-if="currentUser.id === link.userId">
+          <edit-button class="links_edit" :on-click="() => toggleEditLink(link.id)" />
+          <delete-button class="links_delete" :on-click="() => deleteLink(link)" />
+        </span>
       </div>
     </div>
     <div class="links_linkList" v-else>
@@ -27,11 +34,12 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import { mapActions } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 import AddButton from './AddButton.vue';
 import AddLinkDialog from './AddLinkDialog.vue';
+import DeleteButton from './DeleteButton.vue';
 import EditButton from './EditButton.vue';
-import { Link } from '@/types';
+import { Link, RootState } from '@/types';
 
 export default Vue.extend({
   name: 'Links',
@@ -39,6 +47,7 @@ export default Vue.extend({
   components: {
     AddButton,
     AddLinkDialog,
+    DeleteButton,
     EditButton,
   },
 
@@ -57,9 +66,16 @@ export default Vue.extend({
     updatedLink: {} as Link,
   }),
 
+  computed: {
+    ...mapState({
+      currentUser: (state: RootState) => state.currentUser,
+    }),
+  },
+
   methods: {
     ...mapActions({
       editLink: 'links/editLink',
+      removeLink: 'links/removeLink',
     }),
     handleLinkChange(this: any, value: string, link: Link) {
       this.updatedLink = {
@@ -83,6 +99,9 @@ export default Vue.extend({
     },
     toggleDialog(this: any) {
       this.show = !this.show;
+    },
+    deleteLink(this: any, link: Link) {
+      this.removeLink(link);
     },
   },
 });
@@ -113,17 +132,24 @@ export default Vue.extend({
     padding-left: 1rem;
   }
 
-  &_linkRow {
+  &_linkList {
     align-items: center;
     display: flex;
     justify-content: space-between;
 
     &:hover {
-      .links_edit {
+      .links_edit,
+      .links_delete {
         cursor: pointer;
         opacity: 1;
       }
     }
+  }
+
+  &_linkRow {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
 
     &-border {
       padding: 0.3rem 0.5rem;
@@ -141,6 +167,11 @@ export default Vue.extend({
   }
 
   &_edit {
+    opacity: 0;
+    padding: 0.5rem;
+  }
+
+  &_delete {
     opacity: 0;
     padding: 0.5rem 1rem;
   }

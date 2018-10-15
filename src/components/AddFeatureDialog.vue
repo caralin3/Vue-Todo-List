@@ -3,7 +3,7 @@
     <Dialog title="Add Feature" :toggleDialog="dismissDialog">
       <Form buttonText="Add Feature" :toggleDialog="submitDialog" :submit="onSubmitForm">
         <div class="addFeature_dialog">
-          <alert v-if="showAlert" :text="`Missing required field: ${empty}`" />
+          <alert v-if="showAlert" :text="`Missing required field: ${errorMessage}`" />
           <text-input :class="'addFeature_textInput'" label="Feature Name" placeholder="" v-model="title" />
           <select-user-input
             :class="'addFeature_select'"
@@ -92,7 +92,7 @@ export default Vue.extend({
     } as User,
     assigneeId: '',
     description: '',
-    empty: '',
+    errorMessage: '',
     endDate: '',
     priority: 'Select Priority' as priorityType,
     priorityOptions,
@@ -150,11 +150,11 @@ export default Vue.extend({
       } else {
         this.showAlert = true;
         if (!this.assigneeId) {
-          this.empty = 'Assignee';
+          this.errorMessage = 'Assignee';
         } else if (this.priority === 'Select Priority') {
-          this.empty = 'Priority';
+          this.errorMessage = 'Priority';
         } else if (this.status === 'Select Status') {
-          this.empty = 'Status';
+          this.errorMessage = 'Status';
         }
       }
     },

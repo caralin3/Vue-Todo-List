@@ -79,6 +79,7 @@ const actions: ActionTree<LinkState, any> = {
     });
   },
   removeLink: ({commit}, link: Link): any => {
+    console.log(link);
     if (link.featureId) {
       // Delete link id from features
       fb.featuresCollection.doc(link.featureId).update({
