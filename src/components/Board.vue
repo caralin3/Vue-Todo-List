@@ -15,7 +15,6 @@
         sortBy === 'Major' ? major :
         sortBy === 'Minor' ? minor :
         sortBy === 'Only My Items' ? myItems :
-        sortBy === 'Recently Updared' ? recentItems :
         itemList"
       />
     </div>
@@ -68,7 +67,6 @@ export default Vue.extend({
       'Major',
       'Minor',
       'Only My Items',
-      'Recently Updated',
     ];
   },
 
@@ -107,9 +105,6 @@ export default Vue.extend({
     },
     myItems(this: any) {
       return this.itemList.filter((item: any) => item.assignee.id === this.currentUser.id);
-    },
-    recentItems(this: any) {
-      return this.itemList.sort((item1: any, item2: any) => item2.updatedDate - item1.updatedDate);
     },
     statuses(this: any) {
       return [{

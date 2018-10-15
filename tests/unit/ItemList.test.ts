@@ -5,7 +5,6 @@ import ItemList from '@/components/ItemList.vue';
 import AddFeatureDialog from '@/components/AddFeatureDialog.vue';
 import AddItemDialog from '@/components/AddItemDialog.vue';
 import ListItem from '@/components/ListItem.vue';
-import SelectInput from '@/components/SelectInput.vue';
 import { Item } from '@/types';
 
 config.logModifiedComponents = false;
@@ -27,7 +26,6 @@ describe('ItemList', () => {
       AddFeatureDialog,
       AddItemDialog,
       ListItem,
-      SelectInput,
     },
     propsData: {
       itemList,
@@ -54,6 +52,9 @@ describe('ItemList', () => {
           query: { filter },
         },
       },
+      data: () => ({
+        filteredItems: itemList,
+      }),
     });
     const vm: any = wrapper.vm;
 

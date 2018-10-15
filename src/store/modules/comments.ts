@@ -114,7 +114,7 @@ const actions: ActionTree<CommentState, any> = {
     });
     // Delete comment
     fb.commentsCollection.doc(comment.id).delete().then(() => {
-      console.log(`Link ${comment.id} successfully deleted!`);
+      console.log(`Comment ${comment.id} successfully deleted!`);
       commit(MutationType.REMOVE_COMMENT, comment);
     }).catch((err: any) => {
       console.log(err.message);

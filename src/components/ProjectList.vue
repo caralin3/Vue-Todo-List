@@ -39,9 +39,6 @@ export default Vue.extend({
       currentUser: (state: RootState) => state.currentUser,
       projects: (state: any) => state.projects.projects,
     }),
-    ...mapGetters('projects', [
-      'projectCount',
-    ]),
     myProjects(this: any) {
       return this.projects.filter((proj: Project) => proj.users
         .filter((userId: string) => userId === this.currentUser.id)[0])

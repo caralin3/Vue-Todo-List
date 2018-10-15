@@ -20,7 +20,7 @@
             {{ link.to }}
           </a>
         </div>
-        <span>
+        <span v-if="currentUser.id === link.userId">
           <edit-button class="links_edit" :on-click="() => toggleEditLink(link.id)" />
           <delete-button class="links_delete" :on-click="() => deleteLink(link)" />
         </span>
@@ -34,12 +34,12 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import { mapActions } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 import AddButton from './AddButton.vue';
 import AddLinkDialog from './AddLinkDialog.vue';
 import DeleteButton from './DeleteButton.vue';
 import EditButton from './EditButton.vue';
-import { Link } from '@/types';
+import { Link, RootState } from '@/types';
 
 export default Vue.extend({
   name: 'Links',
@@ -65,6 +65,12 @@ export default Vue.extend({
     show: false,
     updatedLink: {} as Link,
   }),
+
+  computed: {
+    ...mapState({
+      currentUser: (state: RootState) => state.currentUser,
+    }),
+  },
 
   methods: {
     ...mapActions({

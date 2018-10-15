@@ -35,3 +35,11 @@ export default Vue.extend({
   },
 });
 </script>
+
+<style lang="less" scoped>
+.selectInput {
+  &_input {
+    padding: 0.5rem;
+  }
+}
+</style>

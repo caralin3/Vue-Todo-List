@@ -45,9 +45,15 @@
           {{ new Date(comment.updatedDate) | date }}
           {{ new Date(comment.updatedDate) | time }}
         </span>
+        <delete-button
+          class="comments_delete"
+          v-if="currentUser.id === comment.user.id"
+          :on-click="() => deleteComment(comment)"
+        />
         <p
           class="comments_text"
-          contenteditable="true"
+          :class="{'comments_text-edit': currentUser.id === comment.user.id}"
+          :contenteditable="currentUser.id === comment.user.id"
           @blur="handleCommentChange($event.target.innerText, comment)"
         >
           {{ comment.text }}
@@ -62,10 +68,11 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import { mapActions } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 import AddButton from './AddButton.vue';
 import AddCommentDialog from './AddCommentDialog.vue';
-import { Comment } from '@/types';
+import DeleteButton from './DeleteButton.vue';
+import { Comment, RootState } from '@/types';
 
 export default Vue.extend({
   name: 'Comments',
@@ -73,6 +80,7 @@ export default Vue.extend({
   components: {
     AddButton,
     AddCommentDialog,
+    DeleteButton,
   },
 
   props: {
@@ -86,9 +94,16 @@ export default Vue.extend({
     updatedComment: {} as Comment,
   }),
 
+  computed: {
+    ...mapState({
+      currentUser: (state: RootState) => state.currentUser,
+    }),
+  },
+
   methods: {
     ...mapActions({
       editComment: 'comments/editComment',
+      removeComment: 'comments/removeComment',
     }),
     handleCommentChange(this: any, value: string, comm: Comment) {
       this.updatedComment = {
@@ -105,6 +120,9 @@ export default Vue.extend({
     },
     toggleDialog(this: any) {
       this.show = !this.show;
+    },
+    deleteComment(this: any, comm: Comment) {
+      this.removeComment(comm);
     },
   },
 });
@@ -141,6 +159,13 @@ export default Vue.extend({
     margin: 0 0 1rem 0;
     padding: 1rem 1rem 0;
     width: 90%;
+
+    &:hover {
+      .comments_delete {
+        cursor: pointer;
+        opacity: 1;
+      }
+    }
   }
 
   &_username {
@@ -149,11 +174,19 @@ export default Vue.extend({
 
   &_text {
     padding: 0.5rem;
-    
-    &:hover {
-      border: 1px solid @madison;
-      cursor: pointer;
+
+    &-edit {
+      &:hover {
+        border: 1px solid @madison;
+        cursor: pointer;
+      }
     }
+  }
+
+  &_delete {
+    // padding: 0 1rem;
+    float: right;
+    opacity: 0;
   }
 }
 </style>
