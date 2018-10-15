@@ -11,7 +11,9 @@
           {{ proj.title }}
         </span>
       </h2>
-      <button class="projectDetails_header-button" type="button" v-on:click="toggleDialog">Add Collaborator</button>
+      <button class="projectDetails_header-button" type="button" v-on:click="toggleDialog">
+        Add Collaborator
+      </button>
     </div>
     <details-panel class="projectDetails_body">
       <project-details-data :on-change="handleTextChange" :proj="proj" />
@@ -97,6 +99,7 @@ export default Vue.extend({
 
     &-button {
       .button;
+      max-height: none;
     }
     
     &-title {
@@ -105,7 +108,11 @@ export default Vue.extend({
     }
 
     &-edit {
-    padding: 0.3rem 0.5rem;
+      padding: 0.3rem 0.5rem;
+
+      @media only screen and (max-width: 660px) {
+        padding: 0.3rem 0;
+      }
 
       &:hover {
         border: 1px solid @madison;

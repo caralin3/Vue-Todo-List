@@ -76,6 +76,7 @@ export default Vue.extend({
     display: flex;
     flex-direction: column;
     justify-content: center;
+    padding: 0 1rem 0 0.5rem;
   }
 }
 
@@ -83,7 +84,7 @@ export default Vue.extend({
   background-color: @medium-sea-green;
   color: @madison;
   padding: 1.5rem;
-  height: 12rem;
+  height: 14rem;
   max-width: 20rem;
   width: 100%;
 
@@ -111,6 +112,10 @@ export default Vue.extend({
     transform: translate(-50%, -50%);
     -ms-transform: translate(-50%, -50%);
     z-index: 1;
+
+    @media only screen and (max-width: 800px) {
+      top: 8rem;
+    }
   }
 
   &_link {
