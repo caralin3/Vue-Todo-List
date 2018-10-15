@@ -1,5 +1,6 @@
 <template>
   <div class="projectDetails">
+    <add-user-dialog v-if="showDialog" :proj="proj" :toggle-dialog="toggleDialog" />
     <div class="projectDetails_header">
       <h2 class="projectDetails_header-title">
         <span
@@ -10,6 +11,7 @@
           {{ proj.title }}
         </span>
       </h2>
+      <button class="projectDetails_header-button" type="button" v-on:click="toggleDialog">Add Collaborators</button>
     </div>
     <details-panel class="projectDetails_body">
       <project-details-data :on-change="handleTextChange" :proj="proj" />
@@ -26,6 +28,7 @@
 import Vue from 'vue';
 import * as fb from '@/firebase';
 import { mapActions } from 'vuex';
+import AddUserDialog from './AddUserDialog.vue';
 import Description from './Description.vue';
 import DetailsPanel from './DetailsPanel.vue';
 import Links from './Links.vue';
@@ -35,6 +38,7 @@ export default Vue.extend({
   name: 'ProjectDetails',
 
   components: {
+    AddUserDialog,
     Description,
     DetailsPanel,
     Links,
@@ -51,6 +55,7 @@ export default Vue.extend({
   },
 
   data: () => ({
+    showDialog: false,
     updatedProject: {},
   }),
 
@@ -72,6 +77,9 @@ export default Vue.extend({
       };
       this.editProject(this.updatedProject);
     },
+    toggleDialog(this: any) {
+      this.showDialog = !this.showDialog;
+    },
   },
 });
 </script>
@@ -84,7 +92,12 @@ export default Vue.extend({
   &_header {
     align-items: center;
     display: flex;
+    justify-content: space-between;
     padding: 2rem 2rem 0;
+
+    &-button {
+      .button;
+    }
     
     &-title {
       color: @madison;
