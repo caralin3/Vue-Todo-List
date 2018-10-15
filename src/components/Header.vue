@@ -1,7 +1,7 @@
 <template>
   <div class="header">
     <h1>
-      <router-link class="header_title" :to="currentUser === null ? '/' : '/projects'" :exact="true">Todo</router-link>
+      <router-link class="header_title" :to="currentUser === null ? '/' : '/projects'" :exact="true">Plan-It</router-link>
     </h1>
     <div class="header_nav">
       <router-link v-if="currentUser === null" to="/" :exact="true">Home</router-link>
@@ -60,7 +60,7 @@ export default Vue.extend({
   width: 100%;
 
   &_title {
-    color: @madison;
+    color: @white;
   }
 
   &_nav {
