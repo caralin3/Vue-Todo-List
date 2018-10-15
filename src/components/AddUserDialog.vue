@@ -1,6 +1,6 @@
 <template>
   <div class="addUser">
-    <Dialog title="Add Collaborators" :toggleDialog="dismissDialog">
+    <Dialog title="Add Collaborator" :toggleDialog="dismissDialog">
       <Form buttonText="Add" :toggleDialog="submitDialog" :submit="onSubmitForm">
         <div class="addUser_dialog">
           <alert v-if="showAlert" text="User already belongs to project" />

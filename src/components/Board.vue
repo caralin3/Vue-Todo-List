@@ -5,16 +5,16 @@
       <board-icon />
     </div>
     <div class="board_filters">
-      <board-filters :filters="filters" :on-click="sort" />
+      <board-filters :filters="filters" :on-click="setFilter" />
     </div>
     <div class="board_board">
       <board-status-header :statuses="statuses" />
       <board-grid
-        :item-list="sortBy === 'Blocker' ? blockers :
-        sortBy === 'Critical' ? critical :
-        sortBy === 'Major' ? major :
-        sortBy === 'Minor' ? minor :
-        sortBy === 'Only My Items' ? myItems :
+        :item-list="filterBy === 'Blocker' ? blockers :
+        filterBy === 'Critical' ? critical :
+        filterBy === 'Major' ? major :
+        filterBy === 'Minor' ? minor :
+        filterBy === 'Only My Items' ? myItems :
         itemList"
       />
     </div>
@@ -51,14 +51,12 @@ export default Vue.extend({
     filters: [],
     itemId: '',
     currentItem: {} as Feature | Item,
-    sorted: [],
-    sortBy: '',
+    filterBy: '',
   }),
 
   created(this: any) {
     this.filter = this.$route.query.filter;
     this.itemId = this.$route.query.id;
-    this.sorted = this.itemList;
     this.getItem();
 
     this.filters = [
@@ -92,19 +90,19 @@ export default Vue.extend({
       return this.itemList.filter((item: any) => item.status === 'closed').length;
     },
     blockers(this: any) {
-      return this.itemList.filter((item: any) => item.priority === 'blocker');
+      return this.sort(this.itemList.filter((item: any) => item.priority === 'blocker'));
     },
     critical(this: any) {
-      return this.itemList.filter((item: any) => item.priority === 'critical');
+      return this.sort(this.itemList.filter((item: any) => item.priority === 'critical'));
     },
     major(this: any) {
-      return this.itemList.filter((item: any) => item.priority === 'major');
+      return this.sort(this.itemList.filter((item: any) => item.priority === 'major'));
     },
     minor(this: any) {
-      return this.itemList.filter((item: any) => item.priority === 'minor');
+      return this.sort(this.itemList.filter((item: any) => item.priority === 'minor'));
     },
     myItems(this: any) {
-      return this.itemList.filter((item: any) => item.assignee.id === this.currentUser.id);
+      return this.sort(this.itemList.filter((item: any) => item.assignee.id === this.currentUser.id));
     },
     statuses(this: any) {
       return [{
@@ -146,8 +144,19 @@ export default Vue.extend({
     close(this: any) {
       this.$router.push({ path: this.$route.path, query: { filter: this.filter }});
     },
-    sort(this: any, filter: string) {
-      this.sortBy = filter;
+    setFilter(this: any, filter: string) {
+      this.filterBy = filter;
+    },
+    sort(arr: any[]) {
+      return arr.sort((item1: Item | Feature, item2: Item | Feature) => {
+        if (item1.updatedDate > item2.updatedDate) {
+          return -1;
+        }
+        if (item1.updatedDate < item2.updatedDate) {
+          return 1;
+        }
+        return 0;
+      });
     },
   },
 
