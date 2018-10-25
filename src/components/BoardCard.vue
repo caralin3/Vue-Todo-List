@@ -76,7 +76,7 @@ export default Vue.extend({
   padding: 1rem 0 1rem 0;
 
   &:hover {
-    cursor: grab;
+    cursor: move;
   }
 
   &_title,
