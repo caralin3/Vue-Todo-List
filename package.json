@@ -6,6 +6,7 @@
     "start": "vue-cli-service serve",
     "build": "vue-cli-service build && yarn run build:css && yarn test:unit",
     "build:css": "lessc src/less/index.less",
+    "deploy": "yarn run build && firebase deploy",
     "lint": "vue-cli-service lint",
     "test:unit": "vue-cli-service test:unit",
     "test": "jest",
